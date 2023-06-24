@@ -39,7 +39,10 @@ EXEC			=	execution.c \
 					child_process.c \
 					split_exec.c \
 					handle_builtins.c \
-					handle_heredoc.c
+					handle_heredoc.c \
+					handle_append.c \
+					utils_heredoc.c \
+					ft_heredoc.c
 
 BUILTINS		=	echo.c \
 					env.c \

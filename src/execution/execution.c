@@ -2,24 +2,19 @@
 
 int shell_execution(t_exec *d_exec, char **env, t_shell *shell_info)
 {
-	(void)	shell_info;
-	(void)	env;
+	(void)shell_info;
 	int i;
-	//int fd_here;
 	t_pipe	d_pip;
 	d_pip = (t_pipe){0};
 	/*------------------VARIABLES_TEST--------------------*/
 	char *builtins[] = {"cd", "echo", "env", "exit", "export", "pwd", "unset", NULL};
 	/*---------------------------------------------------*/
-	// if ((fd_here = handle_heredoc(d_exec)) > 0)
-	// {	fprintf(stderr, "if here: %d\n", fd_here);
-	// 	d_pip.fd_in = fd_here;
-	// }
-	handle_redirections(d_exec, &d_pip);
-	// init_struc_exec(d_exec, *shell_info, env); -->> initialisation au début -> init_shell
-	handle_pipes(&d_pip.fd_pipe1, &d_pip.fd_pipe2);
 	if (d_exec->heredoc[0])
 		handle_heredoc(d_exec);
+	fprintf(stderr, "after heredoc\n");
+	init_struc_exec(d_exec, *shell_info, env);
+	handle_pipes(&d_pip.fd_pipe1, &d_pip.fd_pipe2);
+		
 	i = 0;
 	if (!d_exec->tab_cmd)
 		exit(0);
@@ -27,7 +22,7 @@ int shell_execution(t_exec *d_exec, char **env, t_shell *shell_info)
 	{
 		if(is_builtins(d_exec->tab_cmd[i], builtins) == 1)
 		{	//fprintf(stderr, "pipe = 0, builtins\n");
-			handle_dup_fd_single_cmd(&d_pip);
+			handle_dup_fd_single_cmd(&d_pip, d_exec);
 			//handle_dup_single_cmd(&d_pip);
 			d_exec->cmd_n_arg = ft_split_exec(d_exec->tab_cmd[i], ' ', 0);
 			builtins_exec(d_exec->cmd_n_arg[0], shell_info, d_exec->cmd_n_arg);
@@ -67,9 +62,11 @@ int shell_execution(t_exec *d_exec, char **env, t_shell *shell_info)
 				}
 			}
 			i++;
+			d_exec->idx++;
 			d_exec->cmd_number++;
 		}
 	}
+	
 	while (i-- > 0)
 		wait(NULL);
 	return (0);
@@ -82,37 +79,37 @@ void builtins_exec(char *builtins_name, t_shell *info, char **cmd)
 	{
 		info->arg++;
 		echo_minishell(info);
-		fprintf(stderr, "built_echo\n");
+		//fprintf(stderr, "built_echo\n");
 	}
 	if(ft_strncmp("cd", builtins_name, ft_strlen(builtins_name)) == 0)
 	{
-		fprintf(stderr, "built_cd_minishell\n");
+		//fprintf(stderr, "built_cd_minishell\n");
 		cd_minishell(info);
 	}
 	if(ft_strncmp("env", builtins_name, ft_strlen(builtins_name)) == 0)
 	{
-		fprintf(stderr, "built_env_minishell\n");
+		//fprintf(stderr, "built_env_minishell\n");
 		env_minishell(info);
 	}
 	if(ft_strncmp("exit", builtins_name, ft_strlen(builtins_name)) == 0)
 	{
 		exit_minishell(info);
-		fprintf(stderr, "exit_minishell\n");
+		//fprintf(stderr, "exit_minishell\n");
 	}
 	if(ft_strncmp("export", builtins_name, ft_strlen(builtins_name)) == 0)
 	{
 		export_minishell(info);
-		fprintf(stderr, "built_export_minishell\n");
+		//fprintf(stderr, "built_export_minishell\n");
 	}
 	if(ft_strncmp("pwd", builtins_name, ft_strlen(builtins_name)) == 0)
 	{
 		pwd_minishell(info);
-		fprintf(stderr, "built_pwd_minishell\n");
+		//fprintf(stderr, "built_pwd_minishell\n");
 	}
 	if(ft_strncmp("unset", builtins_name, ft_strlen(builtins_name)) == 0)
 	{
 		unset_minishell(&info);
-		fprintf(stderr, "built_unset_minishell\n");
+		//fprintf(stderr, "built_unset_minishell\n");
 	}
 }
 

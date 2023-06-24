@@ -1,42 +1,5 @@
 #include "minishell.h"
 
-// t_list	*create_lst_exec(int ac, char **av)
-// {
-// 	int		i;
-// 	t_list	*tmp;
-// 	t_list	*stack_a;
-
-// 	i = 1;
-// 	stack_a = NULL;
-// 	if (ac > 2)
-// 	{
-// 		stack_a = ft_lstnew(av[0], NULL);
-// 		while (i < ac)
-// 		{
-// 			tmp = ft_lstnew(av[i],NULL);
-// 			ft_lstadd_back(&stack_a, tmp);
-// 			i++;
-// 		}
-// 	}
-// 	return (stack_a);
-// }
-
-// void	print_list_exec(t_list *lst, char *ft)
-// {
-// 	t_list	*node;
-
-// 	node = lst;
-// 	printf("%s\n", ft);
-// 	printf("----------------------------------------------------------------\n");
-// 	while (node != NULL)
-// 	{
-// 		printf("%s", node->data);
-// 		printf("\n");
-// 		node = node->next;
-// 	}
-// 	printf("----------------------------------------------------------------\n");
-// }
-
 char	*strjoin_exec(char const *s1, char const *s2)
 {
 	char	*cs1;
@@ -60,4 +23,20 @@ char	*strjoin_exec(char const *s1, char const *s2)
 		result[j++] = cs2[i++];
 	result[j] = '\0';
 	return (result);
+}
+
+char    *ft_strcpy(char *s1, char *s2)
+{
+    int i;
+
+    i = 0;
+    if(!s2)
+        return(NULL);
+    while(s2[i])
+    {
+        s1[i] = s2[i];
+        i++;
+    }
+    s1[i] = '\0';
+    return(s2);
 }

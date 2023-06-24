@@ -148,6 +148,7 @@ int			found_char(const char *str, int c);
 
 /* -------------- Fonctions utiles liste -----------------------*/
 void		tok_clearlst(t_tok **lst);
+int			ft_lstsize_heredoc(t_list *lst);
 void		tok_addlst(t_tok **lst, t_tok *token);
 void		tab_to_lst(t_shell *info, char **envp);
 char		**lst_to_tab(t_env *lst, t_dlist **trash);
@@ -157,7 +158,9 @@ t_tok		*new_node(char *str, int token, t_dlist **trash);
 void		str_to_node(char *str, t_list *node, t_shell *info);
 void		fill_node(t_list *node, char *s1, char *s2, int if_var);
 void		creat_and_add(char *tmp, char *str, int type, int index, t_shell *info);
-
+void		display_lst_heredoc(t_list **ptr_to_head, char *name);
+void		display_node_heredoc(t_list *lst);
+t_list		*ft_lstnew_heredoc(char *data, t_dlist **trash_lst);
 /* -------------- Fonctions test -----------------------*/
 void		print_node(t_tok *node);
 void		test(char *str, char *fonction);
@@ -172,13 +175,13 @@ void		command_not_found(char *cmd);
 char		**handle_infile(t_exec *exe);
 char		**handle_outfile(t_exec *exe);
 int			handle_heredoc(t_exec *d_exe);
-void		handle_dup_fd_single_cmd(t_pipe *d_pip);
+void		handle_dup_fd_single_cmd(t_pipe *d_pip, t_exec *exe);
 void		close_pipes(t_pipe *d, int process);
 void		handle_pipes(int (*fd1)[2], int (*fd2)[2]);
 char		*strjoin_exec(char const *s1, char const *s2);
 void		handle_redirections(t_exec *exe, t_pipe *pipe);
 void		error_infile_outfile(int error_nb, t_exec *exe);
-void		last_cmd(t_pipe *d, char *cmd_path, int process);
+void		last_cmd(t_pipe *d, char *cmd_path, int process, t_exec *d_exe);
 char		**ft_split_exec(const char *str, char c, int var);
 void		middle_cmd(t_pipe *d, char *cmd_path, int process);
 void		first_cmd(t_pipe *d, char *cmd_path, t_exec *d_exe);
@@ -187,10 +190,17 @@ char		*get_cmd_path(char *cmd, t_exec *info, t_dlist **trash);
 int			is_builtins(char *cmd_to_compare, char** builtins_list);
 void		builtins_exec(char *builtins_name, t_shell *info, char **cmd);
 void		init_struc_pipe(t_pipe *d, char *infile, char *outfile, t_exec *exe);
-void		builtins_1(t_pipe *d_pip, t_exec *d_exe, t_shell *d_shell, char *cmd);
+void		builtins_1(t_pipe *d, t_exec *d_exe, t_shell *d_shell, char *cmd);
 void		builtins_0(t_pipe *d_pip, t_exec *d_exe, t_shell *d_shell, char *cmd);
 void		child_process_1(t_pipe *d, t_exec *d_exe, t_shell *d_shell, char *cmd);
 void		child_process_0(t_pipe *d_pip, t_exec *d_exe, t_shell *d_shell, char *cmd);
 void		handle_single_cmd(t_pipe *d_pip, t_exec *d_exe, t_shell *d_shell, char *cmd);
+char    	**heredoc_data_saved(char *to_check, t_exec *exe, char *buffer);
+char    	*ft_strcpy(char *s1, char *s2);
+char		**create_tab(t_list **lst, t_dlist **trash);
+int			convert_tab_to_fd_heredoc(char **heredoc_res);
+char		*create_str_heredoc(char **exe_heredoc, t_exec *exe);
+char		*ft_strcat_heredoc(char *dest, char *src, int end);
+int			is_tab_heredoc_empty(char **tab);
 
 #endif
