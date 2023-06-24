@@ -75,7 +75,7 @@ char	**create_tab(t_list **lst, t_dlist **trash)
 		tmp = tmp->next;
 		i++;
 	}
-	tab[i] = '\0';
+	tab[i] = NULL;
 	return (tab);
 }
 

@@ -1,6 +1,5 @@
 #include "../minishell.h"
 
-int g_errno = 0;
 // int	main(int ac, char **av, char **envp)
 // {
 
@@ -67,7 +66,6 @@ int	main(int ac, char **av, char **envp)
 	}
 	else // avec arg = version Debbug
 	{
-		// buffer = av[1];
 		buffer = "ls";
 		check = parse_shell (buffer, &info_parse, &info_exec);
 		if (check == 1)

@@ -3,6 +3,7 @@
 int shell_execution(t_exec *d_exec, char **env, t_shell *shell_info)
 {
 	(void)shell_info;
+	(void) env;
 	int i;
 	t_pipe	d_pip;
 	d_pip = (t_pipe){0};
@@ -12,7 +13,7 @@ int shell_execution(t_exec *d_exec, char **env, t_shell *shell_info)
 	if (d_exec->heredoc[0])
 		handle_heredoc(d_exec);
 	fprintf(stderr, "after heredoc\n");
-	init_struc_exec(d_exec, *shell_info, env);
+	// init_struc_exec(d_exec, *shell_info, env);
 	handle_pipes(&d_pip.fd_pipe1, &d_pip.fd_pipe2);
 		
 	i = 0;

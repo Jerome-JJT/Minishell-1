@@ -11,7 +11,7 @@ static void	cpy_var(char *dst, char *src, char sep)
 		dst[i] = src[i];
 		i++;
 	}
-	dst[i] = 0;
+	dst[i] = '\0';
 }
 
 /* ----------------------- 2. Split var. env. ---------------------------*/
