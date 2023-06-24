@@ -67,7 +67,7 @@ int	main(int ac, char **av, char **envp)
 	else // avec arg = version Debbug
 	{
 		// buffer = av[1];
-		buffer = "salut";
+		buffer = "ls";
 		check = parse_shell (buffer, &info_parse, &info_exec);
 		if (check == 1)
 			printf(""RED"Erreur"RESET": nombre quote invalide\n");

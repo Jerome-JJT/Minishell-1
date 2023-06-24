@@ -2,7 +2,6 @@
 
 static char *fill_tab(char *tab, char *token, t_dlist **trash)
 {
-    print_tab(&tab, "Fill_tab");
     if (!tab)
         tab = ft_strdup(token, trash);
     else
@@ -34,27 +33,26 @@ static t_tok    *send_red(t_tok *lst, t_exec *exec, int type, int index, t_dlist
 
 void pars_to_exec(t_shell *info, t_exec *exec, t_dlist **trash)
 {
-    int     *pipe;
+    int     pipe;
     t_tok   *tmp;
 
-
-    pipe = &exec->number_of_pipes;
+    pipe = 0;
     tmp = info->token;
     while (tmp)
     {
         if (tmp->type == RED_IN)
-            tmp = send_red(tmp, exec, RED_IN, *pipe, trash);
+            tmp = send_red(tmp, exec, RED_IN, pipe, trash);
         else if (tmp->type == RED_OUT)
-            tmp = send_red(tmp, exec, RED_OUT, *pipe, trash);
+            tmp = send_red(tmp, exec, RED_OUT, pipe, trash);
         else if (tmp->type == H_D)
-            tmp = send_red(tmp, exec, H_D, *pipe, trash);
+            tmp = send_red(tmp, exec, H_D, pipe, trash);
         else if (ft_isword(tmp->type))
-            tmp = send_red(tmp, exec, WORD, *pipe, trash);
+            tmp = send_red(tmp, exec, WORD, pipe, trash);
         if (!tmp)
             break ;
         if (tmp->type == PIPE)
-            *pipe += 1;
+            pipe++;
         tmp = tmp->next;
     }
-    exec->tab_cmd = info->arg;
+    exec->number_of_pipes = pipe;
 }
