@@ -34,8 +34,8 @@
 # define CYAN "\033[0;96m"
 # define WHITE "\033[0;97m"
 
-//int	g_errno;
-extern int g_errno;
+int	g_errno;
+// extern int g_errno;
 
 /* ----------- ENUM -> Type Token --------------- */
 enum e_token
@@ -47,8 +47,8 @@ enum e_token
 	RED_OUT,
 	H_D,
 	APPEND,
-	SPACEE,
 	// SPACEE,
+	SPACE,
 	PIPE
 }	;
 
@@ -106,7 +106,7 @@ typedef struct s_pipe
 }	t_pipe;
 
 /* ---------------- Builtings ------------------ */
-void		echo_minishell(t_shell *info);
+void		echo_minishell(char **tab);
 void		cd_minishell(t_shell *info);
 void		env_minishell(t_shell *info);
 void		pwd_minishell(t_shell *info);
