@@ -25,7 +25,7 @@ int shell_execution(t_exec *d_exec, char **env, t_shell *shell_info)
 			handle_dup_fd_single_cmd(&d_pip, d_exec);
 			//handle_dup_single_cmd(&d_pip);
 			d_exec->cmd_n_arg = ft_split_exec(d_exec->tab_cmd[i], ' ', 0);
-			builtins_exec(d_exec->cmd_n_arg[0], shell_info, d_exec->cmd_n_arg);
+			builtins_exec(d_exec->cmd_n_arg[0], shell_info, d_exec->cmd_n_arg, d_exec);
 			return (0);
 		}
 		else
@@ -72,13 +72,14 @@ int shell_execution(t_exec *d_exec, char **env, t_shell *shell_info)
 	return (0);
 }
 
-void builtins_exec(char *builtins_name, t_shell *info, char **cmd)
+void builtins_exec(char *builtins_name, t_shell *info, char **cmd, t_exec *exe)
 {
 	info->arg = cmd;
 	if(ft_strncmp("echo", builtins_name, ft_strlen(builtins_name)) == 0)
 	{
-		info->arg++;
-		echo_minishell(info);
+		//	CHAR ** ECHO A RECUPERER
+		exe->cmd_n_arg++;
+		echo_minishell(exe->cmd_n_arg);
 		//fprintf(stderr, "built_echo\n");
 	}
 	if(ft_strncmp("cd", builtins_name, ft_strlen(builtins_name)) == 0)
