@@ -1,0 +1,17 @@
+Parsing exception:
+
+if : cmd|>outfile = aucune sortie (creer outfile)
+else if : cmd|cmd>outfile = sortie redirigé dans outfile
+
+etape 1:
+lecture avec readline de la ligne de commande
+split de la ligne de commande en **tab
+-> Si tableau a plus d'un argument
+creer premier node 
+-> controler chaque char de chaque *str -> if alpha = type 0
+								-> if single quote = type 1
+								-> if double quote = type 2
+								-> if pipe = type 3
+								-> if < ou > = type 4
+								-> if << ou >> = type 5
+								-> if $ = type 6
