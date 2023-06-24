@@ -9,10 +9,7 @@ static int	is_here_doc(t_tok *token)
 	if (!token)
 		return (0);
 	ptr = token;
-	fprintf(stderr, "word:%s\n", token->tok);
-	while (ptr->next != NULL && !ptr)
-	{
-		fprintf(stderr, "word3\n");
+	while (ptr != NULL && ptr->next != NULL)
 		ptr = ptr->next;
 	}
 	fprintf(stderr, "word1\n");

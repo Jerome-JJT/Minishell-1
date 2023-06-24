@@ -3,9 +3,11 @@
 int shell_execution(t_exec *d_exec, char **env, t_shell *shell_info)
 {
 	(void)shell_info;
+	(void) env;
 	int i;
 	t_pipe	d_pip;
 	d_pip = (t_pipe){0};
+	fprintf(stderr, "execution\n");
 	/*------------------VARIABLES_TEST--------------------*/
 	char *builtins[] = {"cd", "echo", "env", "exit", "export", "pwd", "unset", NULL};
 	/*---------------------------------------------------*/
@@ -13,7 +15,7 @@ int shell_execution(t_exec *d_exec, char **env, t_shell *shell_info)
 	if (d_exec->heredoc[0])
 		handle_heredoc(d_exec);
 	fprintf(stderr, "after heredoc\n");
-	init_struc_exec(d_exec, *shell_info, env);
+	// init_struc_exec(d_exec, *shell_info, env);
 	handle_pipes(&d_pip.fd_pipe1, &d_pip.fd_pipe2);
 		
 	i = 0;
@@ -22,9 +24,10 @@ int shell_execution(t_exec *d_exec, char **env, t_shell *shell_info)
 	if(d_exec->number_of_pipes == 0)
 	{
 		if(is_builtins(d_exec->tab_cmd[i], builtins) == 1)
-		{	fprintf(stderr, "pipe = 0, builtins\n");
+		{	
+			fprintf(stderr, "pipe = 0, builtins\n");
 			handle_dup_fd_single_cmd(&d_pip, d_exec);
-			//handle_dup_single_cmd(&d_pip);
+			// handle_dup_single_cmd(&d_pip);
 			d_exec->cmd_n_arg = ft_split_exec(d_exec->tab_cmd[i], ' ', 0);
 			builtins_exec(d_exec->cmd_n_arg[0], shell_info, d_exec->cmd_n_arg, d_exec);
 			return (0);

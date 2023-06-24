@@ -18,6 +18,7 @@ UTILS			=	utils.c \
 					test.c \
 					utils_3.c \
 					utils_2.c \
+					utils_4.c \
 					error.c
 
 PARSE			=	parse_builtins.c \
