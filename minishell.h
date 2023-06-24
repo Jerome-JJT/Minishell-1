@@ -145,6 +145,7 @@ int			check_printchar(char c);
 int			ft_checkquote(char *str);
 int			ft_isparsing_char(char c);
 char		**ft_split_var(char *var);
+void    	reset_exectab(t_exec *exec);
 void		ft_strswap(char **s1, char **s2);
 int			ft_error_msg(int errno, char *str);
 int			found_char(const char *str, int c);

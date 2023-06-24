@@ -60,13 +60,13 @@ int	main(int ac, char **av, char **envp)
 				print_parsing(&info_exec, "Before exec");
 				shell_execution(&info_exec, envp, &info_parse);
 				tok_clearlst(&info_parse.token);
-				ft_tabreset(info_exec.tab_cmd);
+				reset_exectab(&info_exec);
 			}
 		}
 	}
 	else // avec arg = version Debbug
 	{
-		buffer = "ls";
+		buffer = "<out";
 		check = parse_shell (buffer, &info_parse, &info_exec);
 		if (check == 1)
 			printf(""RED"Erreur"RESET": nombre quote invalide\n");

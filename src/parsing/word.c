@@ -8,7 +8,7 @@ static int	is_here_doc(t_tok *token)
 	if (!token)
 		return (0);
 	ptr = token;
-	while (!ptr->next && !ptr)
+	while (ptr != NULL && ptr->next != NULL)
 		ptr = ptr->next;
 	if (ptr->type == H_D)
 		return (1);
