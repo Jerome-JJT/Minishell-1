@@ -1,43 +1,42 @@
 #include "../../minishell.h"
 
 /* ---------------- 1.strcpy with sep. char ---------------------*/
-static void	cpy_var(char *dst, char *src, char sep)
+void cpy_var(char *dst, char *src, char sep)
 {
-	int	i;
+    int i = 0;
 
-	i = 0;
-	while (src[i] != sep)
-	{
-		dst[i] = src[i];
-		i++;
-	}
-	dst[i] = 0;
+    while (src[i] != sep && src[i] != '\0')
+    {
+        dst[i] = src[i];
+        i++;
+    }
+
+    dst[i] = '\0';
 }
 
-/* ----------------------- 2. Split var. env. ---------------------------*/
-char	**ft_split_var(char *var)
+char **ft_split_var(char *var)
 {
-	char	**tab;
-	int		i;
+    char **tab = malloc(3 * sizeof(char *));
+    if (!tab)
+    {
+        printf("Error allocating memory for tab\n");
+        return NULL;
+    }
 
-	tab = malloc(3 * sizeof(char *));
-	if (!tab)
-		return (NULL);
-	tab[2] = NULL;
-	i = 0;
-	while (tab[i] != NULL)
-	{
-		tab[i] = malloc(200 * sizeof(char));
-		if (!tab[i])
-			printf("Erreur allocation ft_split_var\n");
-		i++;
-	}
-	cpy_var(tab[0], var, '=');
-	while (*var != '=')
-		var++;
-	var++;
-	cpy_var(tab[1], var, '\0');
-	return (tab);
+    tab[2] = NULL;
+    tab[0] = malloc((strlen(var) + 1) * sizeof(char));
+    tab[1] = malloc((strlen(var) + 1) * sizeof(char));
+
+    cpy_var(tab[0], var, '=');
+
+    char *equalSign = strchr(var, '=');
+    if (equalSign)
+    {
+        equalSign++; // Move past the '=' character
+        cpy_var(tab[1], equalSign, '\0');
+    }
+
+    return tab;
 }
 
 /* ---------------------------- 3.Check valid quote --------------------------------*/

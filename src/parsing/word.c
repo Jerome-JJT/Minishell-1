@@ -5,17 +5,24 @@ static int	is_here_doc(t_tok *token)
 {
 	t_tok	*ptr;
 
+	fprintf(stderr, "word0\n");
 	if (!token)
 		return (0);
 	ptr = token;
-	while (!ptr->next && !ptr)
+	fprintf(stderr, "word:%s\n", token->tok);
+	while (ptr->next != NULL && !ptr)
+	{
+		fprintf(stderr, "word3\n");
 		ptr = ptr->next;
+	}
+	fprintf(stderr, "word1\n");
 	if (ptr->type == H_D)
 		return (1);
 	else if (!ptr->prev)
 		return (0);
 	else if (ptr->type == SPACE && ptr->prev->type == H_D)
 		return (1);
+	fprintf(stderr, "word\n");
 	return (0);
 }
 
@@ -104,6 +111,7 @@ char	*ft_word(char *str, t_shell *info)
 	i = 0;
 	check = 0;
 	tmp = NULL;
+	//fprintf(stderr, "tok:%s\n", info->token->tok);
 	if (info->token && is_here_doc(info->token))
 	{
 		while (!ft_isparsing_char(str[i]))

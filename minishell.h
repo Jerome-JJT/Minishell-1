@@ -34,8 +34,7 @@
 # define CYAN "\033[0;96m"
 # define WHITE "\033[0;97m"
 
-int	g_errno;
-// extern int g_errno;
+extern int g_errno;
 
 /* ----------- ENUM -> Type Token --------------- */
 enum e_token
@@ -48,7 +47,7 @@ enum e_token
 	H_D,
 	APPEND,
 	// SPACEE,
-	SPACE,
+	SPACEE,
 	PIPE
 }	;
 
@@ -72,6 +71,7 @@ typedef struct s_shell
 	int		status;
 	char	cwd[1024];
 	char	**arg;
+	// char	**env;
 	t_env	*env;
 	t_tok	*token;
 	t_dlist	*trash_lst;

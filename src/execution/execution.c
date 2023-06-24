@@ -9,6 +9,7 @@ int shell_execution(t_exec *d_exec, char **env, t_shell *shell_info)
 	/*------------------VARIABLES_TEST--------------------*/
 	char *builtins[] = {"cd", "echo", "env", "exit", "export", "pwd", "unset", NULL};
 	/*---------------------------------------------------*/
+	fprintf(stderr, ">>execution\n");
 	if (d_exec->heredoc[0])
 		handle_heredoc(d_exec);
 	fprintf(stderr, "after heredoc\n");
@@ -21,7 +22,7 @@ int shell_execution(t_exec *d_exec, char **env, t_shell *shell_info)
 	if(d_exec->number_of_pipes == 0)
 	{
 		if(is_builtins(d_exec->tab_cmd[i], builtins) == 1)
-		{	//fprintf(stderr, "pipe = 0, builtins\n");
+		{	fprintf(stderr, "pipe = 0, builtins\n");
 			handle_dup_fd_single_cmd(&d_pip, d_exec);
 			//handle_dup_single_cmd(&d_pip);
 			d_exec->cmd_n_arg = ft_split_exec(d_exec->tab_cmd[i], ' ', 0);
@@ -39,12 +40,12 @@ int shell_execution(t_exec *d_exec, char **env, t_shell *shell_info)
 			{
 				if (i % 2 == 0)
 				{
-					//fprintf(stderr, ">> builtins_0 = %s\n", d_exec->tab_cmd[i]);
+					fprintf(stderr, ">> builtins_0 = %s\n", d_exec->tab_cmd[i]);
 					builtins_0(&d_pip, d_exec, shell_info, d_exec->tab_cmd[i]);
 				}
 				else
 				{
-					//fprintf(stderr, ">> builtins_1 = %s\n", d_exec->tab_cmd[i]);
+					fprintf(stderr, ">> builtins_1 = %s\n", d_exec->tab_cmd[i]);
 					builtins_1(&d_pip, d_exec, shell_info, d_exec->tab_cmd[i]);
 				}
 			}
@@ -52,12 +53,12 @@ int shell_execution(t_exec *d_exec, char **env, t_shell *shell_info)
 			{
 				if (i % 2 == 0)
 				{
-					//fprintf(stderr, ">> process_0 = %s\n", d_exec->tab_cmd[i]);
+					fprintf(stderr, ">> process_0 = %s\n", d_exec->tab_cmd[i]);
 					child_process_0(&d_pip, d_exec, shell_info, d_exec->tab_cmd[i]);
 				}
 				else
 				{
-					//fprintf(stderr, ">> process_1 = %s\n", d_exec->tab_cmd[i]);
+					fprintf(stderr, ">> process_1 = %s\n", d_exec->tab_cmd[i]);
 					child_process_1(&d_pip, d_exec, shell_info, d_exec->tab_cmd[i]);
 				}
 			}
@@ -77,7 +78,6 @@ void builtins_exec(char *builtins_name, t_shell *info, char **cmd, t_exec *exe)
 	info->arg = cmd;
 	if(ft_strncmp("echo", builtins_name, ft_strlen(builtins_name)) == 0)
 	{
-		//	CHAR ** ECHO A RECUPERER
 		exe->cmd_n_arg++;
 		echo_minishell(exe->cmd_n_arg);
 		//fprintf(stderr, "built_echo\n");
@@ -105,7 +105,7 @@ void builtins_exec(char *builtins_name, t_shell *info, char **cmd, t_exec *exe)
 	if(ft_strncmp("pwd", builtins_name, ft_strlen(builtins_name)) == 0)
 	{
 		pwd_minishell(info);
-		//fprintf(stderr, "built_pwd_minishell\n");
+		fprintf(stderr, "built_pwd_minishell\n");
 	}
 	if(ft_strncmp("unset", builtins_name, ft_strlen(builtins_name)) == 0)
 	{

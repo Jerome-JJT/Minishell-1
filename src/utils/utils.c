@@ -49,6 +49,7 @@ void	init_shell(t_shell *info, t_exec *exec, char **envp)
 		g_errno = 1;
 	}
 	info->status = 0;
+	info->token = NULL;
 	info->trash_lst = ft_calloc(1, sizeof(t_dlist));
 	info->env = ft_dlst_new(&info->trash_lst);
 	tab_to_lst(info, envp);

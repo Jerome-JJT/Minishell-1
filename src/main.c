@@ -4,32 +4,32 @@ int g_errno = 0;
 // int	main(int ac, char **av, char **envp)
 // {
 
-// 	(void) ac;
-// 	(void) av;
-// 	t_shell infos;
+//  	(void) ac;
+//  	(void) av;
+//  	t_shell infos;
+// 	//int i = 0;
 
-// 	t_exec	*info_exec = NULL;
-// 	info_exec = &(t_exec){0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+//  	t_exec	*info_exec = NULL;
+// 	info_exec = &(t_exec){0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
 // 	/*------------------VARIABLES_TEST--------------------*/
-// 	char *test_tab_cmd[] = {"cat -e", NULL};
-// 	char *test_cmd_simple[] = {"wc", "-l", NULL};
-// 	char *redirections_infile[] = {NULL};	//"text_a.txt", "text_b.txt"
-// 	char *redirections_outfile[] = {NULL};
-// 	char *redirections_heredoc[] = {"begin", "middle", "end"};
+// 	char *test_tab_cmd[] = {"ls -l", "echo bla lol", "cat -e", NULL};
+// 	char *redirections_infile[] = {"text_c.txt", "", "", NULL};	//"text_a.txt", "text_b.txt"
+// 	char *redirections_outfile[] = {"", "", "out" ,NULL};
+// 	char *redirections_heredoc[] = {"", "", "", NULL}; //	mettre NULL si rien et non "" /!|
 // 	/*---------------------------------------------------*/
 
 // 	info_exec->number_of_pipes = 0;
 // 	info_exec->tab_cmd = test_tab_cmd;
-// 	info_exec->cmd_n_arg = test_cmd_simple;
 
 // 	info_exec->env_cpy = envp;
 // 	info_exec->redi_infile = redirections_infile;
 // 	info_exec->redi_outfile = redirections_outfile;
 // 	info_exec->heredoc = redirections_heredoc;
+// 	info_exec->idx = 0;
 
-	// shell_execution(info_exec, envp, &infos);
-	// infos.status = shell_execution(info.arg, info);
+//  	shell_execution(info_exec, envp, &infos);
+// 	//infos.status = shell_execution(infos.arg, info);
 // }
 
 /* -------------------- Main principale ----------------------------*/
@@ -68,7 +68,7 @@ int	main(int ac, char **av, char **envp)
 	else // avec arg = version Debbug
 	{
 		// buffer = av[1];
-		buffer = "ls";
+		buffer = "pwd";
 		check = parse_shell (buffer, &info_parse, &info_exec);
 		if (check == 1)
 			printf(""RED"Erreur"RESET": nombre quote invalide\n");
