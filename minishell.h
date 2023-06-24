@@ -80,6 +80,8 @@ typedef struct s_shell
 /*------------- Stucture executions ------------*/
 typedef struct s_exec
 {
+	int		idx;
+	char	**last_out_app;
 	int		number_of_pipes;
 	char	**tab_cmd;
 	char	**cmd_n_arg;
@@ -90,6 +92,7 @@ typedef struct s_exec
 	char	**redi_infile;
 	char	**redi_outfile;
 	char	**heredoc;
+	char	*str_heredoc;
 	int		cmd_number;
 	t_dlist	**trash_lst_exe;
 }	t_exec;
@@ -188,7 +191,7 @@ void		first_cmd(t_pipe *d, char *cmd_path, t_exec *d_exe);
 void		init_struc_exec(t_exec *d, t_shell infos, char **env);
 char		*get_cmd_path(char *cmd, t_exec *info, t_dlist **trash);
 int			is_builtins(char *cmd_to_compare, char** builtins_list);
-void		builtins_exec(char *builtins_name, t_shell *info, char **cmd);
+void		builtins_exec(char *builtins_name, t_shell *info, char **cmd, t_exec *exe);
 void		init_struc_pipe(t_pipe *d, char *infile, char *outfile, t_exec *exe);
 void		builtins_1(t_pipe *d, t_exec *d_exe, t_shell *d_shell, char *cmd);
 void		builtins_0(t_pipe *d_pip, t_exec *d_exe, t_shell *d_shell, char *cmd);

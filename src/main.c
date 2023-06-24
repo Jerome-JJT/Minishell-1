@@ -1,5 +1,6 @@
 #include "../minishell.h"
 
+int g_errno = 0;
 // int	main(int ac, char **av, char **envp)
 // {
 
