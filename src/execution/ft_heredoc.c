@@ -1,18 +1,18 @@
 #include "minishell.h"
 
-int is_tab_heredoc_empty(char **tab)
-{
-	int i;
+// int is_tab_heredoc_empty(char **tab)
+// {
+// 	int i;
 
-	i = 0;
-	while (tab[i])
-	{
-		if (ft_strcmp((const char*)tab[i], "") != 0)
-			return (0);
-		i++;
-	}
-	return (1);
-}
+// 	i = 0;
+// 	while (tab[i])
+// 	{
+// 		if (ft_strcmp((const char*)tab[i], "") != 0)
+// 			return (0);
+// 		i++;
+// 	}
+// 	return (1);
+// }
 
 char *create_str_heredoc(char **exe_heredoc, t_exec *exe)
 {

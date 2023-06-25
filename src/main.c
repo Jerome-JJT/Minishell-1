@@ -1,5 +1,6 @@
 #include "../minishell.h"
 
+int g_errno = 0;
 // int	main(int ac, char **av, char **envp)
 // {
 
@@ -57,7 +58,7 @@ int	main(int ac, char **av, char **envp)
 				tok_clearlst(&info_parse.token);
 			else if (check == 0)
 			{
-				print_parsing(&info_exec, "Before exec");
+				print_parsing(&info_exec, "\nBefore exec\n");
 				shell_execution(&info_exec, envp, &info_parse);
 				tok_clearlst(&info_parse.token);
 				reset_exectab(&info_exec);
@@ -67,7 +68,7 @@ int	main(int ac, char **av, char **envp)
 	else // avec arg = version Debbug
 	{
 		// buffer = av[1];
-		buffer = "pwd";
+		buffer = "<minishell.h pwd";
 		check = parse_shell (buffer, &info_parse, &info_exec);
 		if (check == 1)
 			printf(""RED"Erreur"RESET": nombre quote invalide\n");
@@ -75,7 +76,7 @@ int	main(int ac, char **av, char **envp)
 			tok_clearlst(&info_parse.token);
 		else
 		{
-			print_parsing(&info_exec, "Before exec");
+			print_parsing(&info_exec, "\nBefore exec\n");
 			shell_execution(&info_exec, envp, &info_parse);
 			tok_clearlst(&info_parse.token);
 		}

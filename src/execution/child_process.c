@@ -35,6 +35,7 @@ void handle_single_cmd(t_pipe *d_pip, t_exec *d_exe, t_shell *d_shell, char *cmd
 
 void handle_dup_fd_single_cmd(t_pipe *d_pip, t_exec *exe)
 {
+    //fprintf(stderr, "handle_dup_fd_single\n");
 	handle_redirections(exe, d_pip);
     if (d_pip->infile)
     {

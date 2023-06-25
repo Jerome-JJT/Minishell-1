@@ -7,17 +7,22 @@ int shell_execution(t_exec *d_exec, char **env, t_shell *shell_info)
 	int i;
 	t_pipe	d_pip;
 	d_pip = (t_pipe){0};
-	fprintf(stderr, "execution\n");
 	/*------------------VARIABLES_TEST--------------------*/
 	char *builtins[] = {"cd", "echo", "env", "exit", "export", "pwd", "unset", NULL};
 	/*---------------------------------------------------*/
-	fprintf(stderr, ">>execution\n");
+	fprintf(stderr, "check value tab_cmd: %s\n", d_exec->tab_cmd[0]);
+	fprintf(stderr, "check value redi_in: %s\n", d_exec->redi_infile[0]);
+	fprintf(stderr, "check value redi_out: %s\n", d_exec->redi_outfile[0]);
+	fprintf(stderr, "check value heredoc: %s\n", d_exec->heredoc[0]);
+	//d_exec->redi_infile = NULL;
+	//d_exec->idx = 0;
+	i = 0;
+	while (d_exec->tab_cmd[i])
+		i++;
+	d_exec->number_of_pipes = i - 1;
 	if (d_exec->heredoc[0])
 		handle_heredoc(d_exec);
-	fprintf(stderr, "after heredoc\n");
-	// init_struc_exec(d_exec, *shell_info, env);
 	handle_pipes(&d_pip.fd_pipe1, &d_pip.fd_pipe2);
-		
 	i = 0;
 	if (!d_exec->tab_cmd)
 		exit(0);
@@ -25,7 +30,7 @@ int shell_execution(t_exec *d_exec, char **env, t_shell *shell_info)
 	{
 		if(is_builtins(d_exec->tab_cmd[i], builtins) == 1)
 		{	
-			fprintf(stderr, "pipe = 0, builtins\n");
+			//fprintf(stderr, "pipe = 0, builtins\n");
 			handle_dup_fd_single_cmd(&d_pip, d_exec);
 			// handle_dup_single_cmd(&d_pip);
 			d_exec->cmd_n_arg = ft_split_exec(d_exec->tab_cmd[i], ' ', 0);
@@ -43,12 +48,12 @@ int shell_execution(t_exec *d_exec, char **env, t_shell *shell_info)
 			{
 				if (i % 2 == 0)
 				{
-					fprintf(stderr, ">> builtins_0 = %s\n", d_exec->tab_cmd[i]);
+					//fprintf(stderr, ">> builtins_0 = %s\n", d_exec->tab_cmd[i]);
 					builtins_0(&d_pip, d_exec, shell_info, d_exec->tab_cmd[i]);
 				}
 				else
 				{
-					fprintf(stderr, ">> builtins_1 = %s\n", d_exec->tab_cmd[i]);
+					//fprintf(stderr, ">> builtins_1 = %s\n", d_exec->tab_cmd[i]);
 					builtins_1(&d_pip, d_exec, shell_info, d_exec->tab_cmd[i]);
 				}
 			}
@@ -56,21 +61,24 @@ int shell_execution(t_exec *d_exec, char **env, t_shell *shell_info)
 			{
 				if (i % 2 == 0)
 				{
-					fprintf(stderr, ">> process_0 = %s\n", d_exec->tab_cmd[i]);
+					//fprintf(stderr, ">> process_0 = %s\n", d_exec->tab_cmd[i]);
 					child_process_0(&d_pip, d_exec, shell_info, d_exec->tab_cmd[i]);
 				}
 				else
 				{
-					fprintf(stderr, ">> process_1 = %s\n", d_exec->tab_cmd[i]);
+					//fprintf(stderr, ">> process_1 = %s\n", d_exec->tab_cmd[i]);
 					child_process_1(&d_pip, d_exec, shell_info, d_exec->tab_cmd[i]);
 				}
 			}
 			i++;
 			d_exec->idx++;
+			//fprintf(stderr, "cmd_number:%d\n", d_exec->cmd_number);
 			d_exec->cmd_number++;
 		}
 	}
-	
+	d_exec->cmd_number = 0;
+	d_exec->idx = 0;
+	//fprintf(stderr, "finito\n");
 	while (i-- > 0)
 		wait(NULL);
 	return (0);

@@ -5,21 +5,17 @@ static int	is_here_doc(t_tok *token)
 {
 	t_tok	*ptr;
 
-	fprintf(stderr, "word0\n");
 	if (!token)
 		return (0);
 	ptr = token;
 	while (ptr != NULL && ptr->next != NULL)
 		ptr = ptr->next;
-	}
-	fprintf(stderr, "word1\n");
 	if (ptr->type == H_D)
 		return (1);
 	else if (!ptr->prev)
 		return (0);
 	else if (ptr->type == SPACE && ptr->prev->type == H_D)
 		return (1);
-	fprintf(stderr, "word\n");
 	return (0);
 }
 
