@@ -10,7 +10,7 @@ int g_errno = 0;
 // 	//int i = 0;
 
 //  	t_exec	*info_exec = NULL;
-// 	info_exec = &(t_exec){0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+// 	info_exec = &(t_exec){0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,};
 
 // 	/*------------------VARIABLES_TEST--------------------*/
 // 	char *test_tab_cmd[] = {"ls -l", "echo bla lol", "cat -e", NULL};

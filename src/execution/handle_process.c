@@ -2,7 +2,7 @@
 #include <errno.h>
 
 void create_infile_tab(t_exec *exe);
-void create_outfile_tab(t_exec *exe);
+void create_heredoc_tab(t_exec *exe);
 
 void close_pipes(t_pipe *d, int process)
 {
@@ -42,32 +42,44 @@ void create_infile_tab(t_exec *exe)
 	exe->redi_infile = infile_tab;
 }
 
-void create_outfile_tab(t_exec *exe)
+void create_heredoc_tab(t_exec *exe)
 {
-	char **outfile_tab;
+	char **heredoc_tab;
 	//int i = 0;
 
-	outfile_tab = ft_split_exec(exe->redi_outfile[exe->idx], ' ', 0);
+	heredoc_tab = ft_split_exec(exe->heredoc[exe->idx], ' ', 0);
 	// while (outfile_tab[i])
 	// {
 	// 	fprintf(stderr, "tab[%d] = %s\n", i, infile_tab[i]);
 	// 	i++;
 	// }
-	exe->redi_outfile = outfile_tab;
+	exe->heredoc = heredoc_tab;
 }
 
 void handle_redirections(t_exec *exe, t_pipe *pipe)
 {
-	// fprintf(stderr, ">>>HANDLE FILES\n");
+	int i;
+
+	i = 0;
+	//fprintf(stderr, ">>>HANDLE FILES\n");
 	//fprintf(stderr, "control idx: %d\n", exe->idx);
 	// fprintf(stderr, "BEFORE control redi outfile[0]: %s\n", exe->heredoc[exe->idx]);
 	//fprintf(stderr, "BEFORE control redi infile_idx: %s\n", exe->redi_infile[exe->idx]);
 	//fprintf(stderr, "BEFORE control redi outfile_idx: %s\n", exe->redi_outfile[exe->idx]);
+	//fprintf(stderr, "BEFORE control redi heredoc_idx: %s\n", exe->heredoc[exe->idx]);
 	if (exe->heredoc[exe->idx]) //((ft_strncmp((const char*)exe->str_heredoc, "", 1) != 0))	// AJOUT HEREDOC
 	{
-		//fprintf(stderr, "heredoc no empty\n");
-		pipe->fd_in = open(".heredoc.txt", O_RDONLY); // A TESTER
-		exe->redi_infile[exe->idx] = ".heredoc.txt";
+		create_heredoc_tab(exe);
+		while(exe->heredoc[i])
+			i++;
+		fprintf(stderr, "after creat TAB last_heredoc :%s\n", exe->heredoc[i - 1]);
+		fprintf(stderr, "last_heredoc handle redi:%s\n", exe->last_heredoc);
+		if (ft_strcmp(exe->heredoc[i - 1], exe->last_heredoc) == 0)
+		{
+			fprintf(stderr, "heredoc no empty\n");
+			pipe->fd_in = open(".heredoc.txt", O_RDONLY); // A TESTER
+			exe->redi_infile[exe->idx] = ".heredoc.txt";
+		}
 	}
 	else
 	{
@@ -75,7 +87,7 @@ void handle_redirections(t_exec *exe, t_pipe *pipe)
 		// fprintf(stderr, "check value redi_in: %s\n", exe->redi_infile[0]);
 		if (exe->redi_infile[exe->idx] != NULL)
 		{
-			//create_infile_tab(exe);
+			
 			// fprintf(stderr, "TAB control redi infile_idx: %d\n", exe->idx);
 			// fprintf(stderr, "TAB control redi infile_idx[1]: %s\n", exe->redi_infile[0]);
 			exe->redi_infile = handle_infile(exe);

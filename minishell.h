@@ -83,6 +83,8 @@ typedef struct s_exec
 	int		idx;
 	char	**last_out_app;
 	int		number_of_pipes;
+	int		nb_of_heredocs;
+	char	*last_heredoc;
 	char	**tab_cmd;
 	char	**cmd_n_arg;
 	char	**env_cpy;
