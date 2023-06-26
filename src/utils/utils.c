@@ -57,21 +57,12 @@ void	init_shell(t_shell *info, t_exec *exec, char **envp)
 	exec->env_cpy = envp;
 	exec->cmd_number = 0;
 	exec->idx = 0;
-	exec->number_of_pipes = 0;
 	exec->nb_of_valid_heredoc = 0;
 	exec->nb_probable_of_heredocs = 0;
 	exec->tab_cmd = ft_calloc(100, sizeof(char *));
 	exec->heredoc = ft_calloc(100, sizeof(char *));
 	exec->redi_infile = ft_calloc(100, sizeof(char *));
 	exec->redi_outfile = ft_calloc(100, sizeof(char *));
-
-	// exec->last_heredoc = 0;
-	// exec->cmd_n_arg = 0;
-	// exec->path = 0;
-	// exec->access_path = 0;
-	// exec->cmd_path = 0;
-	// exec->str_heredoc = 0;
-	// exec->reset_exec_tab = 0;
 }
 
 /* ---------------------- 5.Reset tab ----------------------------*/

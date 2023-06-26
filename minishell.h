@@ -97,7 +97,6 @@ typedef struct s_exec
 	char	**heredoc;
 	char	*str_heredoc;
 	int		cmd_number;
-	int		reset_exec_tab;
 	t_dlist	**trash_lst_exe;
 }	t_exec;
 
@@ -184,6 +183,7 @@ void		command_not_found(char *cmd);
 char		**handle_infile(t_exec *exe);
 char		**handle_outfile(t_exec *exe);
 int			handle_heredoc(t_exec *d_exe);
+void		create_heredoc_tab(t_exec *exe);
 void		handle_dup_fd_single_cmd(t_pipe *d_pip, t_exec *exe);
 void		close_pipes(t_pipe *d, int process);
 void		handle_pipes(int (*fd1)[2], int (*fd2)[2]);

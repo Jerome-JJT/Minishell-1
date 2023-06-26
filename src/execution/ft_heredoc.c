@@ -19,13 +19,6 @@ char *create_str_heredoc(char **exe_heredoc, t_exec *exe)
 			result = ft_strcat_heredoc(result, exe_heredoc[i], 0);
 		i++;
 	}
-	//result = ft_strcat_heredoc(result, '\0', 1);
-//	i = 0;
-	//while(result[i])
-	// {
-	// 	fprintf(stderr, "%c", result[i]);
-	// 	i++;
-	// }
 	return (result);
 }
 
@@ -36,6 +29,7 @@ char **heredoc_data_saved(char *to_check, t_exec *d_exe, char *buffer)
     char **res;
 
 	d_exe->last_heredoc = to_check;
+	//fprintf(stderr, "last_heredoc ft data_saved:%s\n", d_exe->last_heredoc);
     res = NULL;
     t_dlist **trash = NULL;
     t_list *heredoc_lst = NULL;
