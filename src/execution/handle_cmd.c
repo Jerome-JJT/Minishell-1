@@ -45,6 +45,7 @@ void	first_cmd(t_pipe *d, char *cmd_path, t_exec *d_exe)
 	// fprintf(stderr, "first_cmd outfile:%s\n", d->outfile);
 	if (d->infile)
 	{
+		//fprintf(stderr, "infile in first_cmd: %s\n", d->infile);
 		d->fd_in = open(d->infile, O_RDONLY);
 		if (d->fd_in == -1)
         {
@@ -60,7 +61,7 @@ void	first_cmd(t_pipe *d, char *cmd_path, t_exec *d_exe)
 	}
 	if (d->outfile)
 	{
-		fprintf(stderr, "<<outfile in first command\n");
+		//fprintf(stderr, "<<outfile in first command\n");
 		d->fd_out = open (d->outfile, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 		if (d->fd_out == -1)
 		{
@@ -90,7 +91,7 @@ void	last_cmd(t_pipe *d, char *cmd_path, int process, t_exec *d_exe)
 	
 	if (d->infile)
 	{
-		//fprintf(stderr, "<<infile in last command: %s\n", d->infile);
+		//fprintf(stderr, "infile in last_cmd: %s\n", d->infile);
 		d->fd_in = open(d->infile, O_RDONLY);
 		if (d->fd_in == -1)
         {
@@ -138,6 +139,7 @@ void	middle_cmd(t_pipe *d, char *cmd_path, int process)
 	
 	if (d->infile)
 	{
+		//fprintf(stderr, "infile in middle_cmd: %s\n", d->infile);
 		d->fd_in = open(d->infile, O_RDONLY);
 		if (dup2(d->fd_in, STDIN_FILENO) == -1)
 			fprintf(stderr, "dup in error_first_cmd\n"); //handle_dup_err(d->fd_in, d->fd_pipe2[1], d_exe->cmd_n_arg, 0);

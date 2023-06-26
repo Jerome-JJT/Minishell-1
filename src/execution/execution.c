@@ -8,28 +8,23 @@ int shell_execution(t_exec *d_exec, char **env, t_shell *shell_info)
 	t_pipe	d_pip;
 	d_pip = (t_pipe){0};
 	/*------------------VARIABLES_TEST--------------------*/
-	char *heredoc_test[] = {NULL, NULL, NULL, NULL};
+	char *heredoc_test[] = {NULL, "a b", NULL, NULL};
 	char *builtins[] = {"cd", "echo", "env", "exit", "export", "pwd", "unset", NULL};
 	/*---------------------------------------------------*/
 	fprintf(stderr, "check value tab_cmd: %s\n", d_exec->tab_cmd[0]);
-	fprintf(stderr, "check value redi_in: %s\n", d_exec->redi_infile[0]);
+	fprintf(stderr, "check value redi_in[0]: %s\n", d_exec->redi_infile[0]);
+	//fprintf(stderr, "check value redi_in[1]: %s\n", d_exec->redi_infile[1]);
+	//fprintf(stderr, "check value redi_in[2]: %s\n", d_exec->redi_infile[2]);
 	fprintf(stderr, "check value redi_out: %s\n", d_exec->redi_outfile[0]);
 	fprintf(stderr, "check value heredoc: %s\n", d_exec->heredoc[0]);
 	//d_exec->redi_infile = NULL;
 	d_exec->heredoc = heredoc_test;
-	// i = 0;
-	// while (d_exec->heredoc[i])
-	// {
-	// 	fprintf(stderr, "heredoc[%d]: %s\n", i, d_exec->heredoc[i]);
-	// 	i++;
-	// }
 	i = 0;
 	while (d_exec->tab_cmd[i])
 		i++;
-	d_exec->nb_of_heredocs = i;
+	d_exec->nb_probable_of_heredocs = i;
 	d_exec->number_of_pipes = i - 1;
-	// if (d_exec->heredoc[0])
-	// 	handle_heredoc(d_exec);
+	handle_heredoc(d_exec);
 	handle_pipes(&d_pip.fd_pipe1, &d_pip.fd_pipe2);
 	i = 0;
 	if (!d_exec->tab_cmd)

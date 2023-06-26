@@ -67,18 +67,21 @@ void handle_redirections(t_exec *exe, t_pipe *pipe)
 	//fprintf(stderr, "BEFORE control redi infile_idx: %s\n", exe->redi_infile[exe->idx]);
 	//fprintf(stderr, "BEFORE control redi outfile_idx: %s\n", exe->redi_outfile[exe->idx]);
 	//fprintf(stderr, "BEFORE control redi heredoc_idx: %s\n", exe->heredoc[exe->idx]);
-	if (exe->heredoc[exe->idx]) //((ft_strncmp((const char*)exe->str_heredoc, "", 1) != 0))	// AJOUT HEREDOC
+	if (exe->nb_of_valid_heredoc > 0) //((ft_strncmp((const char*)exe->str_heredoc, "", 1) != 0))	// AJOUT HEREDOC
 	{
-		create_heredoc_tab(exe);
-		while(exe->heredoc[i])
-			i++;
-		fprintf(stderr, "after creat TAB last_heredoc :%s\n", exe->heredoc[i - 1]);
-		fprintf(stderr, "last_heredoc handle redi:%s\n", exe->last_heredoc);
-		if (ft_strcmp(exe->heredoc[i - 1], exe->last_heredoc) == 0)
+		if(exe->heredoc[exe->idx])
 		{
-			fprintf(stderr, "heredoc no empty\n");
-			pipe->fd_in = open(".heredoc.txt", O_RDONLY); // A TESTER
-			exe->redi_infile[exe->idx] = ".heredoc.txt";
+			create_heredoc_tab(exe);
+			while(exe->heredoc[i])
+				i++;
+			//fprintf(stderr, "after creat TAB last_heredoc :%s\n", exe->heredoc[i - 1]);
+			//fprintf(stderr, "last_heredoc handle redi:%s\n", exe->last_heredoc);
+			if (ft_strcmp(exe->heredoc[i - 1], exe->last_heredoc) == 0)
+			{
+				//fprintf(stderr, "heredoc no empty\n");
+				pipe->fd_in = open(".heredoc.txt", O_RDONLY); // A TESTER
+				exe->redi_infile[0] = ".heredoc.txt";
+			}
 		}
 	}
 	else

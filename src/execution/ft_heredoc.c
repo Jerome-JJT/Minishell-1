@@ -9,9 +9,9 @@ char *create_str_heredoc(char **exe_heredoc, t_exec *exe)
 	//fprintf(stderr, "nb heredoc: %d\n", exe->nb_of_heredocs);
 	result = malloc(sizeof(char *) * 100);
 	//result = my_malloc(100, sizeof(char*), exe->trash_lst_exe);
-	while(i <= exe->nb_of_heredocs)
+	while(i <= exe->nb_probable_of_heredocs)
 	{
-		if (exe->heredoc[i] == NULL && i < exe->nb_of_heredocs)
+		if (exe->heredoc[i] == NULL && i < exe->nb_probable_of_heredocs)
 			i++;
 		//if (!exe_heredoc[i + 1])
 		//	result = ft_strcat_heredoc(result, exe_heredoc[i], 1);
