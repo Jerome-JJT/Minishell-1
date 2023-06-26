@@ -118,12 +118,12 @@ void	child_process_1(t_pipe *d, t_exec *d_exe, t_shell *d_shell, char *cmd)
 		handle_redirections(d_exe, d);
 		if (d_exe->cmd_number == d_exe->number_of_pipes)
 		{
-			fprintf(stderr, "last_cmd child_1\n");
+			//fprintf(stderr, "last_cmd child_1\n");
 			last_cmd(d, d_exe->cmd_path, 1, d_exe);
 		}
 		else
 		{
-			fprintf(stderr, "middle_cmd child_1\n");
+			//fprintf(stderr, "middle_cmd child_1\n");
 			middle_cmd(d, d_exe->cmd_path, 1);
 		}
 		if (execve (d_exe->cmd_path, d_exe->cmd_n_arg, d_exe->env_cpy) == -1)

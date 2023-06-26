@@ -97,6 +97,7 @@ typedef struct s_exec
 	char	**heredoc;
 	char	*str_heredoc;
 	int		cmd_number;
+	int		reset_exec_tab;
 	t_dlist	**trash_lst_exe;
 }	t_exec;
 
@@ -152,6 +153,7 @@ void    	reset_exectab(t_exec *exec);
 void		ft_strswap(char **s1, char **s2);
 int			ft_error_msg(int errno, char *str);
 int			found_char(const char *str, int c);
+void		ft_tabreset2(char **tab, t_exec *exe);
 
 /* -------------- Fonctions utiles liste -----------------------*/
 void		tok_clearlst(t_tok **lst);

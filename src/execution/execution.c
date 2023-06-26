@@ -8,7 +8,7 @@ int shell_execution(t_exec *d_exec, char **env, t_shell *shell_info)
 	t_pipe	d_pip;
 	d_pip = (t_pipe){0};
 	/*------------------VARIABLES_TEST--------------------*/
-	char *heredoc_test[] = {NULL, "a b", NULL, NULL};
+	//char *heredoc_test[] = {NULL, NULL, NULL};
 	char *builtins[] = {"cd", "echo", "env", "exit", "export", "pwd", "unset", NULL};
 	/*---------------------------------------------------*/
 	fprintf(stderr, "check value tab_cmd: %s\n", d_exec->tab_cmd[0]);
@@ -18,7 +18,7 @@ int shell_execution(t_exec *d_exec, char **env, t_shell *shell_info)
 	fprintf(stderr, "check value redi_out: %s\n", d_exec->redi_outfile[0]);
 	fprintf(stderr, "check value heredoc: %s\n", d_exec->heredoc[0]);
 	//d_exec->redi_infile = NULL;
-	d_exec->heredoc = heredoc_test;
+	//d_exec->heredoc = heredoc_test;
 	i = 0;
 	while (d_exec->tab_cmd[i])
 		i++;
@@ -79,8 +79,16 @@ int shell_execution(t_exec *d_exec, char **env, t_shell *shell_info)
 			d_exec->cmd_number++;
 		}
 	}
+	//d_exec->reset_exec_tab = d_exec->idx;
+	//fprintf(stderr, "rest_exec_tab:%d\n", d_exec->reset_exec_tab);
 	d_exec->cmd_number = 0;
 	d_exec->idx = 0;
+	// i = 0;
+	// while(d_exec->heredoc[i])
+	// {
+	// 	fprintf(stderr, "fin exe->heredoc[%d]: %s\n", i, d_exec->heredoc[i]);
+	// 	i++;
+	// }
 	//fprintf(stderr, "finito\n");
 	while (i-- > 0)
 		wait(NULL);

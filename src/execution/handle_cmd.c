@@ -91,7 +91,7 @@ void	last_cmd(t_pipe *d, char *cmd_path, int process, t_exec *d_exe)
 	
 	if (d->infile)
 	{
-		//fprintf(stderr, "infile in last_cmd: %s\n", d->infile);
+		fprintf(stderr, "infile in last_cmd: %s\n", d->infile);
 		d->fd_in = open(d->infile, O_RDONLY);
 		if (d->fd_in == -1)
         {
