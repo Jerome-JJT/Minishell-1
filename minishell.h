@@ -217,4 +217,8 @@ char		*create_str_heredoc(char **exe_heredoc, t_exec *exe);
 char		*ft_strcat_heredoc(char *dest, char *src, int end);
 int			is_tab_heredoc_empty(char **tab);
 
+/*-----------------------------Signals-----------------------------*/
+
+void	handle_signals(int sig_num);
+
 #endif
