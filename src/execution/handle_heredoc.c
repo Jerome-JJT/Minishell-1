@@ -20,7 +20,7 @@ int handle_heredoc(t_exec *d_exe)
 	d_exe->nb_of_valid_heredoc = size;
 	if (d_exe->nb_of_valid_heredoc == 0)
 		return (1);
-	fprintf(stderr, ">> nb of valid heredoc: %d\n", size);
+	//fprintf(stderr, ">> nb of valid heredoc: %d\n", size);
 	d_exe->str_heredoc = create_str_heredoc(d_exe->heredoc, d_exe);
 	//fprintf(stderr, "ft_handle_heredoc %s\n", d_exe->str_heredoc);
 	heredoc_tab = ft_split_exec(d_exe->str_heredoc, ' ', 0);

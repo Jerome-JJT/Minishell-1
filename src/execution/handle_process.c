@@ -39,6 +39,8 @@ void handle_redirections(t_exec *exe, t_pipe *pipe)
 
 	i = 0;
 	//fprintf(stderr, ">>>HANDLE FILES\n");
+	handle_append(exe);
+	//fprintf(stderr, "last_append[%d]:%s\n", exe->idx, exe->last_append);
 	if (exe->nb_of_valid_heredoc > 0)
 	{
 		if(exe->heredoc[exe->idx])
@@ -46,7 +48,7 @@ void handle_redirections(t_exec *exe, t_pipe *pipe)
 			create_heredoc_tab(exe);
 			while(exe->heredoc[i])
 				i++;
-			fprintf(stderr, "last_heredoc handle redi:%s\n", exe->last_heredoc);
+			//fprintf(stderr, "last_heredoc handle redi:%s\n", exe->last_heredoc);
 			if (ft_strcmp(exe->heredoc[i - 1], exe->last_heredoc) == 0)
 			{
 				//fprintf(stderr, "heredoc no empty\n");
@@ -67,12 +69,21 @@ void handle_redirections(t_exec *exe, t_pipe *pipe)
 	}
 	if (exe->redi_outfile[exe->idx])
 	{
+		//fprintf(stderr, "outfile[%d] existant\n", exe->idx);
 		exe->redi_outfile = handle_outfile(exe);
 	}
-	else
+	if (!exe->redi_outfile[exe->idx] && !exe->last_append)
+	{
+		//fprintf(stderr, "pas de outfile: %s ni de append: %s\n", exe->redi_outfile[exe->idx], exe->last_append);
 		exe->redi_outfile[0] = NULL;
+	}
+	if (exe->last_append)
+	{
+		//fprintf(stderr, "last_append exisant: %s\n", exe->last_append);
+		exe->redi_outfile[0] = exe->last_append; // open n close ?
+	}
 	//fprintf(stderr, "AFTER control redi infile: %s\n", exe->redi_infile[0]);
-	//fprintf(stderr, "AFTER control redi outfile: %s\n", exe->redi_outfile[0]);
+	//fprintf(stderr, "AFTER control redi outfile[0]: %s pour command idx: %d\n", exe->redi_outfile[0], exe->idx);
 	init_struc_pipe(pipe, exe->redi_infile[0], exe->redi_outfile[0], exe);
 }
 

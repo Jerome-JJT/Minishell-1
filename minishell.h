@@ -81,7 +81,8 @@ typedef struct s_shell
 typedef struct s_exec
 {
 	int		idx;
-	char	**last_out_app;
+	char	**append;
+	char	*last_append;
 	int		number_of_pipes;
 	int		nb_probable_of_heredocs;
 	int		nb_of_valid_heredoc;
@@ -179,6 +180,7 @@ void		print_parsing(t_exec *exec, char *ft);
 
 /* -------------- Fonctions d'execution ---------------------*/
 char		*get_path(char **env);
+void		handle_append(t_exec *exe);
 void		command_not_found(char *cmd);
 char		**handle_infile(t_exec *exe);
 char		**handle_outfile(t_exec *exe);
@@ -192,7 +194,7 @@ void		handle_redirections(t_exec *exe, t_pipe *pipe);
 void		error_infile_outfile(int error_nb, t_exec *exe);
 void		last_cmd(t_pipe *d, char *cmd_path, int process, t_exec *d_exe);
 char		**ft_split_exec(const char *str, char c, int var);
-void		middle_cmd(t_pipe *d, char *cmd_path, int process);
+void		middle_cmd(t_pipe *d, t_exec *exe, int process);
 void		first_cmd(t_pipe *d, char *cmd_path, t_exec *d_exe);
 void		init_struc_exec(t_exec *d, t_shell infos, char **env);
 char		*get_cmd_path(char *cmd, t_exec *info, t_dlist **trash);

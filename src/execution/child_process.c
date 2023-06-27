@@ -91,7 +91,7 @@ void		child_process_0(t_pipe *d_pip, t_exec *d_exe, t_shell *d_shell, char *cmd)
 		else if (d_exe->cmd_number == d_exe->number_of_pipes)
 			last_cmd(d_pip, d_exe->cmd_path, 0, d_exe);
 		else
-			middle_cmd(d_pip, d_exe->cmd_path, 0);
+			middle_cmd(d_pip, d_exe, 0);
 		if (execve (d_exe->cmd_path, d_exe->cmd_n_arg, d_exe->env_cpy) == -1)
 			fprintf(stderr, "error excve\n");
 	}
@@ -124,7 +124,7 @@ void	child_process_1(t_pipe *d, t_exec *d_exe, t_shell *d_shell, char *cmd)
 		else
 		{
 			//fprintf(stderr, "middle_cmd child_1\n");
-			middle_cmd(d, d_exe->cmd_path, 1);
+			middle_cmd(d, d_exe, 1);
 		}
 		if (execve (d_exe->cmd_path, d_exe->cmd_n_arg, d_exe->env_cpy) == -1)
 			fprintf(stderr, "error excve\n");//handle_exec_err(d->fd_pipe1[1], d_exe->cmd_n_arg, cmd_path);

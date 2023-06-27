@@ -24,7 +24,7 @@ void		builtins_0(t_pipe *d_pip, t_exec *d_exe, t_shell *d_shell, char *cmd)
 		}
 		else
 		{
-			middle_cmd(d_pip, d_exe->cmd_path, 0);
+			middle_cmd(d_pip, d_exe, 0);
 		}
         builtins_exec(d_exe->cmd_n_arg[0], d_shell, d_exe->cmd_n_arg, d_exe);
 		exit(1);
@@ -53,7 +53,7 @@ void	builtins_1(t_pipe *d, t_exec *d_exe, t_shell *d_shell, char *cmd)
 		}
 		else
 		{
-			middle_cmd(d, d_exe->cmd_path, 1);
+			middle_cmd(d, d_exe, 1);
 		}
         builtins_exec(d_exe->cmd_n_arg[0], d_shell, d_exe->cmd_n_arg, d_exe);
 		exit(1);
