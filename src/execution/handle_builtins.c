@@ -16,11 +16,11 @@ void		builtins_0(t_pipe *d_pip, t_exec *d_exe, t_shell *d_shell, char *cmd)
 		handle_redirections(d_exe, d_pip);
 		if (d_exe->cmd_number == 0)
 		{
-			first_cmd(d_pip, d_exe->cmd_path, d_exe);
+			first_cmd(d_pip, d_exe);
 		}
 		else if (d_exe->cmd_number == d_exe->number_of_pipes)
 		{
-			last_cmd(d_pip, d_exe->cmd_path, 0, d_exe);
+			last_cmd(d_pip, 0, d_exe);
 		}
 		else
 		{
@@ -49,7 +49,7 @@ void	builtins_1(t_pipe *d, t_exec *d_exe, t_shell *d_shell, char *cmd)
 		handle_redirections(d_exe, d);
 		if (d_exe->cmd_number == d_exe->number_of_pipes)
 		{
-			last_cmd(d, d_exe->cmd_path, 1, d_exe);
+			last_cmd(d, 1, d_exe);
 		}
 		else
 		{
