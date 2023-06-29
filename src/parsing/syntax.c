@@ -12,13 +12,13 @@ static void	strjoin_node_tmp(t_tok *dest, t_tok *src, t_dlist **trash)
 int	check_syntax(t_tok *lst, t_dlist **trash)
 {
 	int		i;
-	int		in;
+//	int		in;
 	t_tok	*node;
 	t_tok	*node_tmp;
 
 	i = 0;
 	node = lst;
-	in = 0;
+//	in = 0;
 	// print_token(&lst, "check_syntax");
 	while (node != NULL)
 	{

@@ -6,7 +6,7 @@ void handle_single_cmd(t_pipe *d_pip, t_exec *d_exe, t_shell *d_shell, char *cmd
 {
     int fork_pid;
 	int status;
-    //fprintf(stderr, "single cmd\n");
+ //   fprintf(stderr, "single cmd\n");
     fork_pid = fork();
     if (fork_pid == -1)
     {
@@ -37,6 +37,7 @@ void handle_dup_fd_single_cmd(t_pipe *d_pip, t_exec *exe)
     }
     if (d_pip->outfile)
     {
+		//fprintf(stderr, "outfile oui\n");
         setup_outfile_cmd(d_pip, exe);
     }
 }
@@ -53,7 +54,7 @@ void		child_process_0(t_pipe *d_pip, t_exec *d_exe, t_shell *d_shell, char *cmd)
 		//fprintf(stderr, ">>child proces_0: %s\n", cmd);
 		close_pipes(d_pip, 1);
         prepare_cmd(d_exe, d_shell, cmd);
-        fprintf(stderr, "cmd_path child 0 : %s\n", d_exe->cmd_path);
+        //fprintf(stderr, "cmd_path child 0 : %s\n", d_exe->cmd_path);
 		handle_redirections(d_exe, d_pip);
 		if (d_exe->cmd_number == 0)
 			first_cmd(d_pip, d_exe);
@@ -80,7 +81,7 @@ void	child_process_1(t_pipe *d, t_exec *d_exe, t_shell *d_shell, char *cmd)
 	{
 		close_pipes(d, 2);
         prepare_cmd(d_exe, d_shell, cmd);
-        fprintf(stderr, "cmd_path child 1 : %s\n", d_exe->cmd_path);
+       // fprintf(stderr, "cmd_path child 1 : %s\n", d_exe->cmd_path);
 		handle_redirections(d_exe, d);
 		if (d_exe->cmd_number == d_exe->number_of_pipes)
 		{
@@ -105,4 +106,5 @@ void prepare_cmd(t_exec *d_exe, t_shell *d_shell, char *cmd)
 	d_exe->access_path = ft_split_exec(d_exe->path, ':', 1);
 	d_exe->cmd_n_arg = ft_split_exec(cmd, ' ', 0);
 	d_exe->cmd_path = get_cmd_path(d_exe->cmd_n_arg[0], d_exe, &d_shell->trash_lst);
+	//fprintf(stderr, "cmd path : %s\n", d_exe->cmd_path);
 }

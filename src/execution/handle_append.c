@@ -8,10 +8,10 @@ void handle_append(t_exec *exe)
     char *last_element;
     char    **tab_append_out;
 
-    if (!exe->append[exe->idx])
-        exe->last_append = NULL;
-    else
-    {
+   // if (!exe->append[exe->idx])   // REMOVED APPEND
+   //     exe->last_append = NULL;
+   // else
+   // {
         tab_append_out = ft_split_exec(exe->append[exe->idx], ' ', 0);
         create_append_files(tab_append_out);
         last_element = find_last_element(tab_append_out);
@@ -21,8 +21,11 @@ void handle_append(t_exec *exe)
             exe->last_append = last_element;
         }
         else
+        {
+            fprintf(stderr, "append init a NULL\n");
             exe->last_append = NULL;
-    }
+        }
+  //  }
 }
 
 char *find_last_element(char **tab_append_out)

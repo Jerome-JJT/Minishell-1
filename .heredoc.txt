@@ -1,6 +1,1 @@
-<<<<<<< HEAD
-salut toi
-=======
-plop
-ju
->>>>>>> 930786a22b6821cf96e2adc87f6da664043ce6a0
+lo

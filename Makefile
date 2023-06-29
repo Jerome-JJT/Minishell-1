@@ -75,7 +75,7 @@ OBJS			=	$(SRCS:.c=.o)
 $(NAME):	$(OBJS) libft/libft.a
 			@printf "libft				[$(_BLUE)✓$(_END)]\n"
 			@printf "minishell objects		[$(_BLUE)✓$(_END)]\n"
-			@gcc $(CFLAGS) $(OBJS) $(INCLUDES) $(LIBFT) -L usr/local/opt/readline/8.2.1/lib -I usr/local/opt/readline/8.2.1/include -lreadline -o $(NAME)
+			@gcc $(CFLAGS) $(OBJS) $(INCLUDES) $(LIBFT) -lreadline -o $(NAME)
 			@printf "minishell			[$(_BLUE)✓$(_END)]\n"
 			@printf "\n"
 			@printf "Minishell --------------------------------------> Ready to use\n"

@@ -28,6 +28,7 @@ static t_tok    *send_red(t_tok *lst, t_exec *exec, int type, int index, t_dlist
         else if (type == H_D)
             exec->heredoc[index] = fill_tab(exec->heredoc[index], lst->tok, trash);
     }
+ //   exec->append = tab_test_append;
     return (lst);
 }
 
@@ -38,12 +39,14 @@ void pars_to_exec(t_shell *info, t_exec *exec, t_dlist **trash)
     int     out;
     int     hd;
     t_tok   *tmp;
+    char *test_append[] = {NULL};
 
     pipe = 0;
     in = -1;
     out = -1;
     hd = -1,
     tmp = info->token;
+    exec->append = test_append;
     while (tmp)
     {
         if (tmp->type == RED_IN)
