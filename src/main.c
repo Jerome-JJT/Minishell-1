@@ -73,7 +73,7 @@ int	main(int ac, char **av, char **envp)
 	else // avec arg = version Debbug
 	{
 		// buffer = av[1];
-		buffer = "<1 <3e <2 ls";
+		buffer = "<1 cat -e >1| <1 cat -e >2 | <2 wc -c >3";
 		check = parse_shell (buffer, &info_parse, &info_exec);
 		if (check == 1)
 			printf(""RED"Erreur"RESET": nombre quote invalide\n");
@@ -84,6 +84,7 @@ int	main(int ac, char **av, char **envp)
 			print_parsing(&info_exec, "\nBefore exec\n");
 			shell_execution(&info_exec, envp, &info_parse);
 			tok_clearlst(&info_parse.token);
+			reset_exectab(&info_exec);
 		}
 	}
 	return (0); 

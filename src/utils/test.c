@@ -9,7 +9,7 @@ void	print_tab(char **tab, char *ft)
 	printf("----------------------------------------------------------------\n");
 	while (tab[i])
 	{
-		printf("%s\n", tab[i]);
+		printf("-->> %s\n", tab[i]);
 		i++;
 	}
 	printf("----------------------------------------------------------------\n\n\n");
@@ -67,8 +67,12 @@ void	print_node(t_tok *node)
 void	print_parsing(t_exec *exec, char *ft)
 {
 	printf("%s\n", ft);
-	print_tab(exec->heredoc, "test heredoc");
-	print_tab(exec->tab_cmd, "test tab_cmd");
-	print_tab(exec->redi_infile, "test red_in");
-	print_tab(exec->redi_outfile, "test red_out");
+	if (*exec->heredoc)
+		print_tab(exec->heredoc, "test heredoc");
+	if(*exec->tab_cmd)
+		print_tab(exec->tab_cmd, "test tab_cmd");
+	if (*exec->redi_infile)
+		print_tab(exec->redi_infile, "test red_in");
+	if (*exec->redi_outfile)
+		print_tab(exec->redi_outfile, "test red_out");
 }

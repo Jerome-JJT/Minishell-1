@@ -37,9 +37,9 @@ int	check_syntax(t_tok *lst, t_dlist **trash)
 				return (ft_error_msg(258, node_tmp->tok));
 			else if (ft_isword(node_tmp->type) == 1)
 			{
-				if (node->type == RED_IN || node->type == RED_IN
-					|| node->type == APPEND || node->type == APPEND)
+				if (node->type == RED_IN || node->type == APPEND)
 				{
+					fprintf(stderr, "%s\n", node_tmp->tok);
 					if (open(node_tmp->tok, O_RDONLY) < 0)
 						return (ft_error_msg(1, node_tmp->tok));
 				}
