@@ -104,6 +104,7 @@ char	*ft_word(char *str, t_shell *info)
 	i = 0;
 	check = 0;
 	tmp = NULL;
+	//fprintf(stderr, "tok:%s\n", info->token->tok);
 	if (info->token && is_here_doc(info->token))
 	{
 		while (!ft_isparsing_char(str[i]))

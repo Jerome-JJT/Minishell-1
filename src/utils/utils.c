@@ -55,6 +55,10 @@ void	init_shell(t_shell *info, t_exec *exec, char **envp)
 	tab_to_lst(info, envp);
 	info->arg = ft_calloc(100, sizeof(char *));
 	exec->env_cpy = envp;
+	exec->cmd_number = 0;
+	exec->idx = 0;
+	exec->nb_of_valid_heredoc = 0;
+	exec->nb_probable_of_heredocs = 0;
 	exec->tab_cmd = ft_calloc(100, sizeof(char *));
 	exec->heredoc = ft_calloc(100, sizeof(char *));
 	exec->redi_infile = ft_calloc(100, sizeof(char *));
@@ -76,3 +80,16 @@ void	ft_tabreset(char **tab)
 		i++;
 	}
 }
+
+// void	ft_tabreset2(char **tab, t_exec *exe)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while (i < exe->reset_exec_tab) // faire en fonction de la taille pour ne pas bloquer au NULL present en non-fin de tableau
+// 	{
+// 		if (tab[i])
+// 			tab[i] = 0;
+// 		i++;
+// 	}
+// }

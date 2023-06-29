@@ -9,6 +9,7 @@ LIST_PATH		= ./src/list
 SRC_PATH		= ./src
 UTILS_PATH		= ./src/utils
 PARSE_PATH		= ./src/parsing
+SIGNALS_PATH	= ./src/signals
 
 NAME			=	minishell
 
@@ -20,6 +21,8 @@ UTILS			=	utils.c \
 					utils_2.c \
 					utils_4.c \
 					error.c
+
+SIGNALS			=	handle_signals.c
 
 PARSE			=	parse_builtins.c \
 					red.c \
@@ -62,7 +65,7 @@ _CYAN			=	\e[36m
 _END			=	\e[0m
 
 
-SRCS 			=	$(addprefix $(SRC_PATH)/,$(SRC)) $(addprefix $(BUILTINS_PATH)/,$(BUILTINS)) $(addprefix $(LIST_PATH)/,$(LIST)) $(addprefix $(UTILS_PATH)/,$(UTILS)) $(addprefix $(PARSE_PATH)/,$(PARSE)) $(addprefix $(EXEC_PATH)/,$(EXEC))
+SRCS 			=	$(addprefix $(SRC_PATH)/,$(SRC)) $(addprefix $(BUILTINS_PATH)/,$(BUILTINS)) $(addprefix $(LIST_PATH)/,$(LIST)) $(addprefix $(UTILS_PATH)/,$(UTILS)) $(addprefix $(PARSE_PATH)/,$(PARSE)) $(addprefix $(EXEC_PATH)/,$(EXEC)) $(addprefix $(SIGNALS_PATH)/,$(SIGNALS))
 OBJS			=	$(SRCS:.c=.o)
 
 %.o: %.c
@@ -72,7 +75,7 @@ OBJS			=	$(SRCS:.c=.o)
 $(NAME):	$(OBJS) libft/libft.a
 			@printf "libft				[$(_BLUE)✓$(_END)]\n"
 			@printf "minishell objects		[$(_BLUE)✓$(_END)]\n"
-			@gcc $(CFLAGS) $(OBJS) $(INCLUDES) $(LIBFT) -L$(HOME)/.brew/Cellar/readline/8.2.1/lib -lreadline -o $(NAME)
+			@gcc $(CFLAGS) $(OBJS) $(INCLUDES) $(LIBFT) -lreadline -o $(NAME)
 			@printf "minishell			[$(_BLUE)✓$(_END)]\n"
 			@printf "\n"
 			@printf "Minishell --------------------------------------> Ready to use\n"

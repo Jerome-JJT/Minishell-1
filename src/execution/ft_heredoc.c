@@ -1,31 +1,21 @@
 #include "minishell.h"
 
-int is_tab_heredoc_empty(char **tab)
-{
-	int i;
-
-	i = 0;
-	while (tab[i])
-	{
-		if (ft_strcmp((const char*)tab[i], "") != 0)
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
 char *create_str_heredoc(char **exe_heredoc, t_exec *exe)
 {
 	char *result;
 	int i;
 
 	i = 0;
-	result = my_malloc(100, sizeof(char*), exe->trash_lst_exe);
-	while(exe_heredoc[i])
+	//fprintf(stderr, "nb heredoc: %d\n", exe->nb_of_heredocs);
+	result = malloc(sizeof(char *) * 100);
+	//result = my_malloc(100, sizeof(char*), exe->trash_lst_exe);
+	while(i <= exe->nb_probable_of_heredocs)
 	{
-		if (!exe_heredoc[i + 1])
-			result = ft_strcat_heredoc(result, exe_heredoc[i], 1);
-		else
+		if (exe->heredoc[i] == NULL && i < exe->nb_probable_of_heredocs)
+			i++;
+		//if (!exe_heredoc[i + 1])
+		//	result = ft_strcat_heredoc(result, exe_heredoc[i], 1);
+		if (exe->heredoc[i])
 			result = ft_strcat_heredoc(result, exe_heredoc[i], 0);
 		i++;
 	}
@@ -37,6 +27,9 @@ char **heredoc_data_saved(char *to_check, t_exec *d_exe, char *buffer)
     (void)d_exe;
    // fprintf(stderr, ">>position heredoc: %s\n", to_check);
     char **res;
+
+	d_exe->last_heredoc = to_check;
+	//fprintf(stderr, "last_heredoc ft data_saved:%s\n", d_exe->last_heredoc);
     res = NULL;
     t_dlist **trash = NULL;
     t_list *heredoc_lst = NULL;

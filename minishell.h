@@ -34,8 +34,7 @@
 # define CYAN "\033[0;96m"
 # define WHITE "\033[0;97m"
 
-int	g_errno;
-// extern int g_errno;
+extern int g_errno;
 
 /* ----------- ENUM -> Type Token --------------- */
 enum e_token
@@ -48,7 +47,7 @@ enum e_token
 	H_D,
 	APPEND,
 	// SPACEE,
-	SPACE,
+	SPACEE,
 	PIPE
 }	;
 
@@ -72,6 +71,7 @@ typedef struct s_shell
 	int		status;
 	char	cwd[1024];
 	char	**arg;
+	// char	**env;
 	t_env	*env;
 	t_tok	*token;
 	t_dlist	*trash_lst;
@@ -81,8 +81,12 @@ typedef struct s_shell
 typedef struct s_exec
 {
 	int		idx;
-	char	**last_out_app;
+	char	**append;
+	char	*last_append;
 	int		number_of_pipes;
+	int		nb_probable_of_heredocs;
+	int		nb_of_valid_heredoc;
+	char	*last_heredoc;
 	char	**tab_cmd;
 	char	**cmd_n_arg;
 	char	**env_cpy;
@@ -149,6 +153,7 @@ void    	reset_exectab(t_exec *exec);
 void		ft_strswap(char **s1, char **s2);
 int			ft_error_msg(int errno, char *str);
 int			found_char(const char *str, int c);
+void		ft_tabreset2(char **tab, t_exec *exe);
 
 /* -------------- Fonctions utiles liste -----------------------*/
 void		tok_clearlst(t_tok **lst);
@@ -175,20 +180,25 @@ void		print_parsing(t_exec *exec, char *ft);
 
 /* -------------- Fonctions d'execution ---------------------*/
 char		*get_path(char **env);
+void		handle_append(t_exec *exe);
 void		command_not_found(char *cmd);
 char		**handle_infile(t_exec *exe);
 char		**handle_outfile(t_exec *exe);
 int			handle_heredoc(t_exec *d_exe);
+void		create_heredoc_tab(t_exec *exe);
+void		setup_infile_cmd(t_pipe *d_pipe);
+void		setup_outfile_cmd(t_pipe *d_pipe, t_exec *d_exe);
+void		setup_middle_cmd(t_pipe *d_pipe, int option);
 void		handle_dup_fd_single_cmd(t_pipe *d_pip, t_exec *exe);
 void		close_pipes(t_pipe *d, int process);
 void		handle_pipes(int (*fd1)[2], int (*fd2)[2]);
 char		*strjoin_exec(char const *s1, char const *s2);
 void		handle_redirections(t_exec *exe, t_pipe *pipe);
 void		error_infile_outfile(int error_nb, t_exec *exe);
-void		last_cmd(t_pipe *d, char *cmd_path, int process, t_exec *d_exe);
+void		last_cmd(t_pipe *d, int process, t_exec *d_exe);
 char		**ft_split_exec(const char *str, char c, int var);
-void		middle_cmd(t_pipe *d, char *cmd_path, int process);
-void		first_cmd(t_pipe *d, char *cmd_path, t_exec *d_exe);
+void		middle_cmd(t_pipe *d, t_exec *exe, int process);
+void		first_cmd(t_pipe *d, t_exec *d_exe);
 void		init_struc_exec(t_exec *d, t_shell infos, char **env);
 char		*get_cmd_path(char *cmd, t_exec *info, t_dlist **trash);
 int			is_builtins(char *cmd_to_compare, char** builtins_list);
@@ -206,5 +216,9 @@ int			convert_tab_to_fd_heredoc(char **heredoc_res);
 char		*create_str_heredoc(char **exe_heredoc, t_exec *exe);
 char		*ft_strcat_heredoc(char *dest, char *src, int end);
 int			is_tab_heredoc_empty(char **tab);
+
+/*-----------------------------Signals-----------------------------*/
+
+void	handle_signals(int sig_num);
 
 #endif

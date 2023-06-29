@@ -1,3 +1,7 @@
-Mew is one of the fictional species from the Pokémon franchise.
-It is a small, pink, Psychic-type Mythical Pokémon, it was added to Pokémon Red and Blue by Game Freak programmer Shigeki Morimoto,
-with the intent of making it obtainable, but was ultimately left out for development and technical reasons.
+Mew (Japanese: ミュウ Mew) is a Psychic-type Mythical Pokémon introduced in Generation I.
+
+It is not known to evolve into or from any other Pokémon.
+
+Mew is notable for its unique ability to learn every Technical Machine, Technical Record, Hidden Machine, and Move Tutor move (except those exclusive to a particular Pokémon or group of Pokémon, such as Volt Tackle and Secret Sword).
+
+It is a member of the Mewi duo along with Mewtwo.
