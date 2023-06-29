@@ -34,7 +34,8 @@
 # define CYAN "\033[0;96m"
 # define WHITE "\033[0;97m"
 
-extern int g_errno;
+// extern int g_errno;
+int	g_errno;
 
 /* ----------- ENUM -> Type Token --------------- */
 enum e_token
@@ -46,8 +47,8 @@ enum e_token
 	RED_OUT,
 	H_D,
 	APPEND,
+	SPACE,
 	// SPACEE,
-	SPACEE,
 	PIPE
 }	;
 

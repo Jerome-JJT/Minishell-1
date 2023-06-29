@@ -7,9 +7,9 @@ void handle_signals(int sig_num)
     {
        // fprintf(stderr, "if sig num == 2\n");
        // write(1, "^C\n", 3);
-        rl_on_new_line();
-        rl_replace_line("", 0);
-        rl_redisplay();
+        // rl_on_new_line();
+        // rl_replace_line("", 0);
+        // rl_redisplay();
     }
     if (sig_num == SIGQUIT)
     {
