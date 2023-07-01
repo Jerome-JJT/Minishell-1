@@ -198,6 +198,7 @@ void		handle_redirections(t_exec *exe, t_pipe *pipe);
 void		error_infile_outfile(int error_nb, t_exec *exe);
 void		last_cmd(t_pipe *d, int process, t_exec *d_exe);
 char		**ft_split_exec(const char *str, char c, int var);
+//void		middle_cmd(t_pipe *d, char *cmd_path, int process);
 void		middle_cmd(t_pipe *d, t_exec *exe, int process);
 void		first_cmd(t_pipe *d, t_exec *d_exe);
 void		init_struc_exec(t_exec *d, t_shell infos, char **env);

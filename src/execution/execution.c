@@ -12,11 +12,11 @@ int shell_execution(t_exec *d_exec, char **env, t_shell *shell_info)
 	char *builtins[] = {"cd", "echo", "env", "exit", "export", "pwd", "unset", NULL};
 	/*---------------------------------------------------*/
 	// fprintf(stderr, "check value tab_cmd: %s\n", d_exec->tab_cmd[0]);
-	//fprintf(stderr, "check value redi_in[0]: %s\n", d_exec->redi_infile[0]);
-	//fprintf(stderr, "check value redi_in[1]: %s\n", d_exec->redi_infile[1]);
+	fprintf(stderr, "check value redi_in[0]: %s\n", d_exec->redi_infile[0]);
 	//fprintf(stderr, "check value redi_in[2]: %s\n", d_exec->redi_infile[2]);
-	//fprintf(stderr, "check value redi_out: %s\n", d_exec->redi_outfile[0]);
-	//fprintf(stderr, "check value apppend: %s\n", d_exec->append[0]);
+	fprintf(stderr, "check value redi_out: %s\n", d_exec->redi_outfile[0]);
+	fprintf(stderr, "check value heredoc[0]: %s\n", d_exec->heredoc[0]);
+	fprintf(stderr, "check value apppend: %s\n", d_exec->append[0]);
 	i = 0;
 	// while (d_exec->heredoc[i])
 	// {
