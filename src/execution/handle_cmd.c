@@ -118,7 +118,7 @@ void	middle_cmd(t_pipe *d, t_exec *exe, int process)
 
 void setup_infile_cmd(t_pipe *d_pipe)
 {
-	fprintf(stderr, ">>steup infile cmd\n");
+	//fprintf(stderr, ">>steup infile cmd\n");
 	d_pipe->fd_in = open(d_pipe->infile, O_RDONLY);
 	if (d_pipe->fd_in == -1)
     {
@@ -136,15 +136,15 @@ void setup_infile_cmd(t_pipe *d_pipe)
 void setup_outfile_cmd(t_pipe *d_pipe, t_exec *d_exe)
 {
 	(void)d_exe;
-	fprintf(stderr, "<< setup outfile  command\n");
+	//fprintf(stderr, "<< setup outfile  command idx : %d\n", d_exe->idx);
 	if(d_exe->last_append)
 	{
-		fprintf(stderr, "setup_outfile_cmd : last->append existant\n");
+		fprintf(stderr, "setup_outfile_cmd idx : %d: last->append existant : %s\n", d_exe->idx, d_exe->last_append);
 		d_pipe->fd_out = open (d_pipe->outfile, O_CREAT | O_WRONLY | O_APPEND, 0644);
 	}
 	else	// AJOUT PB CAT-E CAT -E CAT -E
 	{
-		fprintf(stderr, "setup_outfile_cmd : open d_pipe->outfile\n");
+		//fprintf(stderr, "setup_outfile_cmd : open d_pipe->outfile\n");
 		d_pipe->fd_out = open (d_pipe->outfile, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	}
 	if (d_pipe->fd_out == -1)

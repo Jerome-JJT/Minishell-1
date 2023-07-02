@@ -54,6 +54,7 @@ void		child_process_0(t_pipe *d_pip, t_exec *d_exe, t_shell *d_shell, char *cmd)
 		//fprintf(stderr, ">>child proces_0: %s\n", cmd);
 		close_pipes(d_pip, 1);
         prepare_cmd(d_exe, d_shell, cmd);
+		//fprintf(stderr, "idx process 0 : %d\n", d_exe->idx);
         //fprintf(stderr, "cmd_path child 0 : %s\n", d_exe->cmd_path);
 		handle_redirections(d_exe, d_pip);
 		if (d_exe->cmd_number == 0)

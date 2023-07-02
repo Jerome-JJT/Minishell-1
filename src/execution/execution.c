@@ -15,7 +15,7 @@ int shell_execution(t_exec *d_exec, char **env, t_shell *shell_info)
 	fprintf(stderr, "check value redi_in[0]: %s\n", d_exec->redi_infile[0]);
 	//fprintf(stderr, "check value redi_in[2]: %s\n", d_exec->redi_infile[2]);
 	fprintf(stderr, "check value redi_out: %s\n", d_exec->redi_outfile[0]);
-	fprintf(stderr, "check value heredoc[0]: %s\n", d_exec->heredoc[0]);
+	//fprintf(stderr, "check value heredoc[0]: %s\n", d_exec->heredoc[0]);
 	fprintf(stderr, "check value apppend: %s\n", d_exec->append[0]);
 	i = 0;
 	// while (d_exec->heredoc[i])
@@ -31,6 +31,7 @@ int shell_execution(t_exec *d_exec, char **env, t_shell *shell_info)
 	d_exec->number_of_pipes = i - 1;
 	d_exec->last_append = NULL;
 	handle_heredoc(d_exec);
+	//pre_handle_append(d_exec);
 	handle_pipes(&d_pip.fd_pipe1, &d_pip.fd_pipe2);
 	i = 0;
 	if (!d_exec->tab_cmd)
@@ -57,7 +58,7 @@ int shell_execution(t_exec *d_exec, char **env, t_shell *shell_info)
 			{
 				if (i % 2 == 0)
 				{
-					//fprintf(stderr, ">> builtins_0 = %s\n", d_exec->tab_cmd[i]);
+					//fprintf(stderr, ">> builtins_0 = %s, idx : %d\n", d_exec->tab_cmd[i], d_exec->idx);
 					builtins_0(&d_pip, d_exec, shell_info, d_exec->tab_cmd[i]);
 				}
 				else
@@ -70,7 +71,7 @@ int shell_execution(t_exec *d_exec, char **env, t_shell *shell_info)
 			{
 				if (i % 2 == 0)
 				{
-					//fprintf(stderr, ">> process_0 = %s\n", d_exec->tab_cmd[i]);
+					//fprintf(stderr, ">> process_0 = %s, idx : %d\n", d_exec->tab_cmd[i], d_exec->idx);
 					child_process_0(&d_pip, d_exec, shell_info, d_exec->tab_cmd[i]);
 				}
 				else
