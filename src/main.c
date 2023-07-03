@@ -226,14 +226,14 @@ int	main(int ac, char **av, char **envp)
 				print_parsing(&info_exec, "\nBefore exec\n");
 				shell_execution(&info_exec, envp, &info_parse);
 				tok_clearlst(&info_parse.token);
-				reset_exectab(&info_exec);
+				reset_shelltab(&info_exec, &info_parse);
 			}
 		}
 	}
 	else // avec arg = version Debbug
 	{
 		// buffer = av[1];
-		buffer = "<1 cat -e >1| <1 cat -e >2 | <2 wc -c >3";
+		buffer = "<tx_c.txt <tx_a.txt cat -e >out1 >out2| <tx_a.txt <tx_c.txt cat -e >out3 >out4";
 		check = parse_shell (buffer, &info_parse, &info_exec);
 		if (check == 1)
 			printf(""RED"Erreur"RESET": nombre quote invalide\n");
@@ -244,7 +244,7 @@ int	main(int ac, char **av, char **envp)
 			print_parsing(&info_exec, "\nBefore exec\n");
 			shell_execution(&info_exec, envp, &info_parse);
 			tok_clearlst(&info_parse.token);
-			reset_exectab(&info_exec);
+			reset_shelltab(&info_exec, &info_parse);
 		}
 	}
 	return (0); 

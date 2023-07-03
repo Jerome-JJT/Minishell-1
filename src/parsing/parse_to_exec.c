@@ -1,5 +1,19 @@
 #include "../../minishell.h"
 
+static void close_tab(t_exec *exec, int index)
+{
+    exec->redi_infile[index] = NULL;
+    exec->redi_outfile[index] = NULL;
+    exec->heredoc[index] = NULL;
+    exec->append[index] = NULL;
+    exec->tab_cmd[index] = NULL;
+    index++;
+    ft_free_2da(exec->redi_infile + index, NULL);
+    ft_free_2da(exec->redi_outfile + index, NULL);
+    ft_free_2da(exec->heredoc + index, NULL);
+    ft_free_2da(exec->append + index, NULL);
+}
+
 static char *fill_tab(char *tab, char *token, t_dlist **trash)
 {
     if (!tab)
@@ -14,6 +28,9 @@ static char *fill_tab(char *tab, char *token, t_dlist **trash)
 
 static t_tok    *send_red(t_tok *lst, t_exec *exec, int type, int index, t_dlist **trash) 
 {
+    char    *tmp;
+
+    tmp = NULL;
     if (type == WORD)
         exec->tab_cmd[index] = fill_tab(exec->tab_cmd[index], lst->tok, trash);
     else
@@ -24,7 +41,15 @@ static t_tok    *send_red(t_tok *lst, t_exec *exec, int type, int index, t_dlist
         if (type == RED_IN)
             exec->redi_infile[index] = fill_tab(exec->redi_infile[index], lst->tok, trash);
         else if (type == RED_OUT)
-           exec->redi_outfile[index] = fill_tab(exec->redi_outfile[index], lst->tok, trash);
+        {
+            tmp = ft_strjoin("O_", lst->tok, trash);
+            exec->redi_outfile[index] = fill_tab(exec->redi_outfile[index], tmp, trash);
+        }
+        else if (type == APPEND)
+        {
+            tmp = ft_strjoin("A_", lst->tok, trash);
+            exec->redi_outfile[index] = fill_tab(exec->redi_outfile[index], tmp, trash);
+        }
         else if (type == H_D)
             exec->heredoc[index] = fill_tab(exec->heredoc[index], lst->tok, trash);
     }
@@ -50,11 +75,16 @@ void pars_to_exec(t_shell *info, t_exec *exec, t_dlist **trash)
     while (tmp)
     {
         if (tmp->type == RED_IN)
-            tmp = send_red(tmp, exec, RED_IN, ++in, trash);
-        else if (tmp->type == RED_OUT)
-            tmp = send_red(tmp, exec, RED_OUT, ++out, trash);
+            tmp = send_red(tmp, exec, RED_IN, pipe, trash);
+        else if (tmp->type == RED_OUT || tmp->type == APPEND)
+        {
+            if (tmp->type == RED_OUT)
+                tmp = send_red(tmp, exec, RED_OUT, pipe, trash);
+            else
+                tmp = send_red(tmp, exec, APPEND, pipe, trash);
+        }
         else if (tmp->type == H_D)
-            tmp = send_red(tmp, exec, H_D, ++hd, trash);
+            tmp = send_red(tmp, exec, H_D, pipe, trash);
         else if (ft_isword(tmp->type))
             tmp = send_red(tmp, exec, WORD, pipe, trash);
         if (!tmp)
@@ -63,5 +93,6 @@ void pars_to_exec(t_shell *info, t_exec *exec, t_dlist **trash)
             pipe++;
         tmp = tmp->next;
     }
-    exec->number_of_pipes = pipe;
+    exec->number_of_pipes = pipe++;
+    close_tab(exec, pipe);
 }

@@ -30,9 +30,11 @@ int	check_syntax(t_tok *lst, t_dlist **trash)
 			if (!node_tmp)
 				return (ft_error_msg(258, NULL));
 			else if (node_tmp->type == SPACE)
+			{
 				node_tmp = node_tmp->next;
-			if (!node_tmp)
-				return (ft_error_msg(258, NULL));
+				if (!node_tmp)
+					return (ft_error_msg(258, NULL));
+			}
 			else if (node_tmp->type != WORD)
 				return (ft_error_msg(258, node_tmp->tok));
 			else if (ft_isword(node_tmp->type) == 1)
