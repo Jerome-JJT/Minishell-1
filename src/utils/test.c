@@ -2,15 +2,15 @@
 
 void	print_tab(char **tab, char *ft)
 {
-	int	i;
+	// int	i;
 
-	i = 0;
+	// i = 0;
 	printf("%s\n", ft);
 	printf("----------------------------------------------------------------\n");
-	while (tab[i])
+	while (*tab)
 	{
-		printf("-->> %s\n", tab[i]);
-		i++;
+		printf("-->> %s\n", *tab);
+		tab++;
 	}
 	printf("----------------------------------------------------------------\n\n\n");
 }
@@ -75,4 +75,16 @@ void	print_parsing(t_exec *exec, char *ft)
 		print_tab(exec->redi_infile, "test red_in");
 	if (*exec->redi_outfile)
 		print_tab(exec->redi_outfile, "test red_out");
+}
+
+void	print_trash(t_dlist **trash)
+{
+	t_node *tmp;
+
+	tmp = (*trash)->head;
+	while (tmp)
+	{
+		printf("adresse node: %p -> adresse stockée: %p -> valeur: %s\n", tmp, tmp->data, (char *)tmp->data);
+		tmp = tmp->next;
+	}
 }

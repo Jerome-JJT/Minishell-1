@@ -53,16 +53,22 @@ void	init_shell(t_shell *info, t_exec *exec, char **envp)
 	info->trash_lst = ft_calloc(1, sizeof(t_dlist));
 	info->env = ft_dlst_new(&info->trash_lst);
 	tab_to_lst(info, envp);
-	info->arg = ft_calloc(100, sizeof(char *));
+	// info->arg = ft_calloc(100, sizeof(char *));
 	exec->env_cpy = envp;
 	exec->cmd_number = 0;
 	exec->idx = 0;
 	exec->nb_of_valid_heredoc = 0;
 	exec->nb_probable_of_heredocs = 0;
-	exec->tab_cmd = ft_calloc(100, sizeof(char *));
-	exec->heredoc = ft_calloc(100, sizeof(char *));
-	exec->redi_infile = ft_calloc(100, sizeof(char *));
-	exec->redi_outfile = ft_calloc(100, sizeof(char *));
+	exec->tab_cmd = ft_calloc(20, sizeof(char *));
+	exec->heredoc = ft_calloc(20, sizeof(char *));
+	exec->redi_infile = ft_calloc(20, sizeof(char *));
+	exec->redi_outfile = ft_calloc(20, sizeof(char *));
+	// printf("trash: %p\n", info->trash_lst);
+	// printf("cmd: %p\n", exec->tab_cmd);
+	// printf("infile: %p\n", exec->redi_infile);
+	// printf("outfile: %p\n", exec->redi_outfile);
+	// printf("heredoc: %p\n", exec->heredoc);
+
 }
 
 /* ---------------------- 5.Reset tab ----------------------------*/

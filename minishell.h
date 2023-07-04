@@ -155,11 +155,11 @@ char		**ft_split_var(char *var);
 void		ft_strswap(char **s1, char **s2);
 int			ft_error_msg(int errno, char *str);
 int			found_char(const char *str, int c);
-void		ft_tabreset2(char **tab, t_exec *exe);
 void    	reset_shelltab(t_exec *exec, t_shell *shell);
 
 /* -------------- Fonctions utiles liste -----------------------*/
 void		tok_clearlst(t_tok **lst);
+char		*ft_strdup_exec(char *str);
 int			ft_lstsize_heredoc(t_list *lst);
 void		display_node_heredoc(t_list *lst);
 void		tok_addlst(t_tok **lst, t_tok *token);
@@ -175,6 +175,7 @@ void		fill_node(t_list *node, char *s1, char *s2, int if_var);
 void		creat_and_add(char *tmp, char *str, int type, int index, t_shell *info);
 /* -------------- Fonctions test -----------------------*/
 void		print_node(t_tok *node);
+void		print_trash(t_dlist **trash);
 void		test(char *str, char *fonction);
 void		print_tab(char **tab, char *ft);
 void		print_list(t_env *lst, char *ft);

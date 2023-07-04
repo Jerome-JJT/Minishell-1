@@ -1,19 +1,5 @@
 #include "../../minishell.h"
 
-static void close_tab(t_exec *exec, int index)
-{
-    exec->redi_infile[index] = NULL;
-    exec->redi_outfile[index] = NULL;
-    exec->heredoc[index] = NULL;
-    exec->append[index] = NULL;
-    exec->tab_cmd[index] = NULL;
-    index++;
-    ft_free_2da(exec->redi_infile + index, NULL);
-    ft_free_2da(exec->redi_outfile + index, NULL);
-    ft_free_2da(exec->heredoc + index, NULL);
-    ft_free_2da(exec->append + index, NULL);
-}
-
 static char *fill_tab(char *tab, char *token, t_dlist **trash)
 {
     if (!tab)
@@ -60,16 +46,10 @@ static t_tok    *send_red(t_tok *lst, t_exec *exec, int type, int index, t_dlist
 void pars_to_exec(t_shell *info, t_exec *exec, t_dlist **trash)
 {
     int     pipe;
-    int     in;
-    int     out;
-    int     hd;
     t_tok   *tmp;
     char *test_append[] = {NULL};
 
     pipe = 0;
-    in = -1;
-    out = -1;
-    hd = -1,
     tmp = info->token;
     exec->append = test_append;
     while (tmp)
@@ -94,5 +74,4 @@ void pars_to_exec(t_shell *info, t_exec *exec, t_dlist **trash)
         tmp = tmp->next;
     }
     exec->number_of_pipes = pipe++;
-    close_tab(exec, pipe);
 }
