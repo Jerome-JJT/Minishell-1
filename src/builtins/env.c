@@ -16,41 +16,27 @@ static void	print_env(t_env *env)
 }
 
 /* ------------------------- 2.Env avec args ------------------------------*/
-void	env_with_arg(t_shell *info)
+void	env_with_arg(t_shell *info, char *arg)
 {
-	if (ft_strncmp(*info->arg, "env", 4) == 0)
+	if (ft_strncmp(arg, "env", 4) == 0)
 		print_env(info->env);
-	else if (ft_strncmp(*info->arg, "$?", 3) == 0)
+	else if (ft_strncmp(arg, "/", 1) == 0 && !access(*info->arg, F_OK))
 	{
-		ft_error_msg(127, NULL);
-		// printf("env: %d: No such file or directory\n", g_errno);
-		// g_errno = 127;
-	}
-	else if (ft_strncmp(*info->arg, "/", 1) == 0 && !access(*info->arg, F_OK))
-	{
-		if (access(*(info)->arg, W_OK) != 0)
-		{
-			ft_error_msg(126, *info->arg);
-			// printf("env: %s: Premission denied\n", *info->arg);
-			// g_errno = 126;
-		}
+		if (access(arg, W_OK) != 0)
+			ft_error_msg(126, arg);
 	}
 	else
-	{
-		ft_error_msg(127, *info->arg);
-		// printf("env: %s: No such file or directory\n", *info->arg);
-		// g_errno = 127;
-	}
+		ft_error_msg(127, arg);
 }
 
 /* ------------------------- 3.Fonction env ------------------------------*/
-void	env_minishell(t_shell *info)
+void	env_minishell(t_shell *info, char *first_arg)
 {
 	t_list	*node;
 
 	node = info->env->head;
-	if (*info->arg)
-		env_with_arg(info);
+	if (*first_arg)
+		env_with_arg(info, first_arg);
 	else
 	{
 		while (node != NULL)
@@ -69,7 +55,7 @@ Test déjà effectué:
 1.env = liste variable d'environnement
 2.env env = idem 1
 3.env env env = idem 1
-4.env $? = 127: no file (error 127)
+4.
 5.env 123 = 123: no file (error 127)
 6.env abc = abc: no file (error 127)
 7.env /bin = no access (error 126)

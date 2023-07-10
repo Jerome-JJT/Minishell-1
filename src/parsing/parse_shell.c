@@ -41,7 +41,7 @@ int	parse_shell(char *buff, t_shell *info, t_exec *exec)
 	// test(buff, "Parse_shell");
 	while (*buff)
 	{
-		if (ft_isalnum(*buff) || *buff == '-' || *buff == '$')
+		if (ft_isalnum(*buff) || (!ft_isparsing_char(*buff) && ft_isprint(*buff)))
 			buff = ft_word(buff, info);
 		else if ((*buff == '\'' || *buff == '\"'))
 			buff = parse_quote(buff, info);
@@ -62,5 +62,7 @@ int	parse_shell(char *buff, t_shell *info, t_exec *exec)
 	if (check_syntax(info->token, &info->trash_lst))
 		return (2);
 	pars_to_exec(info, exec, &info->trash_lst);
+	// print_trash(&info->trash_lst);
+	// printf("------------------------------------------------------------------------------\n");
 	return (0);
 }

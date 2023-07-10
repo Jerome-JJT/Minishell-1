@@ -13,7 +13,7 @@ void	str_to_node(char *str, t_list *node, t_shell *info)
 			tab = ft_split_var(str);
 		fill_node(node, ft_strdup(tab[0], &info->trash_lst),
 			ft_strdup(tab[1], &info->trash_lst), 1);
-		ft_free_2da(tab, NULL);
+		// ft_free_2da(tab, NULL);
 	}
 	else
 		fill_node(node, ft_strdup(str, &info->trash_lst), NULL, 0);

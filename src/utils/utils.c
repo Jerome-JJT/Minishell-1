@@ -51,9 +51,8 @@ void	init_shell(t_shell *info, t_exec *exec, char **envp)
 	info->status = 0;
 	info->token = NULL;
 	info->trash_lst = ft_calloc(1, sizeof(t_dlist));
-	info->env = ft_dlst_new(&info->trash_lst);
+	info->env = ft_dlst_new(NULL);
 	tab_to_lst(info, envp);
-	// info->arg = ft_calloc(100, sizeof(char *));
 	exec->env_cpy = envp;
 	exec->cmd_number = 0;
 	exec->idx = 0;
@@ -63,11 +62,6 @@ void	init_shell(t_shell *info, t_exec *exec, char **envp)
 	exec->heredoc = ft_calloc(20, sizeof(char *));
 	exec->redi_infile = ft_calloc(20, sizeof(char *));
 	exec->redi_outfile = ft_calloc(20, sizeof(char *));
-	// printf("trash: %p\n", info->trash_lst);
-	// printf("cmd: %p\n", exec->tab_cmd);
-	// printf("infile: %p\n", exec->redi_infile);
-	// printf("outfile: %p\n", exec->redi_outfile);
-	// printf("heredoc: %p\n", exec->heredoc);
 
 }
 
@@ -76,10 +70,12 @@ void	ft_tabreset(char **tab)
 {
 	int	i;
 	int	j;
+	char	*str;
 
 	i = 0;
 	while (tab[i])
 	{
+		str = tab[i];
 		j = 0;
 		while (tab[i][j])
 			tab[i][j++] = 0;

@@ -198,10 +198,12 @@ int g_errno = 0;
 int	main(int ac, char **av, char **envp)
 {
 	int			check;
+	int			i;
 	t_shell		info_parse;
 	t_exec		info_exec;
 	char		*buffer;
 
+	i = 0;
 	init_shell(&info_parse, &info_exec, envp); // --->>  Initialisation général
 	if (ac == 1) // Sans arg = version minishell
 	{
@@ -225,7 +227,7 @@ int	main(int ac, char **av, char **envp)
 			{
 				print_parsing(&info_exec, "\nBefore exec\n");
 				shell_execution(&info_exec, envp, &info_parse);
-				// tok_clearlst(&info_parse.token);
+				tok_clearlst(&info_parse.token);
 				reset_shelltab(&info_exec, &info_parse);
 				// tab_to_lst(&info_parse, envp);
 			}
@@ -234,19 +236,23 @@ int	main(int ac, char **av, char **envp)
 	else // avec arg = version Debbug
 	{
 		// buffer = av[1];
-		buffer = "ls -l";
-		check = parse_shell (buffer, &info_parse, &info_exec);
-		if (check == 1)
-			printf(""RED"Erreur"RESET": nombre quote invalide\n");
-		else if (check == 2)
-			tok_clearlst(&info_parse.token);
-		else
+		buffer = "env /bin";
+		while (i < 2)
 		{
-			print_parsing(&info_exec, "\nBefore exec\n");
-			shell_execution(&info_exec, envp, &info_parse);
-			// tok_clearlst(&info_parse.token);
-			// reset_shelltab(&info_exec, &info_parse);
-			// tab_to_lst(&info_parse, envp);
+			check = parse_shell (buffer, &info_parse, &info_exec);
+			if (check == 1)
+				printf(""RED"Erreur"RESET": nombre quote invalide\n");
+			else if (check == 2)
+				tok_clearlst(&info_parse.token);
+			else
+			{
+				print_parsing(&info_exec, "\nBefore exec\n");
+				shell_execution(&info_exec, envp, &info_parse);
+				tok_clearlst(&info_parse.token);
+				reset_shelltab(&info_exec, &info_parse);
+				// tab_to_lst(&info_parse, envp);
+			}
+			i++;
 		}
 	}
 	return (0); 

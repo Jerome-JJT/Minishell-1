@@ -118,14 +118,14 @@ typedef struct s_pipe
 /* ---------------- Builtings ------------------ */
 void		echo_minishell(char **tab);
 void		cd_minishell(t_shell *info);
-void		env_minishell(t_shell *info);
 void		pwd_minishell(t_shell *info);
 void		exit_minishell(t_shell *info);
 void		unset_minishell(t_shell **info);
-void		export_minishell(t_shell *info);
+void		export_minishell(t_shell *info, char **arg);
+void		env_minishell(t_shell *info, char *first_arg);
 
 /* -------------- Fonctions principales -----------------------*/
-int			parse_builtins(t_shell *info);
+int			parse_builtins(t_shell *info, t_exec *exec);
 void		init_shell(t_shell *info, t_exec *exec, char **envp);
 int			parse_shell(char *buff, t_shell *info, t_exec *exec);
 int 		shell_execution(t_exec *info_exec, char **env, t_shell *info);
