@@ -237,7 +237,7 @@ int	main(int ac, char **av, char **envp)
 	{
 		// buffer = av[1];
 		test[0] = "export salut hello bonjour";
-		test[1] = NULL;
+		test[1] = "export";
 		test[2] = NULL;
 		while (test[i])
 		{

@@ -17,12 +17,17 @@ t_node	*ft_dlst_newcontent(void *data, t_dlist **trash_lst)
 	t_node	*new_node;
 	int		*data_mllc;
 
+	data_mllc = NULL;
 	new_node = my_malloc(1, sizeof(t_node), trash_lst);
-	if (data)
-		data_mllc = my_malloc(1, sizeof(void), trash_lst);
-	if (!new_node || !data_mllc)
+	if (!new_node)
 		return (0);
-	data_mllc = data;
+	if (data)
+	{
+		data_mllc = my_malloc(1, sizeof(void), trash_lst);
+		if (!data_mllc)
+			return (0);
+		data_mllc = data;
+	}
 	new_node->data = data_mllc;
 	new_node->next = NULL;
 	new_node->prev = NULL;

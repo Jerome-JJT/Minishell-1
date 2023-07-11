@@ -98,7 +98,7 @@ void	export_minishell(t_shell *info, char **arg)
 	{
 		while (arg[i])
 		{
-			printf("%s\n", arg[i]);
+			// printf("start export: %s\n", arg[i]);
 			if (!ft_isalpha(arg[i][0])|| arg[i][0] == '$')
 				printf("bash: export: `%s': not a valid identifier\n",
 					arg[i]);

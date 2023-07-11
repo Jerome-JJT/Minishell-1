@@ -5,7 +5,7 @@ void	str_to_node(char *str, t_list *node, t_shell *info)
 {
 	char	**tab;
 
-	printf("%s\n", str);
+	// printf("start str_to_node: %s\n", str);
 	if (found_char(str, '=') > 0)
 	{
 		if (found_char(str, '=') == 1)
@@ -22,9 +22,11 @@ void	str_to_node(char *str, t_list *node, t_shell *info)
 /* -------------------- 2. Fill node -----------------------*/
 void	fill_node(t_list *node, char *s1, char *s2, int if_var)
 {
+	// printf("start fill_node: %s\n", s1);
 	node->variable = s1;
 	node->valeur = s2;
 	node->if_var_env = if_var;
+	// printf("end fill_node: %s\n", node->variable);	
 }
 
 /* -------------------- 3.Find Variable env. -----------------------*/
