@@ -202,6 +202,7 @@ int	main(int ac, char **av, char **envp)
 	t_shell		info_parse;
 	t_exec		info_exec;
 	char		*buffer;
+	char		*test[3];
 
 	i = 0;
 	init_shell(&info_parse, &info_exec, envp); // --->>  Initialisation général
@@ -229,17 +230,18 @@ int	main(int ac, char **av, char **envp)
 				shell_execution(&info_exec, envp, &info_parse);
 				tok_clearlst(&info_parse.token);
 				reset_shelltab(&info_exec, &info_parse);
-				// tab_to_lst(&info_parse, envp);
 			}
 		}
 	}
 	else // avec arg = version Debbug
 	{
 		// buffer = av[1];
-		buffer = "env /bin";
-		while (i < 2)
+		test[0] = "export salut hello bonjour";
+		test[1] = NULL;
+		test[2] = NULL;
+		while (test[i])
 		{
-			check = parse_shell (buffer, &info_parse, &info_exec);
+			check = parse_shell (test[i], &info_parse, &info_exec);
 			if (check == 1)
 				printf(""RED"Erreur"RESET": nombre quote invalide\n");
 			else if (check == 2)
@@ -250,7 +252,6 @@ int	main(int ac, char **av, char **envp)
 				shell_execution(&info_exec, envp, &info_parse);
 				tok_clearlst(&info_parse.token);
 				reset_shelltab(&info_exec, &info_parse);
-				// tab_to_lst(&info_parse, envp);
 			}
 			i++;
 		}

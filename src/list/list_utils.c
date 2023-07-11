@@ -5,6 +5,7 @@ void	str_to_node(char *str, t_list *node, t_shell *info)
 {
 	char	**tab;
 
+	printf("%s\n", str);
 	if (found_char(str, '=') > 0)
 	{
 		if (found_char(str, '=') == 1)
@@ -13,7 +14,6 @@ void	str_to_node(char *str, t_list *node, t_shell *info)
 			tab = ft_split_var(str);
 		fill_node(node, ft_strdup(tab[0], &info->trash_lst),
 			ft_strdup(tab[1], &info->trash_lst), 1);
-		// ft_free_2da(tab, NULL);
 	}
 	else
 		fill_node(node, ft_strdup(str, &info->trash_lst), NULL, 0);
@@ -62,13 +62,18 @@ char	**lst_to_tab(t_env *lst, t_dlist **trash)
 	i = 0;
 	while (node != NULL)
 	{
-		var = ft_strlen(node->variable) + 1;
-		val = ft_strlen(node->valeur) + 1;
-		tab[i] = my_malloc((var + val), sizeof(char), trash);
-		if (!tab[i])
-			return (NULL);
-		tab[i] = ft_strjoin(node->variable, "=", trash);
-		tab[i] = ft_strjoin(tab[i], node->valeur, trash);
+		if (node->valeur)
+		{
+			var = ft_strlen(node->variable) + 1;
+			val = ft_strlen(node->valeur) + 1;
+			tab[i] = my_malloc((var + val), sizeof(char), trash);
+			if (!tab[i])
+				return (NULL);
+			tab[i] = ft_strjoin(node->variable, "=", trash);
+			tab[i] = ft_strjoin(tab[i], node->valeur, trash);
+		}
+		else
+			tab[i] = ft_strdup(node->variable, trash);
 		i++;
 		node = node->next;
 	}

@@ -109,8 +109,7 @@ void builtins_exec(char *builtins_name, t_shell *info, char **cmd, t_exec *exe)
 	info->arg = cmd;
 	if(ft_strncmp("echo", builtins_name, ft_strlen(builtins_name)) == 0)
 	{
-		exe->cmd_n_arg++;
-		echo_minishell(exe->cmd_n_arg);
+		echo_minishell(exe->cmd_n_arg + 1);
 		//fprintf(stderr, "built_echo\n");
 	}
 	if(ft_strncmp("cd", builtins_name, ft_strlen(builtins_name)) == 0)
@@ -121,7 +120,7 @@ void builtins_exec(char *builtins_name, t_shell *info, char **cmd, t_exec *exe)
 	if(ft_strncmp("env", builtins_name, ft_strlen(builtins_name)) == 0)
 	{
 		//fprintf(stderr, "built_env_minishell\n");
-		env_minishell(info, *exe->tab_cmd); // ----------------->> ajouter la première commande en argument.
+		env_minishell(info, *(exe->cmd_n_arg + 1));
 	}
 	if(ft_strncmp("exit", builtins_name, ft_strlen(builtins_name)) == 0)
 	{
@@ -130,7 +129,7 @@ void builtins_exec(char *builtins_name, t_shell *info, char **cmd, t_exec *exe)
 	}
 	if(ft_strncmp("export", builtins_name, ft_strlen(builtins_name)) == 0)
 	{
-		export_minishell(info, exe->tab_cmd);
+		export_minishell(info, exe->cmd_n_arg + 1);
 		//fprintf(stderr, "built_export_minishell\n");
 	}
 	if(ft_strncmp("pwd", builtins_name, ft_strlen(builtins_name)) == 0)
@@ -140,7 +139,7 @@ void builtins_exec(char *builtins_name, t_shell *info, char **cmd, t_exec *exe)
 	}
 	if(ft_strncmp("unset", builtins_name, ft_strlen(builtins_name)) == 0)
 	{
-		unset_minishell(&info);
+		unset_minishell(info, exe->cmd_n_arg + 1);
 		//fprintf(stderr, "built_unset_minishell\n");
 	}
 }

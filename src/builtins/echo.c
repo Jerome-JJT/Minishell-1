@@ -1,6 +1,6 @@
 #include "../../minishell.h"
 
-/* -------------------- test -----------------------*/
+/* -------------------- 1. Char is separation -----------------------*/
 int	ft_issep(char c)
 {
 	if (c == '<' || c == '>' || c == '|')
@@ -8,7 +8,7 @@ int	ft_issep(char c)
 	return (0);
 }
 
-/* -------------------- test -----------------------*/
+/* -------------------- 2.Echo with -n option or not -----------------------*/
 static void	echo_n(char **tab, int option_n)
 {
 	int		i;
@@ -19,16 +19,18 @@ static void	echo_n(char **tab, int option_n)
 		if (ft_issep(tab[i][0]) && ft_strlen(tab[i]) < 2)
 			break ;
 		printf("%s", tab[i]);
+		if (tab[i + 1])
+			printf(" ");
 		i++;
 	}
 	if (option_n == 0)
 		printf("\n");
 }
 
-/* -------------------- 4. Echo -----------------------*/
+/* -------------------- 3. Echo main function -----------------------*/
 void	echo_minishell(char **tab)
 {
-	if (!*tab || ft_issep(**tab))
+	if (!*tab)
 		printf("\n");
 	else
 	{
@@ -38,24 +40,3 @@ void	echo_minishell(char **tab)
 			echo_n(tab, 0);
 	}
 }
-
-/*
-Test déjà effectué:
---------------------------------------------|
-1.echo = '\n'
-2.echo salut = salut
-3.echo $? = 0 -> if erreur avant = errno
-4.echo $NOM_VARIABLE = valeur variable ($USER = nrossel)
-5.echo $?$?$?$? = 0000
-6.echo $?1 = 01
-8.echo $USER$? = nrossel0
-9.echo $USER$abc = nrossel ->> à corriger /!\
-10. echo $salut = '\n' ->> à corriger /!\
-
-
-
-
-
-
-
-*/

@@ -16,7 +16,7 @@ static void	print_env(t_env *env)
 }
 
 /* ------------------------- 2.Env avec args ------------------------------*/
-void	env_with_arg(t_shell *info, char *arg)
+static void	env_with_arg(t_shell *info, char *arg)
 {
 	if (ft_strncmp(arg, "env", 4) == 0)
 		print_env(info->env);
@@ -30,18 +30,18 @@ void	env_with_arg(t_shell *info, char *arg)
 }
 
 /* ------------------------- 3.Fonction env ------------------------------*/
-void	env_minishell(t_shell *info, char *first_arg)
+void	env_minishell(t_shell *info, char *arg)
 {
 	t_list	*node;
 
 	node = info->env->head;
-	if (*first_arg)
-		env_with_arg(info, first_arg);
+	if (arg)
+		env_with_arg(info, arg);
 	else
 	{
 		while (node != NULL)
 		{
-			if (info->env->head->if_var_env == 1)
+			if (node->if_var_env == 1)
 				printf("%s=%s\n", node->variable, node->valeur);
 			node = node->next;
 		}

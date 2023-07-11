@@ -10,13 +10,23 @@ static void	print_export(char **var)
 	while (var[i])
 	{
 		j = 0;
-		printf("declare -x ");
-		while (var[i][j - 1] != '=')
-			printf("%c", var[i][j++]);
-		printf("\"");
-		while (var[i][j])
-			printf("%c", var[i][j++]);
-		printf("\"\n");
+		if (found_char(var[i], '='))
+		{
+			printf("declare -x ");
+			while (var[i][j - 1] != '=')
+				printf("%c", var[i][j++]);
+			printf("\"");
+			while (var[i][j])
+				printf("%c", var[i][j++]);
+			printf("\"\n");
+		}
+		else
+		{
+			printf("declare -x ");
+			while(var[i][j])
+				printf("%c", var[i][j++]);
+			printf("\n");
+		}
 		i++;
 	}
 }
@@ -82,21 +92,22 @@ void	export_minishell(t_shell *info, char **arg)
 	int		i;
 
 	i = 0;
-	if (!arg)
+	if (!*arg)
 		export_no_args(info);
 	else
 	{
 		while (arg[i])
 		{
-			// if (strncmp(info->arg[i], "$", 1) == 0 && info->arg[i][1] != '\0')
-			// 	export_d(info, i);
-			if (ft_isalpha(info->arg[i][0]) == 0 || info->arg[i][0] == '$')
+			printf("%s\n", arg[i]);
+			if (!ft_isalpha(arg[i][0])|| arg[i][0] == '$')
 				printf("bash: export: `%s': not a valid identifier\n",
-					info->arg[i]);
+					arg[i]);
 			else
 			{
 				node = ft_dlst_newcontent(NULL, &info->trash_lst);
-				str_to_node(info->arg[i], node, info);
+				if (!node)
+					return ;
+				str_to_node(arg[i], node, info);
 				ft_dlst_addback(&info->env, node);
 			}
 			i++;
