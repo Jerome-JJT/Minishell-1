@@ -35,26 +35,21 @@ static void	print_export(char **var)
 static void	ft_trialpha(char **env)
 {
 	int		i;
-	int		in_order;
+	int		j;
 	char	**var;
 
 	i = 0;
-	in_order = 1;
 	var = env;
-	while (in_order != i)
+	while (i < ft_tabsize(env))
 	{
-		i = 0;
-		in_order = 0;
-		while (var[i])
+		j = 0;
+		while (var[j])
 		{
-			if (var[i + 1] && ft_strcmp(var[i], var[i + 1]) > -1)
-			{
-				ft_strswap(&var[i], &var[i + 1]);
-				in_order--;
-			}
-			in_order++;
-			i++;
+			if (var[j + 1] && ft_strcmp(var[j], var[j + 1]) > -1)
+				ft_strswap(&var[j], &var[j + 1]);
+			j++;
 		}
+		i++;
 	}
 	print_export(var);
 }
@@ -69,21 +64,21 @@ static void	export_no_args(t_shell *info)
 }
 
 /* --------------------- 4.export with $args --------------------------*/
-// static void	export_d(t_shell *info, int index)
-// {
-// 	t_list	*node;
-// 	t_list	*tmp;
+/*static void	export_d(t_shell *info, int index)
+{
+	t_list	*node;
+	t_list	*tmp;
 
-// 	node = find_var_env(info->env, info->arg[index], 0);
-// 	if (node == NULL)
-// 		export_no_args(info);
-// 	else
-// 	{
-// 		tmp = ft_dlst_newcontent(NULL, &info->trash_lst);
-// 		str_to_node(node->valeur, tmp, info);
-// 		ft_dlst_addback(&info->env, tmp);
-// 	}
-// }
+	node = find_var_env(info->env, info->arg[index], 0);
+	if (node == NULL)
+		export_no_args(info);
+	else
+	{
+		tmp = ft_dlst_newcontent(NULL, &info->trash_lst);
+		str_to_node(node->valeur, tmp, info);
+		ft_dlst_addback(&info->env, tmp);
+	}
+}*/
 
 /* ------------------------- 5.Fonction export ------------------------------*/
 void	export_minishell(t_shell *info, char **arg)
@@ -98,19 +93,16 @@ void	export_minishell(t_shell *info, char **arg)
 	{
 		while (arg[i])
 		{
-			// printf("start export: %s\n", arg[i]);
 			if (!ft_isalpha(arg[i][0])|| arg[i][0] == '$')
 				printf("bash: export: `%s': not a valid identifier\n",
 					arg[i]);
 			else
 			{
 				node = ft_dlst_newcontent(NULL, &info->trash_lst);
-				if (!node)
-					return ;
-				str_to_node(arg[i], node, info);
+				str_to_node(arg[i], node, info, 0);
 				ft_dlst_addback(&info->env, node);
 			}
 			i++;
-		}
+		}	
 	}
 }

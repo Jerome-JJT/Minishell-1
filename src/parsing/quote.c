@@ -95,7 +95,7 @@ char	*ft_dquote(char *str, t_shell *info)
 			
 		i++;
 	}
-	creat_and_add(tmp, str, WORD, i, info);
+	creat_and_add(tmp, str, D_QUOTE, i, info);
 	return (str + (i + 1));
 }
 
@@ -107,6 +107,6 @@ char	*ft_squote(char *str, t_shell *info)
 	i = 1;
 	while (!ft_isquote(str[i]))
 		i++;
-	creat_and_add(NULL, str, WORD, i, info);
+	creat_and_add(NULL, str, S_QUOTE, i, info);
 	return (str + (i + 1));
 }

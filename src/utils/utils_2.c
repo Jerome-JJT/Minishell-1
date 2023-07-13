@@ -14,28 +14,27 @@ void cpy_var(char *dst, char *src, char sep)
     dst[i] = '\0';
 }
 
-char **ft_split_var(char *var)
+char **ft_split_var(char *var, t_dlist **trash)
 {
-    char **tab = malloc(3 * sizeof(char *));
+    char    **tab;
+    char    *tmp;
+
+    tab = my_malloc(3, sizeof(char *), trash);
     if (!tab)
     {
         printf("Error allocating memory for tab\n");
         return NULL;
     }
-
     tab[2] = NULL;
-    tab[0] = malloc((strlen(var) + 1) * sizeof(char));
-    tab[1] = malloc((strlen(var) + 1) * sizeof(char));
-
+    tab[0] = my_malloc((strlen(var) + 1), sizeof(char), trash);
+    tab[1] = my_malloc((strlen(var) + 1), sizeof(char), trash);
     cpy_var(tab[0], var, '=');
-
-    char *equalSign = strchr(var, '=');
-    if (equalSign)
+    tmp = ft_strchr(var, '=');
+    if (tmp)
     {
-        equalSign++; // Move past the '=' character
-        cpy_var(tab[1], equalSign, '\0');
+        tmp++; // Move past the '=' character
+        cpy_var(tab[1], tmp, '\0');
     }
-
     return tab;
 }
 

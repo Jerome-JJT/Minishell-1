@@ -151,11 +151,12 @@ void		ft_tabreset(char **tab);
 int			check_printchar(char c);
 int			ft_checkquote(char *str);
 int			ft_isparsing_char(char c);
-char		**ft_split_var(char *var);
 void		ft_strswap(char **s1, char **s2);
 int			ft_error_msg(int errno, char *str);
 int			found_char(const char *str, int c);
+char		**ft_split_var(char *var, t_dlist **trash);
 void    	reset_shelltab(t_exec *exec, t_shell *shell);
+char		**split_arg(char *str, int egal, t_dlist **trash);
 
 /* -------------- Fonctions utiles liste -----------------------*/
 void		tok_clearlst(t_tok **lst);
@@ -168,10 +169,10 @@ char		**lst_to_tab(t_env *lst, t_dlist **trash);
 t_list		*find_var_env(t_env *env, char *var, int if_dd);
 char    	**tokenlst_to_tab(t_tok *token, t_dlist **trash);
 t_tok		*new_node(char *str, int token, t_dlist **trash);
-void		str_to_node(char *str, t_list *node, t_shell *info);
 t_list		*ft_lstnew_heredoc(char *data, t_dlist **trash_lst);
 void		display_lst_heredoc(t_list **ptr_to_head, char *name);
 void		fill_node(t_list *node, char *s1, char *s2, int if_var);
+void		str_to_node(char *str, t_list *node, t_shell *info, int first_time);
 void		creat_and_add(char *tmp, char *str, int type, int index, t_shell *info);
 /* -------------- Fonctions test -----------------------*/
 void		print_node(t_tok *node);

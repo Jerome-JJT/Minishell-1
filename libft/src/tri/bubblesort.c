@@ -12,7 +12,7 @@
 
 #include "../../include/libft.h"
 
-void	bubblesort(int	*tab, int size)
+void	bubblesort_int(int	*int_tab, int size)
 {
 	int	i;
 	int	j;
@@ -23,8 +23,8 @@ void	bubblesort(int	*tab, int size)
 		j = 0;
 		while (j < size - i - 1)
 		{
-			if (tab[j] > tab[j + 1])
-				ft_swap(&tab[j], &tab[j + 1]);
+			if (int_tab[j] > int_tab[j + 1])
+				ft_swap(&int_tab[j], &int_tab[j + 1]);
 			j++;
 		}
 		i++;

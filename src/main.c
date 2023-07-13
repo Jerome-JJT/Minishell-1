@@ -202,7 +202,7 @@ int	main(int ac, char **av, char **envp)
 	t_shell		info_parse;
 	t_exec		info_exec;
 	char		*buffer;
-	char		*test[3];
+	char		*test[4];
 
 	i = 0;
 	init_shell(&info_parse, &info_exec, envp); // --->>  Initialisation général
@@ -236,9 +236,10 @@ int	main(int ac, char **av, char **envp)
 	else // avec arg = version Debbug
 	{
 		// buffer = av[1];
-		test[0] = "export salut hello bonjour";
+		test[0] = "export a=b \"b=c\" \'c=d\' d=e \"e=f\" \'f=g\'";
 		test[1] = "export";
 		test[2] = NULL;
+		test[3] = NULL;
 		while (test[i])
 		{
 			check = parse_shell (test[i], &info_parse, &info_exec);

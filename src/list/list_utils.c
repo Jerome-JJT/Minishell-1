@@ -1,19 +1,26 @@
 #include "../../minishell.h"
 
 /* ------------------- 1. Str to node --------------------*/
-void	str_to_node(char *str, t_list *node, t_shell *info)
+void	str_to_node(char *str, t_list *node, t_shell *info, int first_time)
 {
 	char	**tab;
+	int		egal;
+	t_list	*tmp;
 
-	// printf("start str_to_node: %s\n", str);
-	if (found_char(str, '=') > 0)
+	tmp = NULL;
+	egal = found_char(str, '=');
+	if (egal > 0)
 	{
-		if (found_char(str, '=') == 1)
-			tab = ft_split(str, '=', &info->trash_lst);
+		tab = split_arg(str, egal, &info->trash_lst);
+		if (!first_time)
+			tmp = find_var_env(info->env, tab[0], 1);
+		if (!tmp)
+			fill_node(node, ft_strdup(tab[0], &info->trash_lst),
+				ft_strdup(tab[1], &info->trash_lst), 1);
 		else
-			tab = ft_split_var(str);
-		fill_node(node, ft_strdup(tab[0], &info->trash_lst),
-			ft_strdup(tab[1], &info->trash_lst), 1);
+			fill_node(tmp, ft_strdup(tab[0], &info->trash_lst),
+				ft_strdup(tab[1], &info->trash_lst), 1);
+
 	}
 	else
 		fill_node(node, ft_strdup(str, &info->trash_lst), NULL, 0);
@@ -22,11 +29,9 @@ void	str_to_node(char *str, t_list *node, t_shell *info)
 /* -------------------- 2. Fill node -----------------------*/
 void	fill_node(t_list *node, char *s1, char *s2, int if_var)
 {
-	// printf("start fill_node: %s\n", s1);
 	node->variable = s1;
 	node->valeur = s2;
 	node->if_var_env = if_var;
-	// printf("end fill_node: %s\n", node->variable);	
 }
 
 /* -------------------- 3.Find Variable env. -----------------------*/
@@ -62,7 +67,7 @@ char	**lst_to_tab(t_env *lst, t_dlist **trash)
 		return (NULL);
 	node = lst->head;
 	i = 0;
-	while (node != NULL)
+	while (node != NULL && node->variable != NULL)
 	{
 		if (node->valeur)
 		{
@@ -92,7 +97,7 @@ void	tab_to_lst(t_shell *info, char **envp)
 	while (envp[i])
 	{
 		node = ft_dlst_newcontent(NULL, &info->trash_lst);
-		str_to_node(envp[i], node, info);
+		str_to_node(envp[i], node, info, 1);
 		ft_dlst_addback(&info->env, node);
 		node = NULL;
 		i++;

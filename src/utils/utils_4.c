@@ -24,3 +24,14 @@ void    reset_shelltab(t_exec *exec, t_shell *shell)
     // if (exec->redi_outfile)
     // if (exec->heredoc)
 }
+
+char    **split_arg(char *str, int egal, t_dlist **trash)
+{
+    char    **tab;
+
+    if (egal == 1)
+			tab = ft_split(str, '=', trash);
+		else
+			tab = ft_split_var(str, trash);
+    return (tab);
+}

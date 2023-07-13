@@ -127,7 +127,7 @@ t_node		*ft_dlst_newcontent(void *data, t_dlist **trash_lst);
 void		ft_dlst_addnode(t_dlist **list, t_node *node, size_t position);
 
 /* ----------- Fonction tri --------------- */
-void		bubblesort(int	*tab, int size);
+void		bubblesort_int(int	*tab, int size);
 void		quicksort(int *tab, int first, int last);
 
 #endif
