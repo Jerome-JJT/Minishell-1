@@ -115,7 +115,7 @@ void builtins_exec(char *builtins_name, t_shell *info, char **cmd, t_exec *exe)
 	if(ft_strncmp("cd", builtins_name, ft_strlen(builtins_name)) == 0)
 	{
 		//fprintf(stderr, "built_cd_minishell\n");
-		cd_minishell(info);
+		cd_minishell(exe->cmd_n_arg + 1, info);
 	}
 	if(ft_strncmp("env", builtins_name, ft_strlen(builtins_name)) == 0)
 	{

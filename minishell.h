@@ -117,9 +117,9 @@ typedef struct s_pipe
 
 /* ---------------- Builtings ------------------ */
 void		echo_minishell(char **tab);
-void		cd_minishell(t_shell *info);
 void		pwd_minishell(t_shell *info);
 void		exit_minishell(t_shell *info);
+void		cd_minishell(char **arg, t_shell *info);
 void		env_minishell(t_shell *info, char *arg);
 void		unset_minishell(t_shell *info, char **arg);
 void		export_minishell(t_shell *info, char **arg);
@@ -179,9 +179,9 @@ void		print_node(t_tok *node);
 void		print_trash(t_dlist **trash);
 void		test(char *str, char *fonction);
 void		print_tab(char **tab, char *ft);
-void		print_list(t_env *lst, char *ft);
 void		print_token(t_tok **lst, char *ft);
 void		print_parsing(t_exec *exec, char *ft);
+void		print_list(t_env *lst, char *ft, int info);
 
 /* -------------- Fonctions d'execution ---------------------*/
 char		*get_path(char **env);

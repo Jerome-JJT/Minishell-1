@@ -1,37 +1,4 @@
-declare -x COLORTERM="truecolor"$
-declare -x GIT_ASKPASS="/private/var/folders/c7/vw3d42d568zf5dxw6ks04j7c0000gq/T/AppTranslocation/FCC56ACA-DC24-403F-8A87-C35544D97E4F/d/Visual Studio Code.app/Contents/Resources/app/extensions/git/dist/askpass.sh"$
-declare -x HOME="/Users/Nico"$
-declare -x LANG="en_US.UTF-8"$
-declare -x LESS="-R"$
-declare -x LOGNAME="Nico"$
-declare -x LSCOLORS="Gxfxcxdxbxegedabagacad"$
-declare -x LS_COLORS="di=1;36:ln=35:so=32:pi=33:ex=31:bd=34;46:cd=34;43:su=30;41:sg=30;46:tw=30;42:ow=30;43"$
-declare -x MallocNanoZone="0"$
-declare -x NODE_OPTIONS="--require "/private/var/folders/c7/vw3d42d568zf5dxw6ks04j7c0000gq/T/AppTranslocation/FCC56ACA-DC24-403F-8A87-C35544D97E4F/d/Visual Studio Code.app/Contents/Resources/app/extensions/ms-vscode.js-debug/src/bootloader.js""$
-declare -x ORIGINAL_XDG_CURRENT_DESKTOP="undefined"$
-declare -x PAGER="less"$
-declare -x PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"$
-declare -x PWD="/Users/Nico/Desktop/Projet42/projets/Minishell"$
-declare -x SHELL="/bin/zsh"$
-declare -x SHLVL="6"$
-declare -x SSH_AUTH_SOCK="/private/tmp/com.apple.launchd.QskgipNyKm/Listeners"$
-declare -x TERM="xterm-256color"$
-declare -x TERM_PROGRAM="vscode"$
-declare -x TERM_PROGRAM_VERSION="1.78.2"$
-declare -x TMPDIR="/var/folders/c7/vw3d42d568zf5dxw6ks04j7c0000gq/T/"$
-declare -x USER="Nico"$
-declare -x USER_ZDOTDIR="/Users/Nico"$
-declare -x VSCODE_GIT_ASKPASS_EXTRA_ARGS="--ms-enable-electron-run-as-node"$
-declare -x VSCODE_GIT_ASKPASS_MAIN="/private/var/folders/c7/vw3d42d568zf5dxw6ks04j7c0000gq/T/AppTranslocation/FCC56ACA-DC24-403F-8A87-C35544D97E4F/d/Visual Studio Code.app/Contents/Resources/app/extensions/git/dist/askpass-main.js"$
-declare -x VSCODE_GIT_ASKPASS_NODE="/private/var/folders/c7/vw3d42d568zf5dxw6ks04j7c0000gq/T/AppTranslocation/FCC56ACA-DC24-403F-8A87-C35544D97E4F/d/Visual Studio Code.app/Contents/Frameworks/Code Helper (Plugin).app/Contents/MacOS/Code Helper (Plugin)"$
-declare -x VSCODE_GIT_IPC_HANDLE="/var/folders/c7/vw3d42d568zf5dxw6ks04j7c0000gq/T/vscode-git-f3d5ee461d.sock"$
-declare -x VSCODE_INJECTION="1"$
-declare -x VSCODE_INSPECTOR_OPTIONS="{"inspectorIpc":"/var/folders/c7/vw3d42d568zf5dxw6ks04j7c0000gq/T/node-cdp.3181-922664ed-0.sock","deferredMode":false,"waitForDebugger":"","onlyEntrypoint":false,"autoAttachMode":"always","fileCallback":"/var/folders/c7/vw3d42d568zf5dxw6ks04j7c0000gq/T/node-debug-callback-75e3ead6a821cbb8"}"$
-declare -x XPC_FLAGS="0x0"$
-declare -x XPC_SERVICE_NAME="0"$
-declare -x ZDOTDIR="/Users/Nico"$
-declare -x ZSH="/Users/Nico/.oh-my-zsh"$
-declare -x _="./minishell"$
-declare -x __CF_USER_TEXT_ENCODING="0x1F7:0x0:0x0"$
-declare -x hello$
-declare -x salut$
+TEXTE A $
+$
+Récemment, en promenade à travers champ, vous vous êtes peut-être demandé ce qui allait y être cultivé? Les champs sont maintenant préparés et les pommes de terre plantées en vue de la grande récolte de l�M-^@M-^Yautomne. En ce moment, les parcelles ressemblent à celle de la photo ci-contre.$
+$

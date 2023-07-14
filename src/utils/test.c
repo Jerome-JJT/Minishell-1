@@ -15,7 +15,7 @@ void	print_tab(char **tab, char *ft)
 	printf("----------------------------------------------------------------\n\n\n");
 }
 
-void	print_list(t_env *lst, char *ft)
+void	print_list(t_env *lst, char *ft, int info)
 {
 	t_list	*node;
 
@@ -25,9 +25,15 @@ void	print_list(t_env *lst, char *ft)
 	printf("%zu\n", lst->len);
 	while (node != NULL)
 	{
-		printf("Data:		%p\n", node->data);
-		printf("Variable:	%s\n", node->variable);
-		printf("Valeur:		%s\n", node->valeur);
+		if (info > 0)
+		{
+			printf("Variable:	"BLUE"%s"RESET"\n", node->variable);
+			printf("Valeur:		"BLUE"%s"RESET"\n", node->valeur);
+		}
+		if (info > 1)
+			printf("Adresse prev <- current -> next: "RED"%p"RESET"		<-		%p		->		"GREEN"%p"RESET"\n", node->prev, node, node->next);
+		if (info > 2)
+			printf("Data:		%p\n", node->data);
 		node = node->next;
 	}
 	printf("----------------------------------------------------------------\n");

@@ -19,6 +19,9 @@
         "tuple": "c",
         "utility": "c",
         "__config": "cpp",
-        "minishell.h": "c"
+        "minishell.h": "c",
+        "string": "c",
+        "string_view": "c",
+        "vector": "c"
     }
 }

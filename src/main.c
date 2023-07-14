@@ -202,7 +202,7 @@ int	main(int ac, char **av, char **envp)
 	t_shell		info_parse;
 	t_exec		info_exec;
 	char		*buffer;
-	char		*test[4];
+	char		*test[10];
 
 	i = 0;
 	init_shell(&info_parse, &info_exec, envp); // --->>  Initialisation général
@@ -226,7 +226,6 @@ int	main(int ac, char **av, char **envp)
 				tok_clearlst(&info_parse.token);
 			else if (check == 0)
 			{
-				print_parsing(&info_exec, "\nBefore exec\n");
 				shell_execution(&info_exec, envp, &info_parse);
 				tok_clearlst(&info_parse.token);
 				reset_shelltab(&info_exec, &info_parse);
@@ -236,10 +235,11 @@ int	main(int ac, char **av, char **envp)
 	else // avec arg = version Debbug
 	{
 		// buffer = av[1];
-		test[0] = "export a=b \"b=c\" \'c=d\' d=e \"e=f\" \'f=g\'";
-		test[1] = "export";
-		test[2] = NULL;
-		test[3] = NULL;
+		test[0] = "export a b c d e f g h";
+		test[1] = "unset a b c d e f g h";
+		test[2] = "export a b c";
+		test[3] = "export";
+		test[4] = NULL;
 		while (test[i])
 		{
 			check = parse_shell (test[i], &info_parse, &info_exec);
@@ -249,7 +249,7 @@ int	main(int ac, char **av, char **envp)
 				tok_clearlst(&info_parse.token);
 			else
 			{
-				print_parsing(&info_exec, "\nBefore exec\n");
+				print_parsing(&info_exec, "Test");
 				shell_execution(&info_exec, envp, &info_parse);
 				tok_clearlst(&info_parse.token);
 				reset_shelltab(&info_exec, &info_parse);
