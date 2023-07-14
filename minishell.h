@@ -117,9 +117,9 @@ typedef struct s_pipe
 
 /* ---------------- Builtings ------------------ */
 void		echo_minishell(char **tab);
+void		exit_minishell(char **arg);
 void		pwd_minishell(t_shell *info);
-void		exit_minishell(t_shell *info);
-void		cd_minishell(char **arg, t_shell *info);
+void		cd_minishell(t_shell *info, char *arg);
 void		env_minishell(t_shell *info, char *arg);
 void		unset_minishell(t_shell *info, char **arg);
 void		export_minishell(t_shell *info, char **arg);

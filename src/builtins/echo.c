@@ -13,7 +13,7 @@ static void	echo_n(char **tab, int option_n)
 {
 	int		i;
 
-	i = option_n;
+	i = 0;
 	while (tab[i])
 	{
 		if (ft_issep(tab[i][0]) && ft_strlen(tab[i]) < 2)
@@ -35,7 +35,7 @@ void	echo_minishell(char **tab)
 	else
 	{
 		if (ft_strncmp(*tab, "-n", 3) == 0)
-			echo_n(tab + 2, 1);
+			echo_n(tab + 1, 1);
 		else
 			echo_n(tab, 0);
 	}

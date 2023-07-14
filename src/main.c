@@ -235,10 +235,10 @@ int	main(int ac, char **av, char **envp)
 	else // avec arg = version Debbug
 	{
 		// buffer = av[1];
-		test[0] = "export a b c d e f g h";
-		test[1] = "unset a b c d e f g h";
-		test[2] = "export a b c";
-		test[3] = "export";
+		test[0] = "echo -n salut";
+		test[1] = NULL;
+		test[2] = NULL;
+		test[3] = NULL;
 		test[4] = NULL;
 		while (test[i])
 		{

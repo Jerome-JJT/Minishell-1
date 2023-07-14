@@ -1,53 +1,24 @@
 #include "../../minishell.h"
 
-/* ------------------------- 1.Exit with $? ------------------------------*/
-static void	exit_d(t_shell *info, char **arg)
-{
-	if (ft_strncmp(*arg, "$?", 3) == 0)
-	{
-		printf("exit\n");
-		exit (g_errno);
-	}
-	else if (ft_isalpha(arg[0][2]))
-	{
-		printf("minishell: exit: %s: numeric argument required\n", *info->arg);
-		exit (255);
-	}
-	else
-	{
-		g_errno *= 10;
-		g_errno += ft_atoi(*info->arg + 2) % 255;
-		printf("exit\n");
-		exit (g_errno);
-	}
-}
-
 /* ------------------------- fonction exit ------------------------------*/
-void	exit_minishell(t_shell *info)
+void	exit_minishell(char **arg)
 {
-	if (!*info->arg)
+	if (!*arg)
 	{
 		printf("exit\n");
 		exit (g_errno);
 	}
-	else if (ft_isalpha(**info->arg))
+	else if (ft_isalpha(**arg))
 	{
-		printf("minishell: exit: %s: numeric argument required", *info->arg);
+		printf("minishell: exit: %s: numeric argument required", *arg);
 		exit (255);
 	}
-	else if (ft_tabsize(info->arg) > 1)
-	{
+	else if (ft_tabsize(arg) > 1)
 		ft_error_msg(1, NULL);
-		// printf("exit\n");
-		// printf("minishell: exit: too many arguments\n");
-		// g_errno = 1;
-	}
-	else if (ft_strncmp(*info->arg, "$?", 2) == 0)
-		exit_d(info, info->arg);
 	else
 	{
 		printf("exit\n");
-		exit(ft_atoi(*info->arg));
+		exit(ft_atoi(*arg));
 	}
 }
 
