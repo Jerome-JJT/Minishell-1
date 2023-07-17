@@ -34,8 +34,8 @@
 # define CYAN "\033[0;96m"
 # define WHITE "\033[0;97m"
 
-// extern int g_errno;
-int	g_errno;
+extern int g_errno;
+//int	g_errno;
 
 /* ----------- ENUM -> Type Token --------------- */
 enum e_token
@@ -47,8 +47,8 @@ enum e_token
 	RED_OUT,
 	H_D,
 	APPEND,
-	SPACE,
-	// SPACEE,
+	//SPACE,
+	SPACEE,
 	PIPE
 }	;
 
@@ -194,6 +194,7 @@ void		pre_handle_append(t_exec *exe);
 void		create_heredoc_tab(t_exec *exe);
 void		setup_infile_cmd(t_pipe *d_pipe);
 void		close_pipes(t_pipe *d, int process);
+void		create_cmd_n_args_builtins(t_exec *exe);
 char		*find_last_element(char **tab_append_out);
 void		handle_pipes(int (*fd1)[2], int (*fd2)[2]);
 void		setup_middle_cmd(t_pipe *d_pipe, int option);

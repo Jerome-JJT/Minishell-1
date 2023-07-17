@@ -70,12 +70,12 @@ void	ft_tabreset(char **tab)
 {
 	int	i;
 	int	j;
-	char	*str;
+	//char	*str;
 
 	i = 0;
 	while (tab[i])
 	{
-		str = tab[i];
+		//str = tab[i];
 		j = 0;
 		while (tab[i][j])
 			tab[i][j++] = 0;

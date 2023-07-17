@@ -7,7 +7,7 @@ char *create_str_heredoc(char **exe_heredoc, t_exec *exe)
 
 	i = 0;
 	//fprintf(stderr, "nb heredoc: %d\n", exe->nb_of_heredocs);
-	result = malloc(sizeof(char *) * 100);
+	result = ft_calloc(100, sizeof(char *));
 	//result = my_malloc(100, sizeof(char*), exe->trash_lst_exe);
 	while(i <= exe->nb_probable_of_heredocs)
 	{

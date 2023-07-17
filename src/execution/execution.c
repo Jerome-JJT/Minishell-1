@@ -11,12 +11,13 @@ int shell_execution(t_exec *d_exec, char **env, t_shell *shell_info)
 	
 	char *builtins[] = {"cd", "echo", "env", "exit", "export", "pwd", "unset", NULL};
 	/*---------------------------------------------------*/
-	// fprintf(stderr, "check value tab_cmd: %s\n", d_exec->tab_cmd[0]);
+	fprintf(stderr, "check value tab_cmd: %s\n", d_exec->tab_cmd[0]);
 	fprintf(stderr, "check value redi_in[0]: %s\n", d_exec->redi_infile[0]);
 	//fprintf(stderr, "check value redi_in[2]: %s\n", d_exec->redi_infile[2]);
 	fprintf(stderr, "check value redi_out: %s\n", d_exec->redi_outfile[0]);
 	//fprintf(stderr, "check value heredoc[0]: %s\n", d_exec->heredoc[0]);
-	fprintf(stderr, "check value apppend: %s\n", d_exec->append[0]);
+	//fprintf(stderr, "check value apppend: %s\n", d_exec->append[0]);
+	//fprintf(stderr, "nb de pipe: %d\n", d_exec->number_of_pipes);
 	i = 0;
 	// while (d_exec->heredoc[i])
 	// {
@@ -43,7 +44,7 @@ int shell_execution(t_exec *d_exec, char **env, t_shell *shell_info)
 			//fprintf(stderr, "pipe = 0, builtins\n");
 			handle_dup_fd_single_cmd(&d_pip, d_exec);
 			// handle_dup_single_cmd(&d_pip);
-			d_exec->cmd_n_arg = ft_split_exec(d_exec->tab_cmd[i], ' ', 0);
+			create_cmd_n_args_builtins(d_exec);//d_exec->cmd_n_arg = ft_split_exec(d_exec->tab_cmd[i], ' ', 0);
 			builtins_exec(d_exec->cmd_n_arg[0], shell_info, d_exec->cmd_n_arg, d_exec);
 			return (0);
 		}
