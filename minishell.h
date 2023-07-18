@@ -117,11 +117,11 @@ typedef struct s_pipe
 
 /* ---------------- Builtings ------------------ */
 void		echo_minishell(char **tab);
-void		exit_minishell(char **arg);
 void		pwd_minishell(t_shell *info);
 void		cd_minishell(t_shell *info, char *arg);
 void		env_minishell(t_shell *info, char *arg);
 void		unset_minishell(t_shell *info, char **arg);
+void		exit_minishell(char **arg, t_dlist **trash);
 void		export_minishell(t_shell *info, char **arg);
 
 /* -------------- Fonctions principales -----------------------*/
@@ -154,6 +154,7 @@ int			ft_isparsing_char(char c);
 void		ft_strswap(char **s1, char **s2);
 int			ft_error_msg(int errno, char *str);
 int			found_char(const char *str, int c);
+char    	*tab_to_str(char **tab, t_dlist **trash);
 char		**ft_split_var(char *var, t_dlist **trash);
 void    	reset_shelltab(t_exec *exec, t_shell *shell);
 char		**split_arg(char *str, int egal, t_dlist **trash);

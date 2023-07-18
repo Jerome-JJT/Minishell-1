@@ -1,14 +1,6 @@
 #include "../../minishell.h"
 
-/* -------------------- 1. Char is separation -----------------------*/
-int	ft_issep(char c)
-{
-	if (c == '<' || c == '>' || c == '|')
-		return (1);
-	return (0);
-}
-
-/* -------------------- 2.Echo with -n option or not -----------------------*/
+/* -------------------- 1.Echo with -n option or not -----------------------*/
 static void	echo_n(char **tab, int option_n)
 {
 	int		i;
@@ -16,8 +8,6 @@ static void	echo_n(char **tab, int option_n)
 	i = 0;
 	while (tab[i])
 	{
-		if (ft_issep(tab[i][0]) && ft_strlen(tab[i]) < 2)
-			break ;
 		printf("%s", tab[i]);
 		if (tab[i + 1])
 			printf(" ");
@@ -27,7 +17,7 @@ static void	echo_n(char **tab, int option_n)
 		printf("\n");
 }
 
-/* -------------------- 3. Echo main function -----------------------*/
+/* -------------------- 2. Echo main function -----------------------*/
 void	echo_minishell(char **tab)
 {
 	if (!*tab)

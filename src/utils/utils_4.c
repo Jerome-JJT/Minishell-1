@@ -1,5 +1,6 @@
 #include "../../minishell.h"
 
+/* ---------------------------- 1.Reset all tab on exec --------------------------------*/
 void    reset_shelltab(t_exec *exec, t_shell *shell)
 {
 
@@ -25,6 +26,7 @@ void    reset_shelltab(t_exec *exec, t_shell *shell)
     // if (exec->heredoc)
 }
 
+/* ---------------------------- 2.Variable split --------------------------------*/
 char    **split_arg(char *str, int egal, t_dlist **trash)
 {
     char    **tab;
@@ -34,4 +36,22 @@ char    **split_arg(char *str, int egal, t_dlist **trash)
 		else
 			tab = ft_split_var(str, trash);
     return (tab);
+}
+
+/* ---------------------------- 3. --------------------------------*/
+char    *tab_to_str(char **tab, t_dlist **trash)
+{
+    char    *str;
+    int     i;
+
+    if (!*tab)
+        return (NULL);
+    i = 1;
+    str = *tab;
+	while (tab[i])
+	{
+		str = ft_strjoin(str, " ", trash);
+		str = ft_strjoin(str, tab[i++], trash);
+	}
+    return (str);
 }

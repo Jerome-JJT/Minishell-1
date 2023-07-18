@@ -1,24 +1,24 @@
 #include "../../minishell.h"
 
 /* ------------------------- fonction exit ------------------------------*/
-void	exit_minishell(char **arg)
+void	exit_minishell(char **arg, t_dlist **trash)
 {
-	if (!*arg)
+	char	*str;
+
+	str = tab_to_str(arg, trash);
+	if (!str)
 	{
 		printf("exit\n");
 		exit (g_errno);
 	}
-	else if (ft_isalpha(**arg))
-	{
-		printf("minishell: exit: %s: numeric argument required", *arg);
-		exit (255);
-	}
+	else if (ft_isalpha(*str))
+		ft_error_msg(255, str);
 	else if (ft_tabsize(arg) > 1)
 		ft_error_msg(1, NULL);
 	else
 	{
 		printf("exit\n");
-		exit(ft_atoi(*arg));
+		exit(ft_atoi(str));
 	}
 }
 

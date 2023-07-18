@@ -235,7 +235,7 @@ int	main(int ac, char **av, char **envp)
 	else // avec arg = version Debbug
 	{
 		// buffer = av[1];
-		test[0] = "echo -n salut";
+		test[0] = "exit 123 123";
 		test[1] = NULL;
 		test[2] = NULL;
 		test[3] = NULL;
