@@ -12,7 +12,8 @@ char	*strjoin_exec(char const *s1, char const *s2)
 	cs2 = (char *)s2;
 	i = 0;
 	j = 0;
-	result = malloc(sizeof(char) * ((ft_strlen(cs1)) + (ft_strlen(cs2)) + 1));
+	
+	result = ft_calloc(((ft_strlen(cs1)) + (ft_strlen(cs2)) + 1), sizeof(char));
 	if (result == NULL)
 		return (NULL);
 	while (cs1[i])

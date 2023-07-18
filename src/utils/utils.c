@@ -62,7 +62,6 @@ void	init_shell(t_shell *info, t_exec *exec, char **envp)
 	exec->heredoc = ft_calloc(20, sizeof(char *));
 	exec->redi_infile = ft_calloc(20, sizeof(char *));
 	exec->redi_outfile = ft_calloc(20, sizeof(char *));
-
 }
 
 /* ---------------------- 5.Reset tab ----------------------------*/
@@ -70,12 +69,12 @@ void	ft_tabreset(char **tab)
 {
 	int	i;
 	int	j;
-	char	*str;
+	//char	*str;
 
 	i = 0;
 	while (tab[i])
 	{
-		str = tab[i];
+		//str = tab[i];
 		j = 0;
 		while (tab[i][j])
 			tab[i][j++] = 0;

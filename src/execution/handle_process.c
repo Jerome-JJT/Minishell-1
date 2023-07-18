@@ -3,6 +3,7 @@
 
 void handle_outfile_append_redirections(t_exec *exe);
 void handle_infile_heredoc_redirections(t_exec *exe, t_pipe *pipe);
+void remove_prefixe_outfile(char **outfile_tab);
 
 void close_pipes(t_pipe *d, int process)
 {
@@ -87,6 +88,7 @@ char **handle_outfile(t_exec *exe)
 	i = 0;
 	if (outfile_tab[0])
 	{
+		remove_prefixe_outfile(outfile_tab);
 		while (outfile_tab[i])
 		{
 			out = open(outfile_tab[i], O_WRONLY | O_CREAT | O_TRUNC, 0644);
@@ -149,4 +151,22 @@ void handle_outfile_append_redirections(t_exec *exe)
 		exe->redi_outfile[0] = NULL;
 	}
 
+}
+
+void remove_prefixe_outfile(char **outfile_tab)
+{
+	int i;
+
+	i = 0;
+	while(outfile_tab[i])
+	{
+		outfile_tab[i] = outfile_tab[i] + 2;
+		i++;
+	}
+	i = 0;
+	while(outfile_tab[i])
+	{
+		fprintf(stderr, "check o_[%d]: %s\n", i, outfile_tab[i]);
+		i++;
+	}
 }

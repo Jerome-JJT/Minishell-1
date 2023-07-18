@@ -208,7 +208,6 @@ int	main(int ac, char **av, char **envp)
 	init_shell(&info_parse, &info_exec, envp); // --->>  Initialisation général
 	if (ac == 1) // Sans arg = version minishell
 	{
-
 		(void) av;
 		while (1)
 		{

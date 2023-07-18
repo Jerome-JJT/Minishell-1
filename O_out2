@@ -1,5 +1,0 @@
-$
-    Initialiser: Lit et execute ses fichiers de configuration. Change le comportement du shell.$
-    Interpreter : Ensuite, shell lit les commandes depuis stdin (qui peut aussi etre un fichier) puis les execute.$
-    Terminer : Apres l'execution des commandes, le shell execute les commandes d'arrets, freent la memoire et termine. ``c int main () { //initialize : load config files. // run command loop -> lsh_loop(); (loop n interpret commands) // shutdown n cleanup, free. return( EXIT_SUCCESS); }`$
-$
