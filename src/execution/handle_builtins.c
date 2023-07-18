@@ -1,7 +1,5 @@
 #include "minishell.h"
 
-
-
 void		builtins_0(t_pipe *d_pip, t_exec *d_exe, t_shell *d_shell, char *cmd)
 {
     (void)cmd;
@@ -68,13 +66,17 @@ void create_cmd_n_args_builtins(t_exec *exe)
 	char *arg;
 	//int i = 0;
 	char **name;
+	size_t size;
 
+	size = ft_strlen(exe->tab_cmd[0]);
 	name = ft_split_exec((exe->tab_cmd[0]), ' ', 0);
 	//fprintf(stderr, "name : %s\n", name[0]);
 	exe->cmd_n_arg = ft_calloc(3, sizeof(char**));
 	exe->cmd_n_arg[0] = ft_calloc(ft_strlen(name[0] + 1), sizeof(char *));
 	arg = ft_calloc((ft_strlen(exe->tab_cmd[0]) + (ft_strlen(name[0] + 1))), sizeof(char*));
-	//exe->cmd_n_arg[0] = my_malloc(5, sizeof(char*), exe->trash_lst_exe);
+	exe->cmd_n_arg[1] = ft_calloc((ft_strlen(arg)), sizeof(char *));
+	exe->cmd_n_arg[1] = NULL;
+	//exe->cmd_n_arg[0] = my_malloc(5,split sizeof(char*), exe->trash_lst_exe);
 	//exe->cmd_n_arg = my_malloc(3,sizeof(char**),exe->trash_lst_exe);
 	if(ft_strncmp("echo", name[0], 5) == 0)
 	{
@@ -84,7 +86,7 @@ void create_cmd_n_args_builtins(t_exec *exe)
 	{
 		exe->cmd_n_arg[0] = "cd";
 	}
-	else if(ft_strncmp("env", name[0], 5) == 0)
+	else if(ft_strncmp("env", name[0], 4) == 0)
 	{
 		exe->cmd_n_arg[0] = "env";
 	}
@@ -109,10 +111,17 @@ void create_cmd_n_args_builtins(t_exec *exe)
 		command_not_found(exe->tab_cmd[0]);
 		exit(g_errno);
 	}
-	arg = ft_strcpy(arg, exe->tab_cmd[0] + (ft_strlen(name[0]) + 1));
-	exe->cmd_n_arg[1] = ft_calloc((ft_strlen(arg)), sizeof(char *));
-	exe->cmd_n_arg[1] = arg;
-	exe->cmd_n_arg[2]= NULL;
+	
+	if(ft_strlen(name[0]) < size)
+	{
+		arg = ft_strcpy(arg, exe->tab_cmd[0] + (ft_strlen(name[0]) + 1));
+		//fprintf(stderr, "cmd rempli\n");
+		exe->cmd_n_arg[1] = arg;
+	}
+	// fprintf(stderr, "end arg[1]: %s\n", exe->cmd_n_arg[1]);
+	// fprintf(stderr, "end arg[2]: %s\n", exe->cmd_n_arg[2]);
+	//fprintf(stderr, "end arg: %s\n", arg);
+	// i = 0;
 	// while(exe->cmd_n_arg[i])
 	// {
 	// 	fprintf(stderr, "cmd_n_arg_builtins[%d]: %s\n", i, exe->cmd_n_arg[i]);

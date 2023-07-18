@@ -62,7 +62,6 @@ void	init_shell(t_shell *info, t_exec *exec, char **envp)
 	exec->heredoc = ft_calloc(20, sizeof(char *));
 	exec->redi_infile = ft_calloc(20, sizeof(char *));
 	exec->redi_outfile = ft_calloc(20, sizeof(char *));
-
 }
 
 /* ---------------------- 5.Reset tab ----------------------------*/
