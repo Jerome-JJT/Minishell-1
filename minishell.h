@@ -61,6 +61,11 @@ typedef struct s_tok
 	struct s_tok	*next;
 	struct s_tok	*prev;
 }	t_tok;
+/*------------- Stucture signals ------------*/
+typedef struct s_sg
+{
+	int				process;
+}	t_sg;
 
 /* ----------- Structure listes --------------- */
 typedef t_dlist	t_env;
@@ -226,8 +231,11 @@ void		child_process_0(t_pipe *d_pip, t_exec *d_exe, t_shell *d_shell, char *cmd)
 void		builtins_exec(char *builtins_name, t_shell *info, char **cmd, t_exec *exe);
 void		handle_single_cmd(t_pipe *d_pip, t_exec *d_exe, t_shell *d_shell, char *cmd);
 
-/*-----------------------------Signals-----------------------------*/
+/*-----------------------------Signaux-----------------------------*/
 
+void	set_signals();
+void	signals_update();
 void	handle_signals(int sig_num);
+void	handler_sg_int(int num);
 
 #endif

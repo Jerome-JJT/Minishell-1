@@ -1,19 +1,66 @@
 #include "minishell.h"
 
-void handle_signals(int sig_num)
+// ctrl \ t ctrl d {EOF} SIGQUIT, ctrl c SIGINT
+void handler_sg(int num);
+void handler_sg_update(int num);
+
+void set_signals()
 {
-    fprintf(stderr, "signals number : %d\n", sig_num);
-    if (sig_num == SIGINT ) // ctrl c
+    struct sigaction sa;
+
+    sa.sa_handler = SIG_IGN;
+    sigemptyset(&sa.sa_mask);
+    sa.sa_flags = 0;
+    sigaction(SIGQUIT, &sa, NULL); // ctrl backslash
+    
+    sa.sa_handler = handler_sg;
+    sigaction(SIGINT, &sa, NULL); // ctrl c
+    //sigaction(EOF, &sa, NULL); // ctrl d
+}
+
+void handler_sg(int num)
+{
+    (void)num;
+    if (num == SIGINT)
     {
-       // fprintf(stderr, "if sig num == 2\n");
-       // write(1, "^C\n", 3);
-        // rl_on_new_line();
-        // rl_replace_line("", 0);
-        // rl_redisplay();
+        write(1, "\n", 1);
+        rl_replace_line("", 0);
+        rl_on_new_line();
+        rl_redisplay();
     }
-    if (sig_num == SIGQUIT)
+    // else if (num == EOF)
+    // {
+    //     fprintf(stderr, "EOF\n");
+    //     write(1, "QUIT (core dumped ms)\n", 22);
+    //     rl_redisplay();
+    // }
+}
+
+void handler_sg_update(int num)
+{
+    (void)num;
+
+    if (num == SIGINT)
     {
-        fprintf(stderr, "SIGQUIT: %d\n", sig_num);
+	    write(1, "\n", 1);
+	    rl_redisplay();
     }
-    signal(sig_num, SIG_DFL);
+    else if (num == SIGQUIT)
+    {
+	    write(1, "MS Quit: (core dumped)\n", 23);
+	    rl_redisplay();
+    }
+}
+
+void signals_update()
+{
+    struct sigaction sa;
+
+    sa.sa_flags = 0;
+    sa.sa_handler = handler_sg_update;
+
+    sigemptyset(&sa.sa_mask);
+    sigaction(SIGQUIT, &sa, NULL); // ctrl backslash
+    sigaction(SIGINT, &sa, NULL); // ctrl c
+    //sigaction(EOF, &sa, NULL); // ctrl d
 }
