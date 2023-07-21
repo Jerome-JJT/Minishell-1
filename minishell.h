@@ -201,6 +201,7 @@ void		setup_infile_cmd(t_pipe *d_pipe);
 void		close_pipes(t_pipe *d, int process);
 void		create_cmd_n_args_builtins(t_exec *exe);
 char		*find_last_element(char **tab_append_out);
+int			perror_msg_system(int error_type);
 void		handle_pipes(int (*fd1)[2], int (*fd2)[2]);
 void		setup_middle_cmd(t_pipe *d_pipe, int option);
 char		*strjoin_exec(char const *s1, char const *s2);
@@ -222,6 +223,9 @@ char		*create_str_heredoc(char **exe_heredoc, t_exec *exe);
 void		init_struc_exec(t_exec *d, t_shell infos, char **env);
 char		*get_cmd_path(char *cmd, t_exec *info, t_dlist **trash);
 int			is_builtins(char *cmd_to_compare, char** builtins_list);
+void		handle_outfile_append_redirections(t_exec *exe);
+void		handle_infile_heredoc_redirections(t_exec *exe, t_pipe *pipe);
+void		remove_prefixe_outfile(char **outfile_tab);
 char    	**heredoc_data_saved(char *to_check, t_exec *exe, char *buffer);
 void		builtins_1(t_pipe *d, t_exec *d_exe, t_shell *d_shell, char *cmd);
 void		builtins_0(t_pipe *d_pip, t_exec *d_exe, t_shell *d_shell, char *cmd);
@@ -235,7 +239,7 @@ void		handle_single_cmd(t_pipe *d_pip, t_exec *d_exe, t_shell *d_shell, char *cm
 
 void	set_signals();
 void	signals_update();
-void	handle_signals(int sig_num);
-void	handler_sg_int(int num);
+void	handler_sg(int num);
+void	handler_sg_update(int num);
 
 #endif

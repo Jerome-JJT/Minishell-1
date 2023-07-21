@@ -17,5 +17,5 @@ void	init_struc_pipe(t_pipe *d, char *infile, char *outfile, t_exec *exe)
 void	handle_pipes(int (*fd1)[2], int (*fd2)[2])
 {
 	if (pipe(*fd1) == -1 || pipe(*fd2) == -1)
-		fprintf(stderr, "error handles_pipes\n");
+		perror_msg_system(2);//fprintf(stderr, "error handles_pipes\n");
 }

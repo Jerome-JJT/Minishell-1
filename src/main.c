@@ -1,7 +1,5 @@
 #include "../minishell.h"
 
-void	use_signal(void);
-
 int g_errno = 0;
 
 /* -------------------- Main principale ----------------------------*/
@@ -24,7 +22,6 @@ int	main(int ac, char **av, char **envp)
 		{
 			rl_on_new_line();
 			buffer = readline(""GREEN"$>"RESET" ");
-			//signals_update();
 			check = parse_shell (buffer, &info_parse, &info_exec);
 			if (check == 1)
 			{

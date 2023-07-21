@@ -68,12 +68,12 @@ void create_cmd_n_args_builtins(t_exec *exe)
 	char **name;
 	size_t size;
 
-	size = ft_strlen(exe->tab_cmd[0]);
-	name = ft_split_exec((exe->tab_cmd[0]), ' ', 0);
+	size = ft_strlen(exe->tab_cmd[exe->idx]);
+	name = ft_split_exec((exe->tab_cmd[exe->idx]), ' ', 0);
 	//fprintf(stderr, "name : %s\n", name[0]);
 	exe->cmd_n_arg = ft_calloc(3, sizeof(char**));
 	exe->cmd_n_arg[0] = ft_calloc(ft_strlen(name[0] + 1), sizeof(char *));
-	arg = ft_calloc((ft_strlen(exe->tab_cmd[0]) + (ft_strlen(name[0] + 1))), sizeof(char*));
+	arg = ft_calloc((ft_strlen(exe->tab_cmd[exe->idx]) + (ft_strlen(name[0] + 1))), sizeof(char*));
 	exe->cmd_n_arg[1] = ft_calloc((ft_strlen(arg)), sizeof(char *));
 	exe->cmd_n_arg[1] = NULL;
 	//exe->cmd_n_arg[0] = my_malloc(5,split sizeof(char*), exe->trash_lst_exe);
@@ -108,13 +108,14 @@ void create_cmd_n_args_builtins(t_exec *exe)
 	}
 	else
 	{
-		command_not_found(exe->tab_cmd[0]);
+		fprintf(stderr, "command not found builtin : %s\n", exe->tab_cmd[exe->idx]);
+		command_not_found(exe->tab_cmd[exe->idx]);
 		exit(g_errno);
 	}
 	
 	if(ft_strlen(name[0]) < size)
 	{
-		arg = ft_strcpy(arg, exe->tab_cmd[0] + (ft_strlen(name[0]) + 1));
+		arg = ft_strcpy(arg, exe->tab_cmd[exe->idx] + (ft_strlen(name[0]) + 1));
 		//fprintf(stderr, "cmd rempli\n");
 		exe->cmd_n_arg[1] = arg;
 	}

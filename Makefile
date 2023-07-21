@@ -39,6 +39,7 @@ EXEC			=	execution.c \
 					utils_exec.c \
 					handle_cmd.c \
 					handle_process.c \
+					handle_redirections.c \
 					error_exec.c \
 					child_process.c \
 					split_exec.c \

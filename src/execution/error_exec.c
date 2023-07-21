@@ -11,8 +11,8 @@ void	command_not_found(char *cmd)
 	// ft_putstr_fd(msg_err, 2);
 	// free(tmp);
 	// free(msg_err);
-	printf("command not found\n");
-	(void) cmd;
+	printf("Command '%s' not found\n", cmd);
+	//exit(127);
 }
 
 void error_infile_outfile(int error_nb, t_exec *exe)
@@ -29,4 +29,27 @@ void error_infile_outfile(int error_nb, t_exec *exe)
 		fprintf(stderr, "heredoc error\n");
 		exit(EXIT_FAILURE);
 	}
+}
+
+int perror_msg_system(int error_type)
+{
+	if (error_type == 1)
+	{
+		g_errno = errno;
+		perror("Fork");
+		return(g_errno);
+	}
+	if (error_type == 2)
+	{
+		g_errno = errno;
+		perror("Pipe");
+		return(g_errno);
+	}
+	if (error_type == 3)
+	{
+		g_errno = errno;
+		perror("Execve");
+		return(g_errno);
+	}
+	return (0);
 }

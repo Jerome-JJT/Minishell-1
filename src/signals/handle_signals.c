@@ -1,9 +1,5 @@
 #include "minishell.h"
 
-// ctrl \ t ctrl d {EOF} SIGQUIT, ctrl c SIGINT
-void handler_sg(int num);
-void handler_sg_update(int num);
-
 void set_signals()
 {
     struct sigaction sa;
