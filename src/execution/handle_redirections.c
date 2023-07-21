@@ -8,12 +8,11 @@ void handle_redirections(t_exec *exe, t_pipe *pipe)
 		fprintf(stderr, "append present: %s\n", exe->append[exe->idx]);
 		handle_append(exe);
 	}
-	//fprintf(stderr, "suite handle redi\n");
 	handle_infile_heredoc_redirections(exe, pipe);
 	handle_outfile_append_redirections(exe);
 	//fprintf(stderr, "last_append[%d]:%s\n", exe->idx, exe->last_append);
 	//fprintf(stderr, "AFTER control redi infile: %s\n", exe->redi_infile[0]);
-	fprintf(stderr, "AFTER control redi outfile[0]: %s pour command idx: %d\n", exe->redi_outfile[0], exe->idx);
+	//fprintf(stderr, "AFTER control redi outfile[0]: %s pour command idx: %d\n", exe->redi_outfile[0], exe->idx);
 	init_struc_pipe(pipe, exe->redi_infile[0], exe->redi_outfile[0], exe);
 }
 

@@ -23,13 +23,6 @@ int shell_execution(t_exec *d_exec, char **env, t_shell *shell_info)
 	// fprintf(stderr, "check value apppend2: %s\n", d_exec->append[2]);
 	// fprintf(stderr, "nb de pipe: %d\n", d_exec->number_of_pipes);
 	i = 0;
-	// while (d_exec->heredoc[i])
-	// {
-	// 	fprintf(stderr, "check value heredoc: %s\n", d_exec->heredoc[i]);
-	// 	i++;
-	// }
-	// fprintf(stderr, "check value heredoc: %s\n", d_exec->heredoc[i]);
-	// i = 0;
 	while (d_exec->tab_cmd[i])
 		i++;
 	d_exec->nb_probable_of_heredocs = i;
@@ -62,12 +55,12 @@ int shell_execution(t_exec *d_exec, char **env, t_shell *shell_info)
 			{
 				if (i % 2 == 0)
 				{
-					fprintf(stderr, ">> builtins_0 = %s, idx : %d\n", d_exec->tab_cmd[i], d_exec->idx);
+					//fprintf(stderr, ">> builtins_0 = %s, idx : %d\n", d_exec->tab_cmd[i], d_exec->idx);
 					builtins_0(&d_pip, d_exec, shell_info, d_exec->tab_cmd[i]);
 				}
 				else
 				{
-					fprintf(stderr, ">> builtins_1 = %s\n", d_exec->tab_cmd[i]);
+					//fprintf(stderr, ">> builtins_1 = %s\n", d_exec->tab_cmd[i]);
 					builtins_1(&d_pip, d_exec, shell_info, d_exec->tab_cmd[i]);
 				}
 			}
@@ -86,7 +79,6 @@ int shell_execution(t_exec *d_exec, char **env, t_shell *shell_info)
 			}
 			i++;
 			d_exec->idx++;
-			//fprintf(stderr, "cmd_number:%d\n", d_exec->cmd_number);
 			d_exec->cmd_number++;
 		}
 	}
@@ -101,34 +93,20 @@ void builtins_exec(char *builtins_name, t_shell *info, char **cmd, t_exec *exe)
 {
 	info->arg = cmd;
 	if(ft_strncmp("echo", builtins_name, ft_strlen(builtins_name)) == 0)
-	{
 		echo_minishell(exe->cmd_n_arg + 1);
-		//fprintf(stderr, "built_echo\n");
-	}
 	if(ft_strncmp("cd", builtins_name, ft_strlen(builtins_name)) == 0)
-	{
-		//fprintf(stderr, "built_cd_minishell\n");
 		cd_minishell(exe->cmd_n_arg + 1, info);
-	}
 	if(ft_strncmp("env", builtins_name, ft_strlen(builtins_name)) == 0)
-	{
 		env_minishell(info, *(exe->cmd_n_arg + 1));
-	}
 	if(ft_strncmp("exit", builtins_name, ft_strlen(builtins_name)) == 0)
-	{
 		exit_minishell(info);
-		//fprintf(stderr, "exit_minishell\n");
-	}
 	if(ft_strncmp("export", builtins_name, ft_strlen(builtins_name)) == 0)
 	{
 		export_minishell(info, exe->cmd_n_arg + 1);
 		//fprintf(stderr, "built_export_minishell\n");
 	}
 	if(ft_strncmp("pwd", builtins_name, ft_strlen(builtins_name)) == 0)
-	{
 		pwd_minishell(info);
-		//fprintf(stderr, "built_pwd_minishell\n");
-	}
 	if(ft_strncmp("unset", builtins_name, ft_strlen(builtins_name)) == 0)
 	{
 		unset_minishell(info, exe->cmd_n_arg + 1);

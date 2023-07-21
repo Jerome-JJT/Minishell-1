@@ -47,8 +47,7 @@ EXEC			=	execution.c \
 					handle_heredoc.c \
 					handle_append.c \
 					utils_heredoc.c \
-					ft_heredoc.c \
-					pre_handle_append.c
+					ft_heredoc.c
 
 BUILTINS		=	echo.c \
 					env.c \

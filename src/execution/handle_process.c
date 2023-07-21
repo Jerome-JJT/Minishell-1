@@ -29,7 +29,7 @@ void create_heredoc_tab(t_exec *exe)
 {
 	char **heredoc_tab;
 
-	heredoc_tab = ft_split_exec(exe->heredoc[exe->idx], ' ', 0);
+	heredoc_tab = ft_split_exec(exe->heredoc[exe->idx], ' ', 0); // probably memory leaks, use ft_split instead
 	exe->heredoc = heredoc_tab;
 }
 

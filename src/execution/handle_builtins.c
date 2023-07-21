@@ -7,7 +7,7 @@ void		builtins_0(t_pipe *d_pip, t_exec *d_exe, t_shell *d_shell, char *cmd)
    // fprintf(stderr, "builtin_0: %s\n", cmd);
 	fork_pid = fork();
 	if (fork_pid == -1)
-		fprintf(stderr, "fork errot\n"); //perror_msg();
+		perror_msg_system(1);//fprintf(stderr, "fork errot\n"); //perror_msg();
 	if (fork_pid == 0)
 	{
 		close_pipes(d_pip, 1);
@@ -29,7 +29,8 @@ void		builtins_0(t_pipe *d_pip, t_exec *d_exe, t_shell *d_shell, char *cmd)
 		exit(1);
 	}
 		close_pipes(d_pip, 3);
-		pipe(d_pip->fd_pipe1);
+		if (pipe(d_pip->fd_pipe1) == -1)
+			perror_msg_system(2);
 }
 
 void	builtins_1(t_pipe *d, t_exec *d_exe, t_shell *d_shell, char *cmd)
@@ -40,7 +41,7 @@ void	builtins_1(t_pipe *d, t_exec *d_exe, t_shell *d_shell, char *cmd)
 	//fprintf(stderr, "builtin_1: %s\n", cmd);
 	fork_pid = fork();
 	if (fork_pid == -1)
-		fprintf(stderr, "fork errot\n"); //perror_msg();
+		perror_msg_system(1);//fprintf(stderr, "fork errot\n"); //perror_msg();
 	if (fork_pid == 0)
 	{
 		close_pipes(d, 2);
@@ -58,7 +59,8 @@ void	builtins_1(t_pipe *d, t_exec *d_exe, t_shell *d_shell, char *cmd)
 		exit(1);
 	}
 	close_pipes(d, 4);
-	pipe(d->fd_pipe2);
+	if (pipe(d->fd_pipe2) == -1)
+		perror_msg_system(2);
 }
 
 void create_cmd_n_args_builtins(t_exec *exe)
@@ -76,8 +78,6 @@ void create_cmd_n_args_builtins(t_exec *exe)
 	arg = ft_calloc((ft_strlen(exe->tab_cmd[exe->idx]) + (ft_strlen(name[0] + 1))), sizeof(char*));
 	exe->cmd_n_arg[1] = ft_calloc((ft_strlen(arg)), sizeof(char *));
 	exe->cmd_n_arg[1] = NULL;
-	//exe->cmd_n_arg[0] = my_malloc(5,split sizeof(char*), exe->trash_lst_exe);
-	//exe->cmd_n_arg = my_malloc(3,sizeof(char**),exe->trash_lst_exe);
 	if(ft_strncmp("echo", name[0], 5) == 0)
 	{
 		exe->cmd_n_arg[0] = "echo";
@@ -108,9 +108,7 @@ void create_cmd_n_args_builtins(t_exec *exe)
 	}
 	else
 	{
-		fprintf(stderr, "command not found builtin : %s\n", exe->tab_cmd[exe->idx]);
 		command_not_found(exe->tab_cmd[exe->idx]);
-		exit(g_errno);
 	}
 	
 	if(ft_strlen(name[0]) < size)
