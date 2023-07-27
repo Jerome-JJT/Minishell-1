@@ -7,7 +7,7 @@ void		builtins_0(t_pipe *d_pip, t_exec *d_exe, t_shell *d_shell, char *cmd)
    // fprintf(stderr, "builtin_0: %s\n", cmd);
 	fork_pid = fork();
 	if (fork_pid == -1)
-		fprintf(stderr, "fork errot\n"); //perror_msg();
+		perror_msg_system(1);//fprintf(stderr, "fork errot\n"); //perror_msg();
 	if (fork_pid == 0)
 	{
 		close_pipes(d_pip, 1);
@@ -29,7 +29,8 @@ void		builtins_0(t_pipe *d_pip, t_exec *d_exe, t_shell *d_shell, char *cmd)
 		exit(1);
 	}
 		close_pipes(d_pip, 3);
-		pipe(d_pip->fd_pipe1);
+		if (pipe(d_pip->fd_pipe1) == -1)
+			perror_msg_system(2);
 }
 
 void	builtins_1(t_pipe *d, t_exec *d_exe, t_shell *d_shell, char *cmd)
@@ -40,7 +41,7 @@ void	builtins_1(t_pipe *d, t_exec *d_exe, t_shell *d_shell, char *cmd)
 	//fprintf(stderr, "builtin_1: %s\n", cmd);
 	fork_pid = fork();
 	if (fork_pid == -1)
-		fprintf(stderr, "fork errot\n"); //perror_msg();
+		perror_msg_system(1);//fprintf(stderr, "fork errot\n"); //perror_msg();
 	if (fork_pid == 0)
 	{
 		close_pipes(d, 2);
@@ -58,7 +59,8 @@ void	builtins_1(t_pipe *d, t_exec *d_exe, t_shell *d_shell, char *cmd)
 		exit(1);
 	}
 	close_pipes(d, 4);
-	pipe(d->fd_pipe2);
+	if (pipe(d->fd_pipe2) == -1)
+		perror_msg_system(2);
 }
 
 void create_cmd_n_args_builtins(t_exec *exe)
@@ -68,16 +70,14 @@ void create_cmd_n_args_builtins(t_exec *exe)
 	char **name;
 	size_t size;
 
-	size = ft_strlen(exe->tab_cmd[0]);
-	name = ft_split_exec((exe->tab_cmd[0]), ' ', 0);
+	size = ft_strlen(exe->tab_cmd[exe->idx]);
+	name = ft_split_exec((exe->tab_cmd[exe->idx]), ' ', 0);
 	//fprintf(stderr, "name : %s\n", name[0]);
 	exe->cmd_n_arg = ft_calloc(3, sizeof(char**));
 	exe->cmd_n_arg[0] = ft_calloc(ft_strlen(name[0] + 1), sizeof(char *));
-	arg = ft_calloc((ft_strlen(exe->tab_cmd[0]) + (ft_strlen(name[0] + 1))), sizeof(char*));
+	arg = ft_calloc((ft_strlen(exe->tab_cmd[exe->idx]) + (ft_strlen(name[0] + 1))), sizeof(char*));
 	exe->cmd_n_arg[1] = ft_calloc((ft_strlen(arg)), sizeof(char *));
 	exe->cmd_n_arg[1] = NULL;
-	//exe->cmd_n_arg[0] = my_malloc(5,split sizeof(char*), exe->trash_lst_exe);
-	//exe->cmd_n_arg = my_malloc(3,sizeof(char**),exe->trash_lst_exe);
 	if(ft_strncmp("echo", name[0], 5) == 0)
 	{
 		exe->cmd_n_arg[0] = "echo";
@@ -108,13 +108,12 @@ void create_cmd_n_args_builtins(t_exec *exe)
 	}
 	else
 	{
-		command_not_found(exe->tab_cmd[0]);
-		exit(g_errno);
+		command_not_found(exe->tab_cmd[exe->idx]);
 	}
 	
 	if(ft_strlen(name[0]) < size)
 	{
-		arg = ft_strcpy(arg, exe->tab_cmd[0] + (ft_strlen(name[0]) + 1));
+		arg = ft_strcpy(arg, exe->tab_cmd[exe->idx] + (ft_strlen(name[0]) + 1));
 		//fprintf(stderr, "cmd rempli\n");
 		exe->cmd_n_arg[1] = arg;
 	}

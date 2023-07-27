@@ -55,3 +55,29 @@ char    *tab_to_str(char **tab, t_dlist **trash)
 	}
     return (str);
 }
+
+/* ---------------------------- 4. --------------------------------*/
+char    *remove_quote(char *str)
+{
+    char    *cpy;
+    int     i;
+    int     j;
+
+    i = 0;
+    j = 0;
+    cpy = str;
+    while (cpy[i + j])
+    {
+        if (ft_isquote(cpy[i]))
+            j++;
+        cpy[i] = cpy[i + j];
+        i++;
+    }
+    if (cpy[i] != 0)
+    {
+        i--;
+        while (cpy[i])
+            cpy[i++] = 0;
+    }
+    return (cpy);
+}

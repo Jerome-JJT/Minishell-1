@@ -10,8 +10,9 @@ void handle_single_cmd(t_pipe *d_pip, t_exec *d_exe, t_shell *d_shell, char *cmd
     fork_pid = fork();
     if (fork_pid == -1)
     {
-        fprintf(stderr, "fork error\n");
-        return;
+		perror_msg_system(1);
+        // fprintf(stderr, "fork error\n");
+        // return;
     }
     if (fork_pid == 0)
     {
@@ -19,8 +20,9 @@ void handle_single_cmd(t_pipe *d_pip, t_exec *d_exe, t_shell *d_shell, char *cmd
         handle_dup_fd_single_cmd(d_pip, d_exe);
         if (execve(d_exe->cmd_path, d_exe->cmd_n_arg, d_exe->env_cpy) == -1)
         {
-            fprintf(stderr, "execve error\n");
-            return;
+			perror_msg_system(3);
+            // fprintf(stderr, "execve error\n");
+            // return;
         }
     }
     else
@@ -48,7 +50,7 @@ void		child_process_0(t_pipe *d_pip, t_exec *d_exe, t_shell *d_shell, char *cmd)
 
 	fork_pid = fork();
 	if (fork_pid == -1)
-		fprintf(stderr, "fork errot\n"); //perror_msg();
+		perror_msg_system(1);//fprintf(stderr, "fork errot\n");
 	if (fork_pid == 0)
 	{
 		//fprintf(stderr, ">>child proces_0: %s\n", cmd);
@@ -66,10 +68,11 @@ void		child_process_0(t_pipe *d_pip, t_exec *d_exe, t_shell *d_shell, char *cmd)
 			middle_cmd(d_pip, d_exe, 0);
 		}
 		if (execve (d_exe->cmd_path, d_exe->cmd_n_arg, d_exe->env_cpy) == -1)
-			fprintf(stderr, "error excve\n");
+			perror_msg_system(3);//fprintf(stderr, "error excve\n");
 	}
 	close_pipes(d_pip, 3);
-	pipe(d_pip->fd_pipe1);
+	if (pipe(d_pip->fd_pipe1) == -1)
+		perror_msg_system(2);
 }
 
 void	child_process_1(t_pipe *d, t_exec *d_exe, t_shell *d_shell, char *cmd)
@@ -79,7 +82,7 @@ void	child_process_1(t_pipe *d, t_exec *d_exe, t_shell *d_shell, char *cmd)
 	fork_pid = fork();
 
 	if (fork_pid == -1)
-		fprintf(stderr, "fork errot\n"); //perror_msg();
+		perror_msg_system(1);//fprintf(stderr, "fork errot\n"); //perror_msg();
 	if (fork_pid == 0)
 	{
 		close_pipes(d, 2);
@@ -97,10 +100,11 @@ void	child_process_1(t_pipe *d, t_exec *d_exe, t_shell *d_shell, char *cmd)
 			middle_cmd(d, d_exe, 1);
 		}
 		if (execve (d_exe->cmd_path, d_exe->cmd_n_arg, d_exe->env_cpy) == -1)
-			fprintf(stderr, "error excve\n");//handle_exec_err(d->fd_pipe1[1], d_exe->cmd_n_arg, cmd_path);
+			perror_msg_system(3);//fprintf(stderr, "error excve\n");//handle_exec_err(d->fd_pipe1[1], d_exe->cmd_n_arg, cmd_path);
 	}
 	close_pipes(d, 4);
-	pipe(d->fd_pipe2);
+	if (pipe(d->fd_pipe2) == -1)
+		perror_msg_system(2);
 }
 
 void prepare_cmd(t_exec *d_exe, t_shell *d_shell, char *cmd)
