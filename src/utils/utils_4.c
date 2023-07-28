@@ -5,20 +5,28 @@ void    reset_shelltab(t_exec *exec, t_shell *shell)
 {
 
 	(void) shell;
-    ft_tabreset(exec->tab_cmd);
-    ft_tabreset(exec->redi_infile);
-    ft_tabreset(exec->redi_outfile);
-    ft_tabreset(exec->heredoc);
+    if(exec->tab_cmd)
+        ft_tabreset(exec->tab_cmd);
+    else
+        exec->tab_cmd = ft_calloc(20, sizeof(char *));
+    if(exec->redi_infile)
+        ft_tabreset(exec->redi_infile);
+    else
+	    exec->redi_infile = ft_calloc(20, sizeof(char *));
+    if (exec->redi_outfile)
+        ft_tabreset(exec->redi_outfile);
+    else
+	    exec->redi_outfile = ft_calloc(20, sizeof(char *));
+    if (exec->heredoc)
+        ft_tabreset(exec->heredoc);
+    else
+	    exec->heredoc = ft_calloc(20, sizeof(char *));
     // ft_free_2da(exec->tab_cmd, NULL);
     // ft_free_2da(exec->redi_infile, NULL);
     // ft_free_2da(exec->redi_outfile, NULL);
     // ft_free_2da(exec->heredoc, NULL);
     // print_trash(&shell->trash_lst);
     // ft_dlst_clear(&shell->trash_lst, free);
-	exec->heredoc = ft_calloc(20, sizeof(char *));
-	exec->redi_infile = ft_calloc(20, sizeof(char *));
-	exec->redi_outfile = ft_calloc(20, sizeof(char *));
-    exec->tab_cmd = ft_calloc(20, sizeof(char *));
     // shell->trash_lst = ft_calloc(1, sizeof(t_dlist));
     // if (exec->tab_cmd)
     // if (exec->redi_infile)

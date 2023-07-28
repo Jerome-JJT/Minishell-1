@@ -43,7 +43,7 @@ int	main(int ac, char **av, char **envp)
 	else // avec arg = version Debbug
 	{
 		// buffer = av[1];
-		test[0] = "echo bla <<a";
+		test[0] = "echo bla >out";
 		test[1] = NULL;
 		test[2] = NULL;
 		test[3] = NULL;
@@ -57,7 +57,7 @@ int	main(int ac, char **av, char **envp)
 				tok_clearlst(&info_parse.token);
 			else
 			{
-				print_parsing(&info_exec, "Test");
+				// print_parsing(&info_exec, "Test");
 				shell_execution(&info_exec, envp, &info_parse);
 				tok_clearlst(&info_parse.token);
 				reset_shelltab(&info_exec, &info_parse);

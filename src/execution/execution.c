@@ -93,7 +93,7 @@ void builtins_exec(char *builtins_name, t_shell *info, char **cmd, t_exec *exe)
 {
 	info->arg = cmd;
 	if(ft_strncmp("echo", builtins_name, ft_strlen(builtins_name)) == 0)
-		echo_minishell(exe->cmd_n_arg + 1);
+		echo_minishell(exe->cmd_n_arg + 1, &info->trash_lst);
 	if(ft_strncmp("cd", builtins_name, ft_strlen(builtins_name)) == 0)
 	{
 		//fprintf(stderr, "built_cd_minishell\n");

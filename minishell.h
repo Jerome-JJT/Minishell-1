@@ -116,11 +116,11 @@ typedef struct s_pipe
 }	t_pipe;
 
 /* ---------------- Builtings ------------------ */
-void		echo_minishell(char **tab);
 void		pwd_minishell(t_shell *info);
 void		cd_minishell(t_shell *info, char *arg);
 void		env_minishell(t_shell *info, char *arg);
 void		unset_minishell(t_shell *info, char **arg);
+void		echo_minishell(char **tab, t_dlist **trash);
 void		exit_minishell(char **arg, t_dlist **trash);
 void		export_minishell(t_shell *info, char **arg);
 
