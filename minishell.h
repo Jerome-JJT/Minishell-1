@@ -47,8 +47,8 @@ enum e_token
 	RED_OUT,
 	H_D,
 	APPEND,
-	//SPACE,
-	SPACEE,
+	SPACE,
+	// SPACEE,
 	PIPE
 }	;
 
