@@ -43,8 +43,8 @@ int	main(int ac, char **av, char **envp)
 	else // avec arg = version Debbug
 	{
 		// buffer = av[1];
-		test[0] = "export \"z=a b c\"";
-		test[1] = "export";
+		test[0] = "< tx_a.txt cat< tx_a.txt cat -e | cat -e | cat -e | cat -e >out";
+		test[1] = NULL;
 		test[2] = NULL;
 		test[3] = NULL;
 		test[4] = NULL;

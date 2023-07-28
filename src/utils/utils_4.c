@@ -11,7 +11,7 @@ void    reset_shelltab(t_exec *exec, t_shell *shell)
     ft_tabreset(exec->heredoc);
     ft_free_2da(exec->tab_cmd, NULL);
     ft_free_2da(exec->redi_infile, NULL);
-    ft_free_2da(exec->redi_outfile, NULL);
+    // ft_free_2da(exec->redi_outfile, NULL);
     ft_free_2da(exec->heredoc, NULL);
     // print_trash(&shell->trash_lst);
     // ft_dlst_clear(&shell->trash_lst, free);
@@ -66,9 +66,9 @@ char    *remove_quote(char *str)
     i = 0;
     j = 0;
     cpy = str;
-    while (cpy[i + j])
+    while (cpy[i])
     {
-        if (ft_isquote(cpy[i]))
+        while (ft_isquote(cpy[i + j]))
             j++;
         cpy[i] = cpy[i + j];
         i++;
