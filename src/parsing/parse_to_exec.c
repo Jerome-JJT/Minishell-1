@@ -73,5 +73,5 @@ void pars_to_exec(t_shell *info, t_exec *exec, t_dlist **trash)
             pipe++;
         tmp = tmp->next;
     }
-    exec->number_of_pipes = pipe++;
+    exec->number_of_pipes = pipe;
 }

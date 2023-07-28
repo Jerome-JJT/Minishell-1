@@ -24,8 +24,7 @@ UTILS			=	utils.c \
 
 SIGNALS			=	handle_signals.c
 
-PARSE			=	parse_builtins.c \
-					red.c \
+PARSE			=	red.c \
 					word.c \
 					pipe.c \
 					space.c \

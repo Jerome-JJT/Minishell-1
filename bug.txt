@@ -1,3 +1,3 @@
-<<a <<b <<c                     [x] --> heredoc non fonctionnel
+<<a <<b <<c                     [√]
 <tx_a.txt cat -e > out          [√]
-< tx_a.txt cat -e | cat -e >out [x] --> pas de tableau outfile
+< tx_a.txt cat -e | cat -e >out [x] --> pas de deuxième "cat -e"
