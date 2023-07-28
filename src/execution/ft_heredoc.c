@@ -81,7 +81,7 @@ int convert_tab_to_fd_heredoc(char **heredoc_res)
 	fd = open(".heredoc.txt", O_CREAT | O_RDWR | O_TRUNC, 0666);
 	if (fd == -1)
 	{
-		// fprintf(stderr, "error fd heredoc\n");
+		fprintf(stderr, "error fd heredoc\n");
 		return (0);
 	}
 	size = ft_tabsize(heredoc_res);

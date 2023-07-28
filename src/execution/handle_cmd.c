@@ -52,7 +52,7 @@ void	first_cmd(t_pipe *d, t_exec *d_exe)
 	else
 	{
 		if(dup2(d->fd_pipe2[1], STDOUT_FILENO) == -1)
-			// fprintf(stderr, "dup out error_first_cmd\n");
+			fprintf(stderr, "dup out error_first_cmd\n");
 		close_pipes(d, 2);
 	}
 }
@@ -69,13 +69,13 @@ void	last_cmd(t_pipe *d, int process, t_exec *d_exe)
 		if (process == 0)
 		{
 			if (dup2 (d->fd_pipe1[0], STDIN_FILENO) == -1)
-				// fprintf(stderr, "dup error_last_cmd_0\n"); //handle_dup_err(d->fd_out, d->fd_pipe1[0], d_exe->cmd_n_arg, 0);
+				fprintf(stderr, "dup error_last_cmd_0\n"); //handle_dup_err(d->fd_out, d->fd_pipe1[0], d_exe->cmd_n_arg, 0);
 			close_pipes(d, 2);
 		}
 		if (process == 1)
 		{
 			if (dup2 (d->fd_pipe2[0], STDIN_FILENO) == -1)
-				// fprintf(stderr, "dup error_last_cmd_0\n");
+				fprintf(stderr, "dup error_last_cmd_0\n");
 			close_pipes(d, 1);
 		}
 	}
@@ -122,12 +122,12 @@ void setup_infile_cmd(t_pipe *d_pipe)
 	d_pipe->fd_in = open(d_pipe->infile, O_RDONLY);
 	if (d_pipe->fd_in == -1)
     {
-        // fprintf(stderr, "error opening infile\n");
+        fprintf(stderr, "error opening infile\n");
         return;
     }
 	if (dup2(d_pipe->fd_in, STDIN_FILENO) == -1)
 	{
-		// fprintf(stderr, "dup in error_first_cmd\n"); //handle_dup_err(d->fd_in, d->fd_pipe2[1], d_exe->cmd_n_arg, 0);
+		fprintf(stderr, "dup in error_first_cmd\n"); //handle_dup_err(d->fd_in, d->fd_pipe2[1], d_exe->cmd_n_arg, 0);
 		return; // AJOUT
 	}
 	close(d_pipe->fd_in);
@@ -165,23 +165,23 @@ void setup_middle_cmd(t_pipe *d_pipe, int option)
 	if (option == 0)
 	{
 		if (dup2(d_pipe->fd_pipe1[0], STDIN_FILENO) == -1)
-			// fprintf(stderr, "dup error_middle_cmd op0\n"); //handle_dup_err(d->fd_out, d->fd_pipe1[0], d_exe->cmd_n_arg, 0);
+			fprintf(stderr, "dup error_middle_cmd op0\n"); //handle_dup_err(d->fd_out, d->fd_pipe1[0], d_exe->cmd_n_arg, 0);
 	}
 	if (option == 1)
 	{
 		if (dup2(d_pipe->fd_pipe2[0], STDIN_FILENO) == -1)
-			// fprintf(stderr, "dup error_middle_cmd op1\n");
+			fprintf(stderr, "dup error_middle_cmd op1\n");
 	}
 	if (option == 2)
 	{
 		if (dup2(d_pipe->fd_pipe2[1], STDOUT_FILENO) == -1)
-			// fprintf(stderr, "dup error_middle_cmd op2\n");//handle_dup_err(1, d->fd_pipe2[1], d->cmd_n_arg, 1);
+			fprintf(stderr, "dup error_middle_cmd op2\n");//handle_dup_err(1, d->fd_pipe2[1], d->cmd_n_arg, 1);
 		close_pipes(d_pipe, 2);
 	}
 	if (option == 3)
 	{
 		if (dup2(d_pipe->fd_pipe1[1], STDOUT_FILENO) == -1)
-			// fprintf(stderr, "dup error_middle_cmd_ op3\n");//handle_dup_err(1, d->fd_pipe1[1], d->cmd_n_arg, 1);
+			fprintf(stderr, "dup error_middle_cmd_ op3\n");//handle_dup_err(1, d->fd_pipe1[1], d->cmd_n_arg, 1);
 		close_pipes(d_pipe, 1);
 	}
 }
