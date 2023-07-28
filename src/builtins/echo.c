@@ -24,6 +24,7 @@ void	echo_minishell(char **tab)
 		printf("\n");
 	else
 	{
+		*tab = remove_quote(*tab);
 		if (ft_strncmp(*tab, "-n", 3) == 0)
 			echo_n(tab + 1, 1);
 		else
