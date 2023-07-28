@@ -22,7 +22,7 @@ void handle_append(t_exec *exe)
         }
         else
         {
-            write(2, "append init a NULL\n", 19);
+            // write(2, "append init a NULL\n", 19);
             exe->last_append = NULL;
         }
    // }

@@ -45,20 +45,20 @@ static int	in_out_append(t_tok **node)
 }
 
 /* -------------------------- 3.If token is heredoc ------------------------------- */
-static int	heredoc(t_tok *node)
+static int	heredoc(t_tok **node)
 {
 	t_tok	*tmp;
 
-	tmp = node->next;
+	tmp = (*node)->next;
 	if (!tmp)
 		return (ft_error_msg(258, NULL));
-	if (tmp->type == SPACE)
+	else if (tmp->type == SPACE)
 		tmp = tmp->next;
 	if (!tmp)
 		return (ft_error_msg(258, NULL));
 	else if (tmp->type != WORD)
 		return (ft_error_msg(258, tmp->tok));
-	node = tmp->next;
+	(*node) = tmp->next;
 	return (0);
 }
 
@@ -107,7 +107,7 @@ int	check_syntax(t_tok *lst, t_dlist **trash)
 		}
 		else if (node->type == H_D)
 		{
-			if (heredoc(node) > 0)
+			if (heredoc(&node) > 0)
 				return (1);
 		}
 		else if (ft_isword(node->type))
