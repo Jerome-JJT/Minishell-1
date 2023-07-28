@@ -18,15 +18,14 @@ void	command_not_found(char *cmd)
 void error_infile_outfile(int error_nb, t_exec *exe)
 {
 	(void)exe;
-	// fprintf(stderr, "error_in_out\n");
 	if(errno == 9)
 	{
-		fprintf(stderr, "No such file or directory %d\n", errno);
+		write(2, "No such file or directory\n", 26);
 		exit(EXIT_FAILURE);
 	}
 	if (error_nb == 2)
 	{
-		fprintf(stderr, "heredoc error\n");
+		write(2, "heredoc error\n", 14);
 		exit(EXIT_FAILURE);
 	}
 }

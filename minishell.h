@@ -34,8 +34,8 @@
 # define CYAN "\033[0;96m"
 # define WHITE "\033[0;97m"
 
-// extern int g_errno;
-int	g_errno;
+extern int g_errno;
+//int	g_errno;
 
 /* ----------- ENUM -> Type Token --------------- */
 enum e_token
@@ -47,8 +47,8 @@ enum e_token
 	RED_OUT,
 	H_D,
 	APPEND,
-	SPACE,
-	// SPACEE,
+	//SPACE,
+	SPACEE,
 	PIPE
 }	;
 
@@ -61,11 +61,6 @@ typedef struct s_tok
 	struct s_tok	*next;
 	struct s_tok	*prev;
 }	t_tok;
-/*------------- Stucture signals ------------*/
-typedef struct s_sg
-{
-	int				process;
-}	t_sg;
 
 /* ----------- Structure listes --------------- */
 typedef t_dlist	t_env;
@@ -181,6 +176,7 @@ void		display_lst_heredoc(t_list **ptr_to_head, char *name);
 void		fill_node(t_list *node, char *s1, char *s2, int if_var);
 void		str_to_node(char *str, t_list *node, t_shell *info, int first_time);
 void		creat_and_add(char *tmp, char *str, int type, int index, t_shell *info);
+
 /* -------------- Fonctions test -----------------------*/
 void		print_node(t_tok *node);
 void		print_trash(t_dlist **trash);
@@ -197,7 +193,6 @@ void		command_not_found(char *cmd);
 char		**handle_infile(t_exec *exe);
 char		**handle_outfile(t_exec *exe);
 int			handle_heredoc(t_exec *d_exe);
-void		pre_handle_append(t_exec *exe);
 void		create_heredoc_tab(t_exec *exe);
 void		setup_infile_cmd(t_pipe *d_pipe);
 void		close_pipes(t_pipe *d, int process);
@@ -213,7 +208,6 @@ void		last_cmd(t_pipe *d, int process, t_exec *d_exe);
 void		setup_outfile_cmd(t_pipe *d_pipe, t_exec *d_exe);
 char		**ft_split_exec(const char *str, char c, int var);
 void		handle_dup_fd_single_cmd(t_pipe *d_pip, t_exec *exe);
-//void		middle_cmd(t_pipe *d, char *cmd_path, int process);
 char    	*ft_strcpy(char *s1, char *s2);
 int			is_tab_heredoc_empty(char **tab);
 void		first_cmd(t_pipe *d, t_exec *d_exe);
