@@ -19,17 +19,17 @@ static void	go_home(t_shell *info)
 }
 
 /* ---------------------------- fonction cd ---------------------------------*/
-void	cd_minishell(char **arg, t_shell *info)
+void	cd_minishell(t_shell *info, char *arg)
 {
 	int		ret;
 
-	if (!*arg)
+	if (!arg)
 		go_home(info);
 	else
 	{
-		ret = chdir(*arg);
+		ret = chdir(arg);
 		if (ret == -1)
-			ft_error_msg(1, *arg);
+			ft_error_msg(1, arg);
 		else
 			getcwd(info->cwd, 1024);
 	}

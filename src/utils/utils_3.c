@@ -45,18 +45,18 @@ void	creat_and_add(char *tmp, char *str, int type, int index, t_shell *info)
 	if (!tmp)
 	{
 		if (type == S_QUOTE || type == D_QUOTE)
-			token = new_node(ft_substr(str, 1, index - 1, &info->trash_lst), S_QUOTE, &info->trash_lst);
+			token = new_node(ft_substr(str, 1, index - 1, &info->trash_lst), type, &info->trash_lst);
 		else if (type == WORD)
-			token = new_node(ft_substr(str, 0, index, &info->trash_lst), WORD, &info->trash_lst);
+			token = new_node(ft_substr(str, 0, index, &info->trash_lst), type, &info->trash_lst);
 		else
-			token = new_node(ft_substr(str, 0, index, &info->trash_lst), H_D, &info->trash_lst);
+			token = new_node(ft_substr(str, 0, index, &info->trash_lst), type, &info->trash_lst);
 	}
 	else
 	{
 		if (type == WORD)
-			token = new_node(ft_substr(tmp, 0, ft_strlen(tmp), &info->trash_lst), WORD, &info->trash_lst);
+			token = new_node(ft_substr(tmp, 0, ft_strlen(tmp), &info->trash_lst), type, &info->trash_lst);
 		else
-			token = new_node(ft_substr(tmp, 0, ft_quotelen(tmp), &info->trash_lst), D_QUOTE, &info->trash_lst);
+			token = new_node(ft_substr(tmp, 0, ft_quotelen(tmp), &info->trash_lst), type, &info->trash_lst);
 	}
 	tok_addlst(&info->token, token);
 }

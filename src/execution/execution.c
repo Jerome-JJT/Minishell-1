@@ -30,7 +30,7 @@ int shell_execution(t_exec *d_exec, char **env, t_shell *shell_info)
 	d_exec->last_append = NULL;
 	handle_heredoc(d_exec);
 	handle_pipes(&d_pip.fd_pipe1, &d_pip.fd_pipe2);
-	signals_update();
+	// signals_update();
 	i = 0;
 	if (!d_exec->tab_cmd)
 		exit(0);
@@ -95,11 +95,17 @@ void builtins_exec(char *builtins_name, t_shell *info, char **cmd, t_exec *exe)
 	if(ft_strncmp("echo", builtins_name, ft_strlen(builtins_name)) == 0)
 		echo_minishell(exe->cmd_n_arg + 1);
 	if(ft_strncmp("cd", builtins_name, ft_strlen(builtins_name)) == 0)
-		cd_minishell(exe->cmd_n_arg + 1, info);
+	{
+		//fprintf(stderr, "built_cd_minishell\n");
+		cd_minishell(info, *(exe->cmd_n_arg + 1));
+	}
 	if(ft_strncmp("env", builtins_name, ft_strlen(builtins_name)) == 0)
 		env_minishell(info, *(exe->cmd_n_arg + 1));
 	if(ft_strncmp("exit", builtins_name, ft_strlen(builtins_name)) == 0)
-		exit_minishell(info);
+	{
+		exit_minishell(exe->cmd_n_arg + 1, &info->trash_lst);
+		//fprintf(stderr, "exit_minishell\n");
+	}
 	if(ft_strncmp("export", builtins_name, ft_strlen(builtins_name)) == 0)
 	{
 		export_minishell(info, exe->cmd_n_arg + 1);

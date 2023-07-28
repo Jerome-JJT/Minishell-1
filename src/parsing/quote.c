@@ -83,7 +83,7 @@ char	*ft_dquote(char *str, t_shell *info)
 	tmp = NULL;
 	i = 1;
 	check = 0;
-	while (str[i] != '\"')
+	while (!ft_isquote(str[i]))
 	{
 		if (str[i] == '$' && check == 0)
 		{

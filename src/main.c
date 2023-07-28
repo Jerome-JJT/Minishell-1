@@ -16,7 +16,7 @@ int	main(int ac, char **av, char **envp)
 	init_shell(&info_parse, &info_exec, envp); // --->>  Initialisation général
 	if (ac == 1) // Sans arg = version minishell
 	{
-		set_signals();
+		// set_signals();
 		(void) av;
 		while (1)
 		{
@@ -32,6 +32,8 @@ int	main(int ac, char **av, char **envp)
 				tok_clearlst(&info_parse.token);
 			else if (check == 0)
 			{
+				print_parsing(&info_exec, "Test");
+				// print_token(&info_parse.token, "Test");
 				shell_execution(&info_exec, envp, &info_parse);
 				tok_clearlst(&info_parse.token);
 				reset_shelltab(&info_exec, &info_parse);
@@ -41,10 +43,10 @@ int	main(int ac, char **av, char **envp)
 	else // avec arg = version Debbug
 	{
 		// buffer = av[1];
-		test[0] = "export a b c d e f g h";
-		test[1] = "unset a b c d e f g h";
-		test[2] = "export a b c";
-		test[3] = "export";
+		test[0] = "export \"z=a b c\"";
+		test[1] = "export";
+		test[2] = NULL;
+		test[3] = NULL;
 		test[4] = NULL;
 		while (test[i])
 		{
