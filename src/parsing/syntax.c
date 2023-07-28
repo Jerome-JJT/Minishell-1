@@ -9,11 +9,11 @@ static void	strjoin_tok_node(t_tok *dest, t_tok *src, t_dlist **trash)
 }
 
 /* -------------------------- 2.If token is in_out_append ------------------------------- */
-static int	in_out_append(t_tok *node)
+static int	in_out_append(t_tok **node)
 {
 	t_tok	*tmp;
 
-	tmp = node->next;
+	tmp = (*node)->next;
 	if (!tmp)
 		return (ft_error_msg(258, NULL));
 	else if (tmp->type == SPACE)
@@ -26,19 +26,20 @@ static int	in_out_append(t_tok *node)
 		return (ft_error_msg(258, tmp->tok));
 	else if (ft_isword(tmp->type) == 1)
 	{
-		if (node->type == RED_IN || node->type == APPEND)
+		if ((*node)->type == RED_IN || (*node)->type == APPEND)
 		{
 			if (open(tmp->tok, O_RDWR) < 0) // -->> A changer selon le type de permissions accordées de base au fichier
 				return (ft_error_msg(1, tmp->tok));
 		}
 		else
 		{
+			//fprintf(stderr, "token: %s\n", tmp->tok);
 			if (access(tmp->tok, F_OK) == 0)
 				unlink(tmp->tok);
-			if (open((tmp->tok), O_CREAT | O_WRONLY, 0777) < 0)
-				fprintf(stderr, "Outfile opening fail\n");
+			//if (open((tmp->tok), O_CREAT | O_WRONLY, 0777) < 0)
+			//	fprintf(stderr, "Outfile opening fail\n");
 		}
-		node = tmp->next;
+		(*node) = tmp->next;
 	}
 	return (0);
 }
@@ -77,7 +78,7 @@ static void	word(t_tok **current_node, t_tok *next_node, t_dlist **trash)
 		}
 	}
 	else if (((*current_node)->type == S_QUOTE || (*current_node)->type == D_QUOTE)
-			&& found_char((*current_node)->tok, " " > 0))
+			&& found_char((*current_node)->tok, ' ' > 0))
 	{
 		(*current_node)->tok = ft_strjoin("\"", (*current_node)->tok, trash);
 		(*current_node)->tok = ft_strjoin((*current_node)->tok, "\"", trash);
@@ -100,7 +101,7 @@ int	check_syntax(t_tok *lst, t_dlist **trash)
 		else if (node->type == RED_IN || node->type == RED_OUT
 			|| node->type == APPEND)
 		{
-			if (in_out_append(node) > 0)
+			if (in_out_append(&node) > 0)
 				return (1);
 		}
 		else if (node->type == H_D)
