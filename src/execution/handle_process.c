@@ -46,7 +46,7 @@ void remove_prefixe_outfile(char **outfile_tab)
 	i = 0;
 	while(outfile_tab[i])
 	{
-		fprintf(stderr, "check o_[%d]: %s\n", i, outfile_tab[i]);
+		// fprintf(stderr, "check o_[%d]: %s\n", i, outfile_tab[i]);
 		i++;
 	}
 }

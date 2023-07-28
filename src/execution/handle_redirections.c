@@ -5,7 +5,7 @@ void handle_redirections(t_exec *exe, t_pipe *pipe)
 	//fprintf(stderr, ">>>HANDLE FILES, idx : %d\n", exe->idx);
 	if (exe->append[exe->idx])
 	{
-		fprintf(stderr, "append present: %s\n", exe->append[exe->idx]);
+		// fprintf(stderr, "append present: %s\n", exe->append[exe->idx]);
 		handle_append(exe);
 	}
 	handle_infile_heredoc_redirections(exe, pipe);
@@ -96,15 +96,15 @@ void handle_infile_heredoc_redirections(t_exec *exe, t_pipe *pipe)
 
 void handle_outfile_append_redirections(t_exec *exe)
 {
-	fprintf(stderr, "handle out_app idx : %d DEBUT\n", exe->idx);
+	// fprintf(stderr, "handle out_app idx : %d DEBUT\n", exe->idx);
 	if (exe->redi_outfile[exe->idx])
 	{
-		fprintf(stderr, "idx : %d. outfile[%d] existant : %s\n", exe->idx, exe->idx, exe->redi_outfile[exe->idx]);
+		// fprintf(stderr, "idx : %d. outfile[%d] existant : %s\n", exe->idx, exe->idx, exe->redi_outfile[exe->idx]);
 		exe->redi_outfile = handle_outfile(exe);
 	}
 	if (exe->last_append)
 	{
-		fprintf(stderr, "idx : %d. last_append exisant: %s\n", exe->idx, exe->last_append);
+		// fprintf(stderr, "idx : %d. last_append exisant: %s\n", exe->idx, exe->last_append);
 		exe->redi_outfile[0] = exe->last_append;
 	}
 	if (!exe->redi_outfile[exe->idx] && !exe->last_append)

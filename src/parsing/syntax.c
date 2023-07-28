@@ -36,7 +36,7 @@ static int	in_out_append(t_tok **node)
 			if (access(tmp->tok, F_OK) == 0)
 				unlink(tmp->tok);
 			if (open((tmp->tok), O_CREAT | O_WRONLY, 0777) < 0)
-				fprintf(stderr, "Outfile opening fail\n");
+				perror("Opening outfile error");
 		}
 		(*node) = tmp->next;
 	}
@@ -77,7 +77,7 @@ static void	word(t_tok **current_node, t_tok *next_node, t_dlist **trash)
 		}
 	}
 	else if (((*current_node)->type == S_QUOTE || (*current_node)->type == D_QUOTE)
-			&& found_char((*current_node)->tok, " " > 0))
+			&& found_char((*current_node)->tok, ' ') > 0)
 	{
 		(*current_node)->tok = ft_strjoin("\"", (*current_node)->tok, trash);
 		(*current_node)->tok = ft_strjoin((*current_node)->tok, "\"", trash);

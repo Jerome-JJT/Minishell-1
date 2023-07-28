@@ -22,7 +22,7 @@ void handle_append(t_exec *exe)
         }
         else
         {
-            fprintf(stderr, "append init a NULL\n");
+            // fprintf(stderr, "append init a NULL\n");
             exe->last_append = NULL;
         }
    // }
@@ -51,7 +51,7 @@ void    create_append_files(char **tab_append_out)
         {
 		    append = open(&tab_append_out[i][2], O_WRONLY | O_CREAT | O_APPEND, 0644);
             if (append == -1)
-				fprintf(stderr, "error append file opening\n");
+				// fprintf(stderr, "error append file opening\n");
 		    close(append);
 	    }
         i++;

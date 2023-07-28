@@ -32,7 +32,7 @@ int	main(int ac, char **av, char **envp)
 				tok_clearlst(&info_parse.token);
 			else if (check == 0)
 			{
-				print_parsing(&info_exec, "Test");
+				// print_parsing(&info_exec, "Test");
 				// print_token(&info_parse.token, "Test");
 				shell_execution(&info_exec, envp, &info_parse);
 				tok_clearlst(&info_parse.token);
