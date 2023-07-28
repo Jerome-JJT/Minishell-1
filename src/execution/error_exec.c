@@ -50,5 +50,11 @@ int perror_msg_system(int error_type)
 		perror("Execve");
 		return(g_errno);
 	}
+		if (error_type == 4)
+	{
+		g_errno = errno;
+		perror("Dup");
+		return(g_errno);
+	}
 	return (0);
 }

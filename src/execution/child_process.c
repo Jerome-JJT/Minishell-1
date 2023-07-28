@@ -68,7 +68,7 @@ void		child_process_0(t_pipe *d_pip, t_exec *d_exe, t_shell *d_shell, char *cmd)
 			middle_cmd(d_pip, d_exe, 0);
 		}
 		if (execve (d_exe->cmd_path, d_exe->cmd_n_arg, d_exe->env_cpy) == -1)
-			perror_msg_system(3);//fprintf(stderr, "error excve\n");
+			perror_msg_system(3); // fprintf(stderr, "error excve\n");
 	}
 	close_pipes(d_pip, 3);
 	if (pipe(d_pip->fd_pipe1) == -1)

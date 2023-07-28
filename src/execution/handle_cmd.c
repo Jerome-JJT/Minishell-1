@@ -52,7 +52,7 @@ void	first_cmd(t_pipe *d, t_exec *d_exe)
 	else
 	{
 		if(dup2(d->fd_pipe2[1], STDOUT_FILENO) == -1)
-			write(2, "dup out error_first_cmd\n", 24);
+			perror_msg_system(4);
 		close_pipes(d, 2);
 	}
 }
@@ -69,13 +69,13 @@ void	last_cmd(t_pipe *d, int process, t_exec *d_exe)
 		if (process == 0)
 		{
 			if (dup2 (d->fd_pipe1[0], STDIN_FILENO) == -1)
-				write(2, "dup error_last_cmd_0\n", 21); //handle_dup_err(d->fd_out, d->fd_pipe1[0], d_exe->cmd_n_arg, 0);
+				perror_msg_system(4);
 			close_pipes(d, 2);
 		}
 		if (process == 1)
 		{
 			if (dup2 (d->fd_pipe2[0], STDIN_FILENO) == -1)
-				write(2, "dup error_last_cmd_0\n", 21);
+				perror_msg_system(4);
 			close_pipes(d, 1);
 		}
 	}
@@ -127,7 +127,7 @@ void setup_infile_cmd(t_pipe *d_pipe)
     }
 	if (dup2(d_pipe->fd_in, STDIN_FILENO) == -1)
 	{
-		write(2, "dup in error_first_cmd\n", 23); //handle_dup_err(d->fd_in, d->fd_pipe2[1], d_exe->cmd_n_arg, 0);
+		perror_msg_system(4);
 		return; // AJOUT
 	}
 	close(d_pipe->fd_in);
@@ -154,7 +154,7 @@ void setup_outfile_cmd(t_pipe *d_pipe, t_exec *d_exe)
 	}
 	if(dup2 (d_pipe->fd_out, STDOUT_FILENO) == -1)
 	{
-		write(2, "dup error_last_cmd_0\n", 21); //handle_dup_err(d->fd_out, d->fd_pipe1[0], d_exe->cmd_n_arg, 0);
+		perror_msg_system(4);
 		return; // AJOUT
 	}
 	close(d_pipe->fd_out);
@@ -165,23 +165,23 @@ void setup_middle_cmd(t_pipe *d_pipe, int option)
 	if (option == 0)
 	{
 		if (dup2(d_pipe->fd_pipe1[0], STDIN_FILENO) == -1)
-			write(2, "dup error_middle_cmd op0\n", 25); //handle_dup_err(d->fd_out, d->fd_pipe1[0], d_exe->cmd_n_arg, 0);
+			perror_msg_system(4);
 	}
 	if (option == 1)
 	{
 		if (dup2(d_pipe->fd_pipe2[0], STDIN_FILENO) == -1)
-			write(2, "dup error_middle_cmd op1\n", 25);
+			perror_msg_system(4);
 	}
 	if (option == 2)
 	{
 		if (dup2(d_pipe->fd_pipe2[1], STDOUT_FILENO) == -1)
-			write(2, "dup error_middle_cmd op2\n", 25);//handle_dup_err(1, d->fd_pipe2[1], d->cmd_n_arg, 1);
+			perror_msg_system(4);
 		close_pipes(d_pipe, 2);
 	}
 	if (option == 3)
 	{
 		if (dup2(d_pipe->fd_pipe1[1], STDOUT_FILENO) == -1)
-			write(2, "dup error_middle_cmd_ op3\n", 26);//handle_dup_err(1, d->fd_pipe1[1], d->cmd_n_arg, 1);
+			perror_msg_system(4);
 		close_pipes(d_pipe, 1);
 	}
 }
