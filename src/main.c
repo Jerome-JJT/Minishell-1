@@ -22,6 +22,9 @@ int	main(int ac, char **av, char **envp)
 		{
 			rl_on_new_line();
 			buffer = readline(""GREEN"$>"RESET" ");
+			if (buffer && *buffer)
+				add_history(buffer);
+			rl_redisplay();
 			check = parse_shell (buffer, &info_parse, &info_exec);
 			if (check == 1)
 			{
@@ -37,6 +40,7 @@ int	main(int ac, char **av, char **envp)
 				shell_execution(&info_exec, envp, &info_parse);
 				tok_clearlst(&info_parse.token);
 				reset_shelltab(&info_exec, &info_parse);
+				free(buffer);
 			}
 		}
 	}
