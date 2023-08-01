@@ -1,7 +1,7 @@
 CC				= gcc
 CFLAGS			= -Wall -Wextra -Werror -g -fsanitize=address
 LIBFT			= -L./libft -lft
-INCLUDES		= -I libft/include/ -I ./ -I /usr/local/Cellar/readline/8.2.1/include/readline/
+INCLUDES		= -I libft/include/ -I ./ -I $(HOME)/.brew/Cellar/readline/8.2.1/include
 BUILTINS_PATH	= ./src/builtins
 EXEC_PATH		= ./src/execution
 LIST_PATH		= ./src/list
@@ -74,7 +74,7 @@ OBJS			=	$(SRCS:.c=.o)
 $(NAME):	$(OBJS) libft/libft.a
 			@printf "libft				[$(_BLUE)✓$(_END)]\n"
 			@printf "minishell objects		[$(_BLUE)✓$(_END)]\n"
-			@gcc $(CFLAGS) $(OBJS) $(INCLUDES) $(LIBFT) -l readline -L /usr/local/Cellar/readline/8.2.1/lib/ -o $(NAME)
+			@gcc $(CFLAGS) $(OBJS) $(INCLUDES) $(LIBFT) -l readline -L $(HOME)/.brew/Cellar/readline/8.2.1/lib -o $(NAME)
 			@printf "minishell			[$(_BLUE)✓$(_END)]\n"
 			@printf "\n"
 			@printf "Minishell --------------------------------------> Ready to use\n"

@@ -34,6 +34,8 @@ static char	*parse_red(char *buff, t_tok **lst, t_dlist **trash)
 /* Main parsing : Tokenisation */
 int	parse_shell(char *buff, t_shell *info, t_exec *exec)
 {
+	if (!buff)
+		exit(0);
 	if (!*buff)
 		return (3);
 	while (*buff == ' ')

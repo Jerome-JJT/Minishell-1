@@ -9,7 +9,7 @@ char	*ft_space(char *str, t_tok **lst, t_dlist **trash)
 	i = 0;
 	while (str[i] == ' ' && str[i] != '\0')
 		i++;
-	token = new_node(ft_strdup(" ", trash), SPACE, trash);
+	token = new_node(ft_strdup(" ", trash), SPACEE, trash);
 	tok_addlst(lst, token);
 	return (str + i);
 }

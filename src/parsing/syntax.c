@@ -16,7 +16,7 @@ static int	in_out_append(t_tok **node)
 	tmp = (*node)->next;
 	if (!tmp)
 		return (ft_error_msg(258, NULL));
-	else if (tmp->type == SPACE)
+	else if (tmp->type == SPACEE)
 	{
 		tmp = tmp->next;
 		if (!tmp)
@@ -52,7 +52,7 @@ static int	heredoc(t_tok **node)
 	tmp = (*node)->next;
 	if (!tmp)
 		return (ft_error_msg(258, NULL));
-	else if (tmp->type == SPACE)
+	else if (tmp->type == SPACEE)
 		tmp = tmp->next;
 	if (!tmp)
 		return (ft_error_msg(258, NULL));

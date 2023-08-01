@@ -6,21 +6,23 @@ void    reset_shelltab(t_exec *exec, t_shell *shell)
 
 	(void) shell;
     if(exec->tab_cmd)
-        ft_tabreset(exec->tab_cmd);
-    else
+        ft_tabreset(&exec->tab_cmd);
         exec->tab_cmd = ft_calloc(20, sizeof(char *));
     if(exec->redi_infile)
-        ft_tabreset(exec->redi_infile);
-    else
+    {
+        ft_tabreset(&exec->redi_infile);
 	    exec->redi_infile = ft_calloc(20, sizeof(char *));
+    }
     if (exec->redi_outfile)
-        ft_tabreset(exec->redi_outfile);
-    else
+    {
+        ft_tabreset(&exec->redi_outfile);
 	    exec->redi_outfile = ft_calloc(20, sizeof(char *));
+    }
     if (exec->heredoc)
-        ft_tabreset(exec->heredoc);
-    else
+    {
+        ft_tabreset(&exec->heredoc);
 	    exec->heredoc = ft_calloc(20, sizeof(char *));
+    }
     // ft_free_2da(exec->tab_cmd, NULL);
     // ft_free_2da(exec->redi_infile, NULL);
     // ft_free_2da(exec->redi_outfile, NULL);
