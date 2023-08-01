@@ -18,7 +18,7 @@ int shell_execution(t_exec *d_exec, char **env, t_shell *shell_info)
 	// fprintf(stderr, "check value redi_out1: %s\n", d_exec->redi_outfile[1]);
 	// fprintf(stderr, "check value redi_out2: %s\n", d_exec->redi_outfile[2]);
 	//fprintf(stderr, "check value heredoc[0]: %s\n", d_exec->heredoc[0]);
-	fprintf(stderr, "check value apppend0: %s\n", d_exec->append[0]);
+	// fprintf(stderr, "check value apppend0: %s\n", d_exec->append[0]);
 	//fprintf(stderr, "check value apppend1: %s\n", d_exec->append[1]);
 	// fprintf(stderr, "check value apppend2: %s\n", d_exec->append[2]);
 	// fprintf(stderr, "nb de pipe: %d\n", d_exec->number_of_pipes);

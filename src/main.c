@@ -55,11 +55,13 @@ int	main(int ac, char **av, char **envp)
 		while (1)
 		{
 			rl_on_new_line();
-				add_history("<<a <<b <<c");
+			rl_redisplay();
+			add_history("<<a <<b <<c");
 			buffer = readline(""GREEN"$>"RESET" ");
+			if (!buffer) 
+				exit(0);
 			if (buffer && *buffer)
 				add_history(buffer);
-			rl_redisplay();
 			check = parse_shell (buffer, &info_parse, &info_exec);
 			if (check == 1)
 			{
