@@ -104,5 +104,5 @@ int	main(int ac, char **av, char **envp)
 			i++;
 		}
 	}
-	return (0); 
+	return (0);
 }

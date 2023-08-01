@@ -19,7 +19,7 @@ static int	count_words(const char *str, char sign)
 
 	count = 0;
 	i = 0;
-	while (str[i])
+	while(str[i])
 	{
 		count++;
 		while (str[i] == sign)
@@ -64,7 +64,7 @@ static int	write_split(char **tab_split, const char *str, char sign, int var)
 			j = 0;
 			while (str[i + j] != sign && str[i + j] != '\0')
 				j++;
-			tab_split [word] = (char *)malloc(sizeof(char) * (j + 1));
+			tab_split[word] = (char *)malloc(sizeof(char) * (j + 1 + var));
 			if (tab_split[word] == NULL)
 				return (delete_word(tab_split, word - 1));
 			write_word(tab_split[word], &str[i], sign, var);
@@ -81,7 +81,7 @@ char	**ft_split_exec(const char *str, char c, int var)
 	int		words;
 
 	words = count_words(str, c);
-	tab_result = (char **)malloc(sizeof(char *) * (words + 1));
+	tab_result = (char **)ft_calloc(sizeof(char *), (words + 1));
 	if (tab_result == NULL)
 		return (NULL);
 	tab_result[words] = 0;

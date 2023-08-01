@@ -22,13 +22,15 @@ int handle_heredoc(t_exec *d_exe)
 		return (1);
 	//fprintf(stderr, ">> nb of valid heredoc: %d\n", size);
 	d_exe->str_heredoc = create_str_heredoc(d_exe->heredoc, d_exe);
+	fprintf(stderr, "str_heredoc : %s\n", d_exe->str_heredoc);
 	//fprintf(stderr, "ft_handle_heredoc %s\n", d_exe->str_heredoc);
 	heredoc_tab = ft_split_exec(d_exe->str_heredoc, ' ', 0);
     size = ft_tabsize(heredoc_tab);//size_tab = ft_tabsize(d_exe->heredoc);
     while(heredoc_tab[i])
-    { 
+    {
         if (i == size - 1)
-		{	
+		{
+			fprintf(stderr, "i : %d, size : %d\n", i, size);
             heredoc_res = heredoc_data_saved(heredoc_tab[i], d_exe, buffer);
 			break;
 		}

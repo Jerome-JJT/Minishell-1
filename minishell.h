@@ -209,6 +209,7 @@ void		last_cmd(t_pipe *d, int process, t_exec *d_exe);
 void		setup_outfile_cmd(t_pipe *d_pipe, t_exec *d_exe);
 char		**ft_split_exec(const char *str, char c, int var);
 void		handle_dup_fd_single_cmd(t_pipe *d_pip, t_exec *exe);
+
 char    	*ft_strcpy(char *s1, char *s2);
 int			is_tab_heredoc_empty(char **tab);
 void		first_cmd(t_pipe *d, t_exec *d_exe);
@@ -221,6 +222,7 @@ void		init_struc_exec(t_exec *d, t_shell infos, char **env);
 char		*get_cmd_path(char *cmd, t_exec *info, t_dlist **trash);
 int			is_builtins(char *cmd_to_compare, char** builtins_list);
 void		handle_outfile_append_redirections(t_exec *exe);
+
 void		handle_infile_heredoc_redirections(t_exec *exe, t_pipe *pipe);
 void		remove_prefixe_outfile(char **outfile_tab);
 char    	**heredoc_data_saved(char *to_check, t_exec *exe, char *buffer);
