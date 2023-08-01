@@ -55,11 +55,7 @@ int	main(int ac, char **av, char **envp)
 		while (1)
 		{
 			rl_on_new_line();
-<<<<<<< HEAD
 			add_history("pwd >out");
-=======
-				add_history("echo \"\'$USER$USER\'\"");
->>>>>>> 2ea274334477096c4bdeff8cb705e52108311021
 			buffer = readline(""GREEN"$>"RESET" ");
 			if (buffer && *buffer)
 				add_history(buffer);
