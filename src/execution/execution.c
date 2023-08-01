@@ -12,24 +12,14 @@ int shell_execution(t_exec *d_exec, char **env, t_shell *shell_info)
 	char *builtins[] = {"cd", "echo", "env", "exit", "export", "pwd", "unset", NULL};
 	/*---------------------------------------------------*/
 	fprintf(stderr, "check value tab_cmd: %s\n", d_exec->tab_cmd[0]);
-<<<<<<< HEAD
 	//fprintf(stderr, "check value redi_in[0]: %s\n", d_exec->redi_infile[0]);
-=======
-	// fprintf(stderr, "check value redi_in[0]: %s\n", d_exec->redi_infile[0]);
->>>>>>> 2ea274334477096c4bdeff8cb705e52108311021
 	// fprintf(stderr, "check value redi_in[2]: %s\n", d_exec->redi_infile[2]);
 	fprintf(stderr, "check value redi_out0: %s\n", d_exec->redi_outfile[0]);
 	// fprintf(stderr, "check value redi_out1: %s\n", d_exec->redi_outfile[1]);
 	// fprintf(stderr, "check value redi_out2: %s\n", d_exec->redi_outfile[2]);
-<<<<<<< HEAD
 	//fprintf(stderr, "check value heredoc[0]: %s\n", d_exec->heredoc[0]);
 	fprintf(stderr, "check value apppend0: %s\n", d_exec->append[0]);
 	//fprintf(stderr, "check value apppend1: %s\n", d_exec->append[1]);
-=======
-	fprintf(stderr, "check value heredoc[0]: %s\n", d_exec->heredoc[0]);
-	// fprintf(stderr, "check value apppend0: %s\n", d_exec->append[0]);
-	// fprintf(stderr, "check value apppend1: %s\n", d_exec->append[1]);
->>>>>>> 2ea274334477096c4bdeff8cb705e52108311021
 	// fprintf(stderr, "check value apppend2: %s\n", d_exec->append[2]);
 	// fprintf(stderr, "nb de pipe: %d\n", d_exec->number_of_pipes);
 	i = 0;
