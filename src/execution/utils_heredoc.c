@@ -4,9 +4,9 @@ int	ft_lstsize_heredoc(t_list *lst)
 {
 	int	i;
 
-	i = 1;
+	i = 0;
 	if (!lst)
-		return (0);
+		return (i);
 	while (lst != NULL)
 	{
 		lst = lst->next;

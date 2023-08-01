@@ -25,7 +25,7 @@ char *create_str_heredoc(char **exe_heredoc, t_exec *exe)
 char **heredoc_data_saved(char *to_check, t_exec *d_exe, char *buffer)
 {
     (void)d_exe;
-   // fprintf(stderr, ">>position heredoc: %s\n", to_check);
+   	// fprintf(stderr, ">>position heredoc: %s\n", to_check);
     char **res;
 
 	d_exe->last_heredoc = to_check;
@@ -34,10 +34,11 @@ char **heredoc_data_saved(char *to_check, t_exec *d_exe, char *buffer)
     t_dlist **trash = NULL;
     t_list *heredoc_lst = NULL;
     t_list *node = NULL;
-	if (!buffer)
-		buffer = readline("> ");
-    heredoc_lst = ft_lstnew_heredoc(buffer, trash);
-	heredoc_lst = heredoc_lst->next;
+	// fprintf(stderr, ">>buffer: %s\n", buffer);
+	// if (!buffer)
+	buffer = readline("> ");
+    // heredoc_lst = ft_lstnew_heredoc(buffer, trash);
+	// heredoc_lst = heredoc_lst->next;
     while(ft_strncmp(buffer, to_check, (ft_strlen(to_check) + 1)) != 0)
     {
         node = ft_lstnew_heredoc(buffer, trash);
@@ -58,11 +59,13 @@ char	**create_tab(t_list **lst, t_dlist **trash)
 
 	i = 0;
 	size = ft_lstsize_heredoc(*lst);
-	tab = my_malloc(size, sizeof(char**),  trash);
+	//fprintf(stderr, "size: %d, sizeof : %lu\n", size, sizeof(char**));
+
+	tab = my_malloc(size + 1, sizeof(char**),  trash);
 	if (tab == NULL)
 		return (NULL);
 	tmp = *lst;
-	while (i < size - 1)
+	while (i < size)
 	{
 		tab[i] = tmp->valeur;
 		tmp = tmp->next;
