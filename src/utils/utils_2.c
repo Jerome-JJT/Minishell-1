@@ -26,8 +26,8 @@ char **ft_split_var(char *var, t_dlist **trash)
         return NULL;
     }
     tab[2] = NULL;
-    tab[0] = my_malloc((strlen(var) + 1), sizeof(char), trash);
-    tab[1] = my_malloc((strlen(var) + 1), sizeof(char), trash);
+    tab[0] = my_malloc((ft_strlen(var) + 1), sizeof(char), trash);
+    tab[1] = my_malloc((ft_strlen(var) + 1), sizeof(char), trash);
     cpy_var(tab[0], var, '=');
     tmp = ft_strchr(var, '=');
     if (tmp)

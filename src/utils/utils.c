@@ -55,6 +55,7 @@ void	init_shell(t_shell *info, t_exec *exec, char **envp)
 	tab_to_lst(info, envp);
 	exec->env_cpy = envp;
 	exec->cmd_number = 0;
+	exec->append = NULL;
 	exec->idx = 0;
 	exec->nb_of_valid_heredoc = 0;
 	exec->nb_probable_of_heredocs = 0;

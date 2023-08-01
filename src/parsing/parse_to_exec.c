@@ -46,11 +46,9 @@ void pars_to_exec(t_shell *info, t_exec *exec, t_dlist **trash)
 {
     int     pipe;
     t_tok   *tmp;
-   // char *test_append[] = {NULL};
 
     pipe = 0;
     tmp = info->token;
-   exec->append = NULL;
     while (tmp)
     {
         if (tmp->type == RED_IN)
