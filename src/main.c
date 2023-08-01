@@ -21,6 +21,7 @@ int	main(int ac, char **av, char **envp)
 		while (1)
 		{
 			rl_on_new_line();
+			add_history("pwd >out");
 			buffer = readline(""GREEN"$>"RESET" ");
 			if (buffer && *buffer)
 				add_history(buffer);
@@ -69,5 +70,5 @@ int	main(int ac, char **av, char **envp)
 			i++;
 		}
 	}
-	return (0); 
+	return (0);
 }

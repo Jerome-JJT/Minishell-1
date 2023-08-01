@@ -110,7 +110,7 @@ void create_cmd_n_args_builtins(t_exec *exe)
 	{
 		command_not_found(exe->tab_cmd[exe->idx]);
 	}
-	
+
 	if(ft_strlen(name[0]) < size)
 	{
 		arg = ft_strcpy(arg, exe->tab_cmd[exe->idx] + (ft_strlen(name[0]) + 1));

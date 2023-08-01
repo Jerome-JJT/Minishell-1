@@ -1,6 +1,5 @@
 CC				= gcc
-CFLAGS			= -Wall -Wextra -Werror -g 
-# -fsanitize=address
+CFLAGS			= -Wall -Wextra -Werror -g -fsanitize=address
 LIBFT			= -L./libft -lft
 INCLUDES		= -I libft/include/ -I ./ -I /usr/local/Cellar/readline/8.2.1/include/readline/
 BUILTINS_PATH	= ./src/builtins
@@ -68,7 +67,7 @@ _END			=	\e[0m
 SRCS 			=	$(addprefix $(SRC_PATH)/,$(SRC)) $(addprefix $(BUILTINS_PATH)/,$(BUILTINS)) $(addprefix $(LIST_PATH)/,$(LIST)) $(addprefix $(UTILS_PATH)/,$(UTILS)) $(addprefix $(PARSE_PATH)/,$(PARSE)) $(addprefix $(EXEC_PATH)/,$(EXEC)) $(addprefix $(SIGNALS_PATH)/,$(SIGNALS))
 OBJS			=	$(SRCS:.c=.o)
 
-%.o: %.c
+%.o: %.c minishell.h
 			@printf "minishell object :		$(_BLUE)%-33.33s\r$(_END)\n" $@
 			@${CC} ${CFLAGS} $(INCLUDES) -c $< -o $@
 

@@ -8,18 +8,18 @@ int shell_execution(t_exec *d_exec, char **env, t_shell *shell_info)
 	t_pipe	d_pip;
 	d_pip = (t_pipe){0};
 	/*------------------VARIABLES_TEST--------------------*/
-	
+
 	char *builtins[] = {"cd", "echo", "env", "exit", "export", "pwd", "unset", NULL};
 	/*---------------------------------------------------*/
-	//fprintf(stderr, "check value tab_cmd: %s\n", d_exec->tab_cmd[0]);
-	// fprintf(stderr, "check value redi_in[0]: %s\n", d_exec->redi_infile[0]);
+	fprintf(stderr, "check value tab_cmd: %s\n", d_exec->tab_cmd[0]);
+	//fprintf(stderr, "check value redi_in[0]: %s\n", d_exec->redi_infile[0]);
 	// fprintf(stderr, "check value redi_in[2]: %s\n", d_exec->redi_infile[2]);
-	//fprintf(stderr, "check value redi_out0: %s\n", d_exec->redi_outfile[0]);
+	fprintf(stderr, "check value redi_out0: %s\n", d_exec->redi_outfile[0]);
 	// fprintf(stderr, "check value redi_out1: %s\n", d_exec->redi_outfile[1]);
 	// fprintf(stderr, "check value redi_out2: %s\n", d_exec->redi_outfile[2]);
 	//fprintf(stderr, "check value heredoc[0]: %s\n", d_exec->heredoc[0]);
-	// fprintf(stderr, "check value apppend0: %s\n", d_exec->append[0]);
-	// fprintf(stderr, "check value apppend1: %s\n", d_exec->append[1]);
+	fprintf(stderr, "check value apppend0: %s\n", d_exec->append[0]);
+	//fprintf(stderr, "check value apppend1: %s\n", d_exec->append[1]);
 	// fprintf(stderr, "check value apppend2: %s\n", d_exec->append[2]);
 	// fprintf(stderr, "nb de pipe: %d\n", d_exec->number_of_pipes);
 	i = 0;
@@ -37,15 +37,21 @@ int shell_execution(t_exec *d_exec, char **env, t_shell *shell_info)
 	if(d_exec->number_of_pipes == 0)
 	{
 		if(is_builtins(d_exec->tab_cmd[i], builtins) == 1)
-		{	
-			//fprintf(stderr, "pipe = 0, builtins\n");
+		{
+			fprintf(stderr, "pipe = 0, builtins\n");
+			int out_backup = dup(1);
+			fprintf(stderr, "out : %d\n", out_backup);
 			handle_dup_fd_single_cmd(&d_pip, d_exec);
 			create_cmd_n_args_builtins(d_exec);
 			builtins_exec(d_exec->cmd_n_arg[0], shell_info, d_exec->cmd_n_arg, d_exec);
+			dup2(out_backup, 1);
 			return (0);
 		}
 		else
+		{
+			fprintf(stderr, "else\n");
 			handle_single_cmd(&d_pip, d_exec, shell_info, d_exec->tab_cmd[i]);
+		}
 	}
 	if (d_exec->number_of_pipes > 0)
 	{
@@ -55,12 +61,12 @@ int shell_execution(t_exec *d_exec, char **env, t_shell *shell_info)
 			{
 				if (i % 2 == 0)
 				{
-					//fprintf(stderr, ">> builtins_0 = %s, idx : %d\n", d_exec->tab_cmd[i], d_exec->idx);
+					fprintf(stderr, ">> builtins_0 = %s, idx : %d\n", d_exec->tab_cmd[i], d_exec->idx);
 					builtins_0(&d_pip, d_exec, shell_info, d_exec->tab_cmd[i]);
 				}
 				else
 				{
-					//fprintf(stderr, ">> builtins_1 = %s\n", d_exec->tab_cmd[i]);
+					fprintf(stderr, ">> builtins_1 = %s\n", d_exec->tab_cmd[i]);
 					builtins_1(&d_pip, d_exec, shell_info, d_exec->tab_cmd[i]);
 				}
 			}
@@ -68,12 +74,12 @@ int shell_execution(t_exec *d_exec, char **env, t_shell *shell_info)
 			{
 				if (i % 2 == 0)
 				{
-					//fprintf(stderr, ">> process_0 = %s, idx : %d\n", d_exec->tab_cmd[i], d_exec->idx);
+					fprintf(stderr, ">> process_0 = %s, idx : %d\n", d_exec->tab_cmd[i], d_exec->idx);
 					child_process_0(&d_pip, d_exec, shell_info, d_exec->tab_cmd[i]);
 				}
 				else
 				{
-					//fprintf(stderr, ">> process_1 = %s\n", d_exec->tab_cmd[i]);
+					fprintf(stderr, ">> process_1 = %s\n", d_exec->tab_cmd[i]);
 					child_process_1(&d_pip, d_exec, shell_info, d_exec->tab_cmd[i]);
 				}
 			}
