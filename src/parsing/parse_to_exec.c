@@ -22,7 +22,7 @@ static t_tok    *send_red(t_tok *lst, t_exec *exec, int type, int index, t_dlist
     else
     {
         lst = lst->next;
-        if (lst->type == SPACE)
+        if (lst->type == SPACEE)
             lst = lst->next;
         if (type == RED_IN)
             exec->redi_infile[index] = fill_tab(exec->redi_infile[index], lst->tok, trash);
@@ -39,7 +39,6 @@ static t_tok    *send_red(t_tok *lst, t_exec *exec, int type, int index, t_dlist
         else if (type == H_D)
             exec->heredoc[index] = fill_tab(exec->heredoc[index], lst->tok, trash);
     }
- //   exec->append = tab_test_append;
     return (lst);
 }
 
@@ -47,11 +46,11 @@ void pars_to_exec(t_shell *info, t_exec *exec, t_dlist **trash)
 {
     int     pipe;
     t_tok   *tmp;
-    char *test_append[] = {NULL};
+   // char *test_append[] = {NULL};
 
     pipe = 0;
     tmp = info->token;
-    exec->append = test_append;
+   exec->append = NULL;
     while (tmp)
     {
         if (tmp->type == RED_IN)

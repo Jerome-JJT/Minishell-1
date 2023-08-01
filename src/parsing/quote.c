@@ -14,7 +14,7 @@ static char	*if_env_var(char *str,  t_env *env, t_dlist **trash)
 	ret = NULL;
 	while (ft_isalnum(str[i]))
 		i++;
-	if (!ft_isquote(str[i]) && ft_issigle(str[i])
+	if (str[i] != '\"' && ft_issigle(str[i])
 			&& str[i])
 	{
 		while (str[i + j] != '\"' && str[i + j])
@@ -83,7 +83,7 @@ char	*ft_dquote(char *str, t_shell *info)
 	tmp = NULL;
 	i = 1;
 	check = 0;
-	while (!ft_isquote(str[i]))
+	while (str[i] != '\"')
 	{
 		if (str[i] == '$' && check == 0)
 		{
@@ -105,7 +105,7 @@ char	*ft_squote(char *str, t_shell *info)
 	int		i;
 
 	i = 1;
-	while (!ft_isquote(str[i]))
+	while (str[i] != '\'')
 		i++;
 	creat_and_add(NULL, str, S_QUOTE, i, info);
 	return (str + (i + 1));

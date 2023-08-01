@@ -65,19 +65,18 @@ void	init_shell(t_shell *info, t_exec *exec, char **envp)
 }
 
 /* ---------------------- 5.Reset tab ----------------------------*/
-void	ft_tabreset(char **tab)
+void	ft_tabreset(char ***tab)
 {
 	int	i;
-	int	j;
-	//char	*str;
+	// int	j;
 
 	i = 0;
-	while (tab[i])
+	while ((*tab)[i])
 	{
-		//str = tab[i];
-		j = 0;
-		while (tab[i][j])
-			tab[i][j++] = 0;
+		// j = 0;
+		// while (tab[i][j])
+		// 	tab[i][j++] = 0;
+		(*tab)[i] = NULL;
 		i++;
 	}
 }

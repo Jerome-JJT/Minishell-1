@@ -14,7 +14,7 @@ static int	is_here_doc(t_tok *token)
 		return (1);
 	else if (!ptr->prev)
 		return (0);
-	else if (ptr->type == SPACE && ptr->prev->type == H_D)
+	else if (ptr->type == SPACEE && ptr->prev->type == H_D)
 		return (1);
 	return (0);
 }

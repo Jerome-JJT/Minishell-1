@@ -15,7 +15,7 @@ void handle_single_cmd(t_pipe *d_pip, t_exec *d_exe, t_shell *d_shell, char *cmd
         // return;
     }
     if (fork_pid == 0)
-    {
+    {	
         prepare_cmd(d_exe, d_shell, cmd);
         handle_dup_fd_single_cmd(d_pip, d_exe);
         if (execve(d_exe->cmd_path, d_exe->cmd_n_arg, d_exe->env_cpy) == -1)
@@ -31,7 +31,10 @@ void handle_single_cmd(t_pipe *d_pip, t_exec *d_exe, t_shell *d_shell, char *cmd
 
 void handle_dup_fd_single_cmd(t_pipe *d_pip, t_exec *exe)
 {
+	
     //fprintf(stderr, "handle_dup_fd_single\n");
+	fprintf(stderr, "bugubuibui b %s\n", exe->cmd_path);
+	dup(1);
 	handle_redirections(exe, d_pip);
     if (d_pip->infile)
     {

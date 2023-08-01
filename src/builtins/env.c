@@ -34,6 +34,11 @@ void	env_minishell(t_shell *info, char *arg)
 {
 	t_list	*node;
 
+	if (!info->env->head)
+	{
+		printf("No minishell environment\n");
+		return ;
+	}
 	node = info->env->head;
 	if (arg)
 		env_with_arg(info, arg);

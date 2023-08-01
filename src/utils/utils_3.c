@@ -53,10 +53,12 @@ void	creat_and_add(char *tmp, char *str, int type, int index, t_shell *info)
 	}
 	else
 	{
-		if (type == WORD)
-			token = new_node(ft_substr(tmp, 0, ft_strlen(tmp), &info->trash_lst), type, &info->trash_lst);
-		else
-			token = new_node(ft_substr(tmp, 0, ft_quotelen(tmp), &info->trash_lst), type, &info->trash_lst);
+		// if (type == WORD)
+			// token = new_node(ft_substr(tmp, 0, ft_strlen(tmp), &info->trash_lst), type, &info->trash_lst);
+			token = new_node(ft_strdup(tmp, &info->trash_lst), type, &info->trash_lst);
+		// else
+			// token = new_node(ft_substr(tmp, 0, ft_quotelen(tmp), &info->trash_lst), type, &info->trash_lst);
 	}
+	printf("E .%s\n", token->tok);
 	tok_addlst(&info->token, token);
 }

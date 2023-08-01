@@ -113,7 +113,7 @@ $(NAME) : $(OBJS)
 re : fclean $(NAME)
 
 clean :
-		$(RM) *.o $(SRC_PATH)*.o $(GNL_SRC_FOLDER)*.o $(PRINTF_SRC_FOLDER)*.o
+		$(RM) $(OBJS)
 
 fclean : clean
 		@$(RM) $(NAME)

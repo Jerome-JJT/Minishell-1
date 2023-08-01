@@ -47,8 +47,8 @@ enum e_token
 	RED_OUT,
 	H_D,
 	APPEND,
-	SPACE,
-	// SPACEE,
+	// SPACE,
+	SPACEE,
 	PIPE
 }	;
 
@@ -102,6 +102,7 @@ typedef struct s_exec
 	char	*str_heredoc;
 	int		cmd_number;
 	t_dlist	**trash_lst_exe;
+	int		fd_out_backup;
 }	t_exec;
 
 typedef struct s_pipe
@@ -147,7 +148,7 @@ int			ft_isquote(char c);
 int			ft_isword(int token);
 int			ft_quotelen(char *str);
 int			ft_tabsize(char **tab);
-void		ft_tabreset(char **tab);
+void		ft_tabreset(char ***tab);
 int			check_printchar(char c);
 char    	*remove_quote(char *str);
 int			ft_checkquote(char *str);
