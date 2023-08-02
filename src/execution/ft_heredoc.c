@@ -1,5 +1,21 @@
 #include "minishell.h"
 
+int number_of_valid_heredoc(t_exec *d_exe)
+{
+	int i;
+	int size;
+
+	i = 0;
+	size = 0;
+	while(i <= d_exe->nb_probable_of_heredocs)
+	{
+		if(d_exe->heredoc[i] != NULL)
+			size++;
+		i++;
+	}
+	return (size);
+}
+
 char *create_str_heredoc(char **exe_heredoc, t_exec *exe)
 {
 	char *result;
@@ -13,8 +29,6 @@ char *create_str_heredoc(char **exe_heredoc, t_exec *exe)
 	{
 		if (exe->heredoc[i] == NULL && i < exe->nb_probable_of_heredocs)
 			i++;
-		//if (!exe_heredoc[i + 1])
-		//	result = ft_strcat_heredoc(result, exe_heredoc[i], 1);
 		if (exe->heredoc[i])
 			result = ft_strcat_heredoc(result, exe_heredoc[i], 0);
 		i++;
@@ -34,11 +48,7 @@ char **heredoc_data_saved(char *to_check, t_exec *d_exe, char *buffer)
     t_dlist **trash = NULL;
     t_list *heredoc_lst = NULL;
     t_list *node = NULL;
-	// fprintf(stderr, ">>buffer: %s\n", buffer);
-	// if (!buffer)
 	buffer = readline("> ");
-    // heredoc_lst = ft_lstnew_heredoc(buffer, trash);
-	// heredoc_lst = heredoc_lst->next;
     while(ft_strncmp(buffer, to_check, (ft_strlen(to_check) + 1)) != 0)
     {
         node = ft_lstnew_heredoc(buffer, trash);
@@ -60,7 +70,6 @@ char	**create_tab(t_list **lst, t_dlist **trash)
 	i = 0;
 	size = ft_lstsize_heredoc(*lst);
 	//fprintf(stderr, "size: %d, sizeof : %lu\n", size, sizeof(char**));
-
 	tab = my_malloc(size + 1, sizeof(char**),  trash);
 	if (tab == NULL)
 		return (NULL);
@@ -75,7 +84,7 @@ char	**create_tab(t_list **lst, t_dlist **trash)
 	return (tab);
 }
 
-int convert_tab_to_fd_heredoc(char **heredoc_res)
+void convert_tab_to_fd_heredoc(char **heredoc_res)
 {
 	int size;
 	int j;
@@ -85,7 +94,7 @@ int convert_tab_to_fd_heredoc(char **heredoc_res)
 	if (fd == -1)
 	{
 		write(2, "error fd heredoc\n", 17);
-		return (0);
+		return;
 	}
 	size = ft_tabsize(heredoc_res);
 	while((size - 1) >= 0)
@@ -100,5 +109,4 @@ int convert_tab_to_fd_heredoc(char **heredoc_res)
 		size--;
 	}
 	close(fd);
-	return (fd);
 }

@@ -10,7 +10,6 @@ void		builtins_0(t_pipe *d_pip, t_exec *d_exe, t_shell *d_shell, char *cmd)
 		perror_msg_system(1);//fprintf(stderr, "fork errot\n"); //perror_msg();
 	if (fork_pid == 0)
 	{
-		fprintf(stderr, "bugubuibui b %s\n", d_exe->cmd_path);
 		close_pipes(d_pip, 1);
 		create_cmd_n_args_builtins(d_exe);//d_exe->cmd_n_arg = ft_split_exec(cmd, ' ', 0);
 		handle_redirections(d_exe, d_pip);
@@ -73,58 +72,43 @@ void create_cmd_n_args_builtins(t_exec *exe)
 
 	size = ft_strlen(exe->tab_cmd[exe->idx]);
 	name = ft_split_exec((exe->tab_cmd[exe->idx]), ' ', 0);
-	//fprintf(stderr, "name : %s\n", name[0]);
 	exe->cmd_n_arg = ft_calloc(3, sizeof(char**));
 	exe->cmd_n_arg[0] = ft_calloc(ft_strlen(name[0] + 1), sizeof(char *));
-	arg = ft_calloc((ft_strlen(exe->tab_cmd[exe->idx]) + (ft_strlen(name[0] + 1))), sizeof(char*));
-	exe->cmd_n_arg[1] = ft_calloc((ft_strlen(arg)), sizeof(char *));
-	exe->cmd_n_arg[1] = NULL;
-	if(ft_strncmp("echo", name[0], 5) == 0)
-	{
-		exe->cmd_n_arg[0] = "echo";
-	}
-	else if(ft_strncmp("cd", name[0], 3) == 0)
-	{
-		exe->cmd_n_arg[0] = "cd";
-	}
-	else if(ft_strncmp("env", name[0], 4) == 0)
-	{
-		exe->cmd_n_arg[0] = "env";
-	}
-	else if(ft_strncmp("exit", name[0], 5) == 0)
-	{
-		exe->cmd_n_arg[0] = "exit";
-	}
-	else if(ft_strncmp("export", name[0], 7) == 0)
-	{
-		exe->cmd_n_arg[0] = "export";
-	}
-	else if(ft_strncmp("pwd", name[0], 4) == 0)
-	{
-		exe->cmd_n_arg[0] = "pwd";
-	}
-	else if(ft_strncmp("unset", name[0], 6) == 0)
-	{
-		exe->cmd_n_arg[0] = "unset";
-	}
-	else
-	{
-		command_not_found(exe->tab_cmd[exe->idx]);
-	}
-
+	fill_name_cmd_builtins(exe, name[0]);
 	if(ft_strlen(name[0]) < size)
 	{
+		arg = ft_calloc((ft_strlen(exe->tab_cmd[exe->idx]) + (ft_strlen(name[0] + 1))) + 1, sizeof(char*)); // ajout + 1 \0
+		exe->cmd_n_arg[1] = ft_calloc((ft_strlen(arg)) + 1, sizeof(char *)); // ajout +1 , \0
 		arg = ft_strcpy(arg, exe->tab_cmd[exe->idx] + (ft_strlen(name[0]) + 1));
-		//fprintf(stderr, "cmd rempli\n");
 		exe->cmd_n_arg[1] = arg;
 	}
-	// fprintf(stderr, "end arg[1]: %s\n", exe->cmd_n_arg[1]);
-	// fprintf(stderr, "end arg[2]: %s\n", exe->cmd_n_arg[2]);
-	//fprintf(stderr, "end arg: %s\n", arg);
 	// i = 0;
 	// while(exe->cmd_n_arg[i])
 	// {
-	// 	fprintf(stderr, "cmd_n_arg_builtins[%d]: %s\n", i, exe->cmd_n_arg[i]);
+	// 	fprintf(stderr, ">>cmd_n_arg_builtins[%d]: %s\n", i, exe->cmd_n_arg[i]);
 	// 	i++;
 	// }
+}
+
+void fill_name_cmd_builtins(t_exec *exe, char *name)
+{
+	if(ft_strncmp("echo", name, 5) == 0)
+		exe->cmd_n_arg[0] = "echo";
+	else if(ft_strncmp("cd", name, 3) == 0)
+		exe->cmd_n_arg[0] = "cd";
+	else if(ft_strncmp("env", name, 4) == 0)
+		exe->cmd_n_arg[0] = "env";
+	else if(ft_strncmp("exit", name, 5) == 0)
+		exe->cmd_n_arg[0] = "exit";
+	else if(ft_strncmp("export", name, 7) == 0)
+	{
+		fprintf(stderr, "arg export\n");
+		exe->cmd_n_arg[0] = "export";
+	}
+	else if(ft_strncmp("pwd", name, 4) == 0)
+		exe->cmd_n_arg[0] = "pwd";
+	else if(ft_strncmp("unset", name, 6) == 0)
+		exe->cmd_n_arg[0] = "unset";
+	else
+		command_not_found(exe->tab_cmd[exe->idx]);
 }
