@@ -1,11 +1,20 @@
 #include "../../minishell.h"
 
-/* -------------------------- 1.Join str node_tmp ------------------------------- */
-static void	strjoin_tok_node(t_tok *dest, t_tok *src, t_dlist **trash)
+/* -------------------------- 1.if token is pipe ------------------------------- */
+static int	check_pipe(t_tok **node)
 {
-	dest->tok = ft_strjoin(dest->tok, src->tok, trash);
-	dest->next = src->next;
-	src->next = NULL;
+	t_tok	*tmp;
+
+	tmp = *node;
+	*node = (*node)->next;
+	if (!tmp->prev)
+		return (ft_error_msg(258, tmp->tok));
+	else if (tmp->prev->type == SPACEE)
+	{
+		if (type_is_sep(tmp->prev->prev->type))
+			return (ft_error_msg(258, tmp->tok));
+	}
+	return (0);
 }
 
 /* -------------------------- 2.If token is in_out_append ------------------------------- */
@@ -33,11 +42,8 @@ static int	in_out_append(t_tok **node)
 		}
 		else
 		{
-			//fprintf(stderr, "token: %s\n", tmp->tok);
 			if (access(tmp->tok, F_OK) == 0)
 				unlink(tmp->tok);
-			//if (open((tmp->tok), O_CREAT | O_WRONLY, 0777) < 0)
-			//	fprintf(stderr, "Outfile opening fail\n");
 		}
 		(*node) = tmp->next;
 	}
@@ -92,28 +98,27 @@ static void	word(t_tok **current_node, t_tok *next_node, t_dlist **trash)
 int	check_syntax(t_tok *lst, t_dlist **trash)
 {
 	t_tok	*node;
+	int		check;
 
 	node = lst;
+	check = 0;
 	while (node != NULL)
 	{
-		// printf("%s\n", node->tok); // -----> ***
-		if (node->type == PIPE && node->prev == NULL)
-			return (ft_error_msg(258, node->tok));
+		if (node->type == PIPE)
+			check = (check_pipe(&node));
 		else if (node->type == RED_IN || node->type == RED_OUT
 			|| node->type == APPEND)
-		{
-			if (in_out_append(&node) > 0)
-				return (1);
-		}
+			check = (in_out_append(&node));
 		else if (node->type == H_D)
-		{
-			if (heredoc(&node) > 0)
-				return (1);
-		}
+			check = (heredoc(&node));
 		else if (ft_isword(node->type))
 			word(&node, node->next, trash);
 		else
 			node = node->next;
+		if (check > 0)
+		{
+			return (1);
+		}
 	}
 	return (0);
 }

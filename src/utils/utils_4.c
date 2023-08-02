@@ -1,10 +1,8 @@
 #include "../../minishell.h"
 
 /* ---------------------------- 1.Reset all tab on exec --------------------------------*/
-void    reset_shelltab(t_exec *exec, t_shell *shell)
+void    reset_shelltab(t_exec *exec)
 {
-
-	(void) shell;
     if(exec->tab_cmd)
         ft_tabreset(&exec->tab_cmd);
         exec->tab_cmd = ft_calloc(20, sizeof(char *));
@@ -23,17 +21,7 @@ void    reset_shelltab(t_exec *exec, t_shell *shell)
         ft_tabreset(&exec->heredoc);
 	    exec->heredoc = ft_calloc(20, sizeof(char *));
     }
-    // ft_free_2da(exec->tab_cmd, NULL);
-    // ft_free_2da(exec->redi_infile, NULL);
-    // ft_free_2da(exec->redi_outfile, NULL);
-    // ft_free_2da(exec->heredoc, NULL);
-    // print_trash(&shell->trash_lst);
-    // ft_dlst_clear(&shell->trash_lst, free);
-    // shell->trash_lst = ft_calloc(1, sizeof(t_dlist));
-    // if (exec->tab_cmd)
-    // if (exec->redi_infile)
-    // if (exec->redi_outfile)
-    // if (exec->heredoc)
+
 }
 
 /* ---------------------------- 2.Variable split --------------------------------*/
@@ -48,7 +36,7 @@ char    **split_arg(char *str, int egal, t_dlist **trash)
     return (tab);
 }
 
-/* ---------------------------- 3. --------------------------------*/
+/* ---------------------------- 3.Tab --> 1 string --------------------------------*/
 char    *tab_to_str(char **tab, t_dlist **trash)
 {
     char    *str;
@@ -66,7 +54,7 @@ char    *tab_to_str(char **tab, t_dlist **trash)
     return (str);
 }
 
-/* ---------------------------- 4. --------------------------------*/
+/* ---------------------------- 4.Remove quote --------------------------------*/
 char    *remove_quote(char *str)
 {
     char    *cpy;
@@ -90,4 +78,13 @@ char    *remove_quote(char *str)
             cpy[i++] = 0;
     }
     return (cpy);
+}
+
+/* ---------------------------- 5.Type is sep --------------------------------*/
+int type_is_sep(int type)
+{
+    if (type == PIPE || type == RED_IN || type == RED_OUT
+        || type == APPEND || type == H_D)
+        return (1);
+    return (0);
 }

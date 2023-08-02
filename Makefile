@@ -56,7 +56,8 @@ BUILTINS		=	echo.c \
 					unset.c
 
 LIST			=	list_utils.c \
-					list_tok.c
+					list_tok.c \
+					list_utils2.c
 
 _BLUE			=	\e[34m
 _PURPLE			=	\e[35m

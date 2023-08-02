@@ -1,6 +1,7 @@
 #include "../../minishell.h"
 
-/* -------------------------- 1.Quote parsing ------------------------------- */
+
+/* -------------------------- 2.Quote parsing ------------------------------- */
 /* Check if quote = '' ou "" */
 static char	*parse_quote(char *buff, t_shell *info)
 {
@@ -16,7 +17,7 @@ static char	*parse_quote(char *buff, t_shell *info)
 	return (str);
 }
 
-/* --------------------- 2.Redirection parsing ------------------------------ */
+/* --------------------- 3.Redirection parsing ------------------------------ */
 /* Check if red = in ou out */
 static char	*parse_red(char *buff, t_tok **lst, t_dlist **trash)
 {
@@ -30,17 +31,15 @@ static char	*parse_red(char *buff, t_tok **lst, t_dlist **trash)
 	return (str);
 }
 
-/* -------------------------- 3.Shell parsing ------------------------------- */
-/* Main parsing : Tokenisation */
-int	parse_shell(char *buff, t_shell *info, t_exec *exec)
+/* -------------------------- 1.Char Sorting ------------------------------- */
+static int	ft_char_sort(char *buff, t_shell *info)
 {
-	if (!buff)
-		exit(0);
-	if (!*buff)
-		return (3);
+	t_tok	*tmp;
+	int		strlen;
+
+	strlen = ft_strlen(buff);
 	while (*buff == ' ')
 		buff++;
-	// test(buff, "Parse_shell");
 	while (*buff)
 	{
 		if (ft_isalnum(*buff) || (!ft_isparsing_char(*buff) && ft_isprint(*buff)))
@@ -58,13 +57,43 @@ int	parse_shell(char *buff, t_shell *info, t_exec *exec)
 		if (buff == NULL)
 		{
 			g_errno = 1;
-			return (g_errno = 1);
+			return (1);
+		}
+		if (*buff == '\0')
+		{
+			tmp = tok_lastnode(info->token);
+			if (tmp->type == PIPE || (tmp->type == SPACEE && tmp->prev->type == PIPE))
+			{
+				while (strlen > 0)
+				{
+					printf("%d\n", strlen);
+					buff--;
+					strlen--;
+				}
+				free(buff);
+				buff = readline(""BLUE">"RESET" ");
+				add_history(buff);
+			}
 		}
 	}
+	return (0);
+}
+
+/* -------------------------- 4.Shell parsing ------------------------------- */
+/* Main parsing : Tokenisation */
+int	parse_shell(char *buff, t_shell *info, t_exec *exec)
+{
+	int	strlen;
+
+	strlen = ft_strlen(buff);
+	if (!buff)
+		exit(0);
+	if (!*buff)
+		return (3);
+	if (ft_char_sort(buff, info) > 0)
+		return (1);
 	if (check_syntax(info->token, &info->trash_lst))
 		return (2);
 	pars_to_exec(info, exec, &info->trash_lst);
-	// print_trash(&info->trash_lst);
-	// printf("------------------------------------------------------------------------------\n");
 	return (0);
 }

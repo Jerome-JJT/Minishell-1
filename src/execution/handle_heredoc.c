@@ -22,27 +22,30 @@ int handle_heredoc(t_exec *d_exe)
 		return (1);
 	//fprintf(stderr, ">> nb of valid heredoc: %d\n", size);
 	d_exe->str_heredoc = create_str_heredoc(d_exe->heredoc, d_exe);
-	fprintf(stderr, "str_heredoc : %s\n", d_exe->str_heredoc);
+	// fprintf(stderr, "str_heredoc : %s\n", d_exe->str_heredoc);
 	//fprintf(stderr, "ft_handle_heredoc %s\n", d_exe->str_heredoc);
 	heredoc_tab = ft_split_exec(d_exe->str_heredoc, ' ', 0);
     size = ft_tabsize(heredoc_tab);//size_tab = ft_tabsize(d_exe->heredoc);
+	// fprintf(stderr, "i debut: %d\n", i);
     while(heredoc_tab[i])
     {
-        if (i == size - 1)
-		{
-			fprintf(stderr, "i : %d, size : %d\n", i, size);
-            heredoc_res = heredoc_data_saved(heredoc_tab[i], d_exe, buffer);
-			break;
-		}
 		if (buffer)
 		{
         	if (ft_strncmp(buffer, heredoc_tab[i], (ft_strlen(heredoc_tab[i]) + 1)) == 0)
            		i++;
+			buffer = NULL;
+		}
+        if (i == size - 1)
+		{
+			// fprintf(stderr, "i : %d, size : %d, to check: %s\n", i, size, heredoc_tab[i]);
+            heredoc_res = heredoc_data_saved(heredoc_tab[i], d_exe, buffer);
+			break;
 		}
         buffer = readline("> ");
     }
+	//free(buffer)
 	i = convert_tab_to_fd_heredoc(heredoc_res);
-	return (i);
+	return (i); // A CHANGER, VOID FT
 }
 
 // void	display_lst_heredoc(t_list **ptr_to_head, char *name)

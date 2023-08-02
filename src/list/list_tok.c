@@ -6,7 +6,7 @@
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 14:04:23 by nrossel           #+#    #+#             */
-/*   Updated: 2023/05/29 14:51:32 by nrossel          ###   ########.fr       */
+/*   Updated: 2023/08/02 11:05:26 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,4 +112,12 @@ char    **tokenlst_to_tab(t_tok *token, t_dlist **trash)
 		tmp = tmp->next;
 	}
 	return (tab);
+}
+
+/* -------------------------- 5.Join str node_tmp ------------------------------- */
+void	strjoin_tok_node(t_tok *dest, t_tok *src, t_dlist **trash)
+{
+	dest->tok = ft_strjoin(dest->tok, src->tok, trash);
+	dest->next = src->next;
+	src->next = NULL;
 }

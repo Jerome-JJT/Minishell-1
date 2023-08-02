@@ -10,7 +10,7 @@ void		builtins_0(t_pipe *d_pip, t_exec *d_exe, t_shell *d_shell, char *cmd)
 		perror_msg_system(1);//fprintf(stderr, "fork errot\n"); //perror_msg();
 	if (fork_pid == 0)
 	{
-		fprintf(stderr, "bugubuibui b %s\n", d_exe->cmd_path);
+		// fprintf(stderr, "bugubuibui b %s\n", d_exe->cmd_path);
 		close_pipes(d_pip, 1);
 		create_cmd_n_args_builtins(d_exe);//d_exe->cmd_n_arg = ft_split_exec(cmd, ' ', 0);
 		handle_redirections(d_exe, d_pip);
