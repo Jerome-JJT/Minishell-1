@@ -1,7 +1,7 @@
 #include "../../minishell.h"
 
 
-/* -------------------------- 2.Quote parsing ------------------------------- */
+/* -------------------------- 1.Quote parsing ------------------------------- */
 /* Check if quote = '' ou "" */
 static char	*parse_quote(char *buff, t_shell *info)
 {
@@ -17,7 +17,7 @@ static char	*parse_quote(char *buff, t_shell *info)
 	return (str);
 }
 
-/* --------------------- 3.Redirection parsing ------------------------------ */
+/* --------------------- 2.Redirection parsing ------------------------------ */
 /* Check if red = in ou out */
 static char	*parse_red(char *buff, t_tok **lst, t_dlist **trash)
 {
@@ -31,29 +31,34 @@ static char	*parse_red(char *buff, t_tok **lst, t_dlist **trash)
 	return (str);
 }
 
-/* -------------------------- 1.Char Sorting ------------------------------- */
+/* -------------------------- 3.Quote parsing ------------------------------- */
+static char	*sort_type(char *buff, t_shell *info)
+{
+	if (ft_isalnum(*buff) || (!ft_isparsing_char(*buff) && ft_isprint(*buff)))
+		buff = ft_word(buff, info);
+	else if ((*buff == '\'' || *buff == '\"'))
+		buff = parse_quote(buff, info);
+	else if (*buff == ' ')
+		buff = ft_space(buff, &info->token, &info->trash_lst);
+	else if (*buff == '<' || *buff == '>')
+		buff = parse_red(buff, &info->token, &info->trash_lst);
+	else if (*buff == '|')
+		buff = ft_pipe(buff, &info->token, &info->trash_lst);
+	else
+		buff++;
+	return (buff);
+}
+
+/* -------------------------- 4.Char Sorting ------------------------------- */
 static int	ft_char_sort(char *buff, t_shell *info)
 {
 	t_tok	*tmp;
 	int		strlen;
 
 	strlen = ft_strlen(buff);
-	while (*buff == ' ')
-		buff++;
 	while (*buff)
 	{
-		if (ft_isalnum(*buff) || (!ft_isparsing_char(*buff) && ft_isprint(*buff)))
-			buff = ft_word(buff, info);
-		else if ((*buff == '\'' || *buff == '\"'))
-			buff = parse_quote(buff, info);
-		else if (*buff == ' ')
-			buff = ft_space(buff, &info->token, &info->trash_lst);
-		else if (*buff == '<' || *buff == '>')
-			buff = parse_red(buff, &info->token, &info->trash_lst);
-		else if (*buff == '|')
-			buff = ft_pipe(buff, &info->token, &info->trash_lst);
-		else
-			buff++;
+		buff = sort_type(buff, info);
 		if (buff == NULL)
 		{
 			g_errno = 1;
@@ -73,13 +78,14 @@ static int	ft_char_sort(char *buff, t_shell *info)
 				free(buff);
 				buff = readline(""BLUE">"RESET" ");
 				add_history(buff);
+				strlen = ft_strlen(buff);
 			}
 		}
 	}
 	return (0);
 }
 
-/* -------------------------- 4.Shell parsing ------------------------------- */
+/* -------------------------- 5.Shell parsing ------------------------------- */
 /* Main parsing : Tokenisation */
 int	parse_shell(char *buff, t_shell *info, t_exec *exec)
 {

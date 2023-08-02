@@ -72,6 +72,7 @@ int	main(int ac, char **av, char **envp)
 		buffer = readline(""GREEN"$>"RESET" ");
 		if (!buffer) 
 			exit(0);
+		buffer = ft_strtrim(buffer, " ", &info_parse.trash_lst);
 		if (buffer && *buffer)
 			add_history(buffer);
 		check = parse_shell (buffer, &info_parse, &info_exec);
