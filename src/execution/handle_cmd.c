@@ -93,7 +93,7 @@ void	middle_cmd(t_pipe *d, t_exec *exe, int process)
 	{
 		//fprintf(stderr, "infile in middle_cmd: %s\n", d->infile);
 		setup_infile_cmd(d);
-	}	
+	}
 	else
 	{
 		if (process == 0)
@@ -130,7 +130,8 @@ void setup_infile_cmd(t_pipe *d_pipe)
 		perror_msg_system(4);
 		return; // AJOUT
 	}
-	close(d_pipe->fd_in);
+	if (close(d_pipe->fd_in) == -1)
+		perror_msg_system(6);
 }
 
 void setup_outfile_cmd(t_pipe *d_pipe, t_exec *d_exe)
@@ -157,7 +158,8 @@ void setup_outfile_cmd(t_pipe *d_pipe, t_exec *d_exe)
 		perror_msg_system(4);
 		return; // AJOUT
 	}
-	close(d_pipe->fd_out);
+	if (close(d_pipe->fd_out) == -1)
+		perror_msg_system(6);
 }
 
 void setup_middle_cmd(t_pipe *d_pipe, int option)

@@ -5,14 +5,14 @@ void	command_not_found(char *cmd)
 {
 	char	*msg_err;
 	char	*tmp;
-
-	tmp = strjoin_exec("minishell: Command not found: ", cmd);
+	g_errno = 127;
+	tmp = strjoin_exec("Minishell: Command not found: ", cmd);
 	msg_err = strjoin_exec(tmp, "\n");
 	ft_putstr_fd(msg_err, 2);
 	// free(tmp);
 	// free(msg_err);
 	//printf("Command '%s' not found\n", cmd);
-	exit(127);
+	exit (EXIT_FAILURE);
 }
 
 void error_infile_outfile(int error_nb, t_exec *exe)
@@ -30,31 +30,44 @@ void error_infile_outfile(int error_nb, t_exec *exe)
 	}
 }
 
-int perror_msg_system(int error_type)
+int perror_msg_system(int errn)
 {
-	if (error_type == 1)
+	fprintf(stderr, ">>errno: %d\n", errno);
+	// if (errno)
+	// 	perror("");
+	if (errn == 7)
 	{
-		g_errno = errno;
 		perror("Fork");
-		return(g_errno);
 	}
-	if (error_type == 2)
+	else if (errn == 2)
 	{
-		g_errno = errno;
 		perror("Pipe");
-		return(g_errno);
 	}
-	if (error_type == 3)
+	else if (errn == 3)
 	{
-		g_errno = errno;
 		perror("Execve");
-		return(g_errno);
 	}
-		if (error_type == 4)
+	else if (errn == 4)
 	{
-		g_errno = errno;
 		perror("Dup");
-		return(g_errno);
 	}
-	return (0);
+	else if (errno == 1)
+	{
+		perror("Open");
+	}
+	else if (errno == 9)
+	{
+		perror("Close");
+		///exit(EXIT_FAILURE);
+	}
+	else if (errno == 2 || errno == 0)
+	{
+		perror("Open");
+
+		//exit(EXIT_FAILURE);
+	}
+	g_errno = errno;
+	return(g_errno);
+	//exit(EXIT_FAILURE);
+	return(1);
 }

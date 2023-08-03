@@ -108,5 +108,6 @@ void convert_tab_to_fd_heredoc(char **heredoc_res)
 		write(fd, "\n", 1);
 		size--;
 	}
-	close(fd);
+	if (close(fd) == -1)
+		perror_msg_system(6);
 }

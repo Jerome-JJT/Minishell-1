@@ -52,7 +52,8 @@ void    create_append_files(char **tab_append_out)
 		    append = open(&tab_append_out[i][2], O_WRONLY | O_CREAT | O_APPEND, 0644);
             if (append == -1)
 				write(2, "error append file opening\n", 26);
-		    close(append);
+		    if (close(append) == -1)
+		        perror_msg_system(6);
 	    }
         i++;
     }
