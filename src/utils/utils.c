@@ -82,15 +82,3 @@ void	ft_tabreset(char ***tab)
 	}
 }
 
-// void	ft_tabreset2(char **tab, t_exec *exe)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (i < exe->reset_exec_tab) // faire en fonction de la taille pour ne pas bloquer au NULL present en non-fin de tableau
-// 	{
-// 		if (tab[i])
-// 			tab[i] = 0;
-// 		i++;
-// 	}
-// }

@@ -3,17 +3,11 @@
 /* ------------------------- cd sans option ------------------------------*/
 static void	go_home(t_shell *info)
 {
-	char	**path_home;
 	char	*path_home_2;
-	int		i;
+	t_list	*path;
 
-	path_home = ft_split(info->cwd, '/', &info->trash_lst);
-	i = 0;
-	while (path_home[i])
-		i++;
-	path_home_2 = ("..");
-	while (i-- > 2)
-		path_home_2 = ft_strjoin(path_home_2, "/..", &info->trash_lst);
+	path = find_var_env(info->env, "HOME", 1);
+	path_home_2 = path->valeur;
 	chdir(path_home_2);
 	getcwd(info->cwd, 1024);
 }
@@ -21,16 +15,27 @@ static void	go_home(t_shell *info)
 /* ---------------------------- fonction cd ---------------------------------*/
 void	cd_minishell(t_shell *info, char *arg)
 {
-	int		ret;
+	int			ret;
+	struct stat	filestat;
 
 	if (!arg)
 		go_home(info);
 	else
 	{
-		ret = chdir(arg);
-		if (ret == -1)
-			ft_error_msg(1, arg);
+		if (stat(info->cwd, &filestat) == 0)
+		{
+			if (S_ISREG(filestat.st_mode))
+				ft_error_msg(1, arg);
+			else if (S_ISDIR(filestat.st_mode))
+			{
+				ret = chdir(arg);
+				if (ret == -1)
+					ft_error_msg(1, arg);
+				else
+					getcwd(info->cwd, 1024);
+			}
+		}
 		else
-			getcwd(info->cwd, 1024);
+			perror("Error access file or directory\n");
 	}
 }

@@ -15,7 +15,7 @@ int	ft_error_msg(int errno, char *str)
 	}
 	else if (errno == 1)
 	{
-		printf(""RED"minishell"RESET": %s: No such file or directory\n", str);
+		printf(""RED"minishell"RESET": cd: %s: Not a directory\n", str);
 		g_errno = errno;
 	}
 	else if (errno == 126)

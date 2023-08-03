@@ -9,7 +9,7 @@ static void	print_export(char **var)
 	i = 0;
 	while (var[i])
 	{
-		j = 0;
+		j = 1;
 		if (found_char(var[i], '='))
 		{
 			printf("declare -x ");

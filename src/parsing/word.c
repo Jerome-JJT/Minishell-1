@@ -31,7 +31,7 @@ static char	*if_env_var(char *str,  t_env *env, t_dlist **trash)
 	j = 0;
 	tmp[0] = "";
 	ret = NULL;
-	while (ft_isalnum(str[i]))
+	while (ft_isalnum(str[i]) || str[i] == '_')
 		i++;
 	if (!ft_isparsing_char(str[i]) && ft_issigle(str[i])
 			&& str[i])
@@ -42,6 +42,7 @@ static char	*if_env_var(char *str,  t_env *env, t_dlist **trash)
 		tmp[1] = ft_substr(str + i, 0, j, trash);
 	}
 	tmp[2] = ft_substr(str, 0, i, trash);
+	printf("%s\n", tmp[2]);
 	ret = find_var_env(env, tmp[2], 1);
 	if (ret)
 		tmp[0] = ft_strdup(ret->valeur, trash);
