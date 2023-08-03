@@ -102,10 +102,7 @@ void fill_name_cmd_builtins(t_exec *exe, char *name)
 	else if(ft_strncmp("exit", name, 5) == 0)
 		exe->cmd_n_arg[0] = "exit";
 	else if(ft_strncmp("export", name, 7) == 0)
-	{
-		fprintf(stderr, "arg export\n");
 		exe->cmd_n_arg[0] = "export";
-	}
 	else if(ft_strncmp("pwd", name, 4) == 0)
 		exe->cmd_n_arg[0] = "pwd";
 	else if(ft_strncmp("unset", name, 6) == 0)

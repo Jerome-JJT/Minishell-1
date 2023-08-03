@@ -21,7 +21,7 @@ char **handle_infile(t_exec *exe)
 	int i;
 	int in;
 	char **infile_tab;
-	//fprintf(stderr, "handle infilee : %s\n", exe->redi_infile[0]);
+	fprintf(stderr, "handle infilee : %s\n", exe->redi_infile[0]);
 	infile_tab = ft_split_exec(exe->redi_infile[exe->idx], ' ', 0);
 	i = 0;
 	if (infile_tab[0])
@@ -29,9 +29,15 @@ char **handle_infile(t_exec *exe)
 		while (infile_tab[i])
 		{
 			in = open(infile_tab[i], O_RDONLY, 0644);
-			close(in);
+			//in = -1;
 			if (in == -1)
-				error_infile_outfile(0, exe);
+				perror_msg_system(5);
+			//fprintf(stderr, "after open failed\n");
+			close(in);
+			//in = -1;
+			if (in == -1)
+				perror_msg_system(6);
+			//fprintf(stderr, "after close failed\n");
 			i++;
 		}
 		i--;
@@ -45,7 +51,7 @@ char **handle_outfile(t_exec *exe)
 	int i;
 	int out;
 	char **outfile_tab;
-	//fprintf(stderr, "handle outfilee 0 : %s\n", exe->redi_outfile[exe->idx]);
+	fprintf(stderr, "handle outfilee 0 : %s\n", exe->redi_outfile[exe->idx]);
 	outfile_tab = ft_split_exec(exe->redi_outfile[exe->idx], ' ', 0);
 	i = 0;
 	if (outfile_tab[0])
@@ -54,7 +60,14 @@ char **handle_outfile(t_exec *exe)
 		while (outfile_tab[i])
 		{
 			out = open(outfile_tab[i], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+			//out = - 1;
+			if (out == - 1)
+				perror_msg_system(5);
+			//fprintf(stderr, "after open failed\n");
 			close(out);
+			//out = -1;
+			if (out == - 1)
+				perror_msg_system(6);
 			i++;
 		}
 		i--;

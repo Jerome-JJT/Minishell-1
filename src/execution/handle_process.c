@@ -23,6 +23,9 @@ void close_pipes(t_pipe *d, int process)
 		close(d->fd_pipe2[1]);
 		close(d->fd_pipe2[0]);
 	}
+	if (close(d->fd_pipe1[1]) == -1 || close(d->fd_pipe1[0]) == -1
+		|| close(d->fd_pipe2[0]) == -1 || close(d->fd_pipe2[1] == -1))
+		perror_msg_system(6);
 }
 
 void create_heredoc_tab(t_exec *exe)
