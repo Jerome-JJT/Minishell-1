@@ -81,5 +81,6 @@ int	main(int ac, char **av, char **envp)
 		// Possible leaks ici si buffer non free !
 	}
 	ft_dlst_clear(&info_parse.trash_lst, free);
+	free(info_parse.env);
 	return (0);
 }

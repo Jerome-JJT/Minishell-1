@@ -112,15 +112,24 @@ void	child_process_1(t_pipe *d, t_exec *d_exe, t_shell *d_shell, char *cmd)
 
 void prepare_cmd(t_exec *d_exe, t_shell *d_shell, char *cmd)
 {
-		d_exe->path = get_path(d_exe->env_cpy);
+	path = find_var_env(d_shell->env, "PATH", 1); // -->> commande unset PATH ; ls
+	if (path)
+	{
+		d_exe->path = path->valeur;
 		d_exe->access_path = ft_split_exec(d_exe->path, ':', 1);
-		d_exe->cmd_n_arg = ft_split_exec(cmd, ' ', 0);
-		if (access (d_exe->cmd_n_arg[0], F_OK) == 0)
-		{
-			d_exe->cmd_path = d_exe->cmd_n_arg[0];
-		}
-		else
-			d_exe->cmd_path = get_cmd_path(d_exe->cmd_n_arg[0], d_exe, &d_shell->trash_lst);
+	}
+	else
+	{
+		d_exe->path = NULL;
+		d_exe->access_path = NULL;
+	}
+	d_exe->cmd_n_arg = ft_split_exec(cmd, ' ', 0);
+	if (access (d_exe->cmd_n_arg[0], F_OK) == 0)
+	{
+		d_exe->cmd_path = d_exe->cmd_n_arg[0];
+	}
+	else
+		d_exe->cmd_path = get_cmd_path(d_exe->cmd_n_arg[0], d_exe, &d_shell->trash_lst);
 	// int i = 0;
 	// while(d_exe->cmd_n_arg[i])
 	// {

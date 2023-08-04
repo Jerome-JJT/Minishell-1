@@ -6,12 +6,12 @@ static void	print_export(char **var)
 	int	i;
 	int	j;
 
-	i = 0;
+	i = -1;
 	while (var[i])
 	{
-		j = 1;
 		if (found_char(var[i], '='))
 		{
+			j = 1;
 			printf("declare -x ");
 			while (var[i][j - 1] != '=')
 				printf("%c", var[i][j++]);
@@ -22,6 +22,7 @@ static void	print_export(char **var)
 		}
 		else
 		{
+			j = 0;
 			printf("declare -x ");
 			while(var[i][j])
 				printf("%c", var[i][j++ - 1]);
@@ -87,7 +88,6 @@ void	export_minishell(t_shell *info, char **arg)
 	int		i;
 
 	i = 0;
-	printf("%s\n", *arg);
 	if (!*arg)
 		export_no_args(info);
 	else
