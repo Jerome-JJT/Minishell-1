@@ -80,5 +80,6 @@ void	ft_tabreset(char ***tab)
 		(*tab)[i] = NULL;
 		i++;
 	}
+	free(tab);
 }
 

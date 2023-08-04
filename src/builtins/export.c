@@ -64,23 +64,6 @@ static void	export_no_args(t_shell *info)
 	ft_trialpha(env);
 }
 
-/* --------------------- 4.export with $args --------------------------*/
-/*static void	export_d(t_shell *info, int index)
-{
-	t_list	*node;
-	t_list	*tmp;
-
-	node = find_var_env(info->env, info->arg[index], 0);
-	if (node == NULL)
-		export_no_args(info);
-	else
-	{
-		tmp = ft_dlst_newcontent(NULL, &info->trash_lst);
-		str_to_node(node->valeur, tmp, info);
-		ft_dlst_addback(&info->env, tmp);
-	}
-}*/
-
 /* ------------------------- 5.Fonction export ------------------------------*/
 void	export_minishell(t_shell *info, char **arg)
 {
