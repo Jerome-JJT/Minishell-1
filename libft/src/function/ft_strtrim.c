@@ -6,7 +6,7 @@
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 15:05:04 by nrossel           #+#    #+#             */
-/*   Updated: 2023/05/23 16:40:11 by nrossel          ###   ########.fr       */
+/*   Updated: 2023/08/04 12:21:02 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ char	*ft_strtrim(char const *s1, char const *set, t_dlist **trash_lst)
 
 	i = 0;
 	k = 0;
+	if (!s1)
+		return (NULL);
 	while (isset(s1[i], set))
 		i++;
 	j = ft_strlen(s1) - 1;

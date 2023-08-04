@@ -24,7 +24,7 @@ static void	print_export(char **var)
 		{
 			printf("declare -x ");
 			while(var[i][j])
-				printf("%c", var[i][j++]);
+				printf("%c", var[i][j++ - 1]);
 			printf("\n");
 		}
 		i++;
@@ -87,6 +87,7 @@ void	export_minishell(t_shell *info, char **arg)
 	int		i;
 
 	i = 0;
+	printf("%s\n", *arg);
 	if (!*arg)
 		export_no_args(info);
 	else

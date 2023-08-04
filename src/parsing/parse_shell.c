@@ -91,6 +91,11 @@ int	parse_shell(char *buff, t_shell *info, t_exec *exec)
 {
 	int	strlen;
 
+	if (*buff == '\t')
+	{
+		while(*buff == '\t')
+			buff++;
+	}
 	strlen = ft_strlen(buff);
 	if (!buff)
 		exit(0);

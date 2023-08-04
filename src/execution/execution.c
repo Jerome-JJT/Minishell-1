@@ -6,16 +6,13 @@ int shell_execution(t_exec *d_exec, char **env, t_shell *shell_info)
 	(void) env;
 	int i;
 	t_pipe	d_pip;
-	d_pip = (t_pipe){0};
+	// d_pip = (t_pipe){0};
+	ft_bzero(&d_pip, sizeof(t_pipe));
 	/*------------------VARIABLES_TEST--------------------*/
 
 	//char *builtins[] = {"cd", "echo", "env", "exit", "export", "pwd", "unset", NULL};
 	/*---------------------------------------------------*/
-<<<<<<< HEAD
 	// fprintf(stderr, "check value tab_cmd: %s\n", d_exec->tab_cmd[0]);
-=======
-	//fprintf(stderr, "check value tab_cmd: %s\n", d_exec->tab_cmd[0]);
->>>>>>> 4c8749afb2b06850e1292710422e11fa71b12abc
 	//fprintf(stderr, "check value redi_in[0]: %s\n", d_exec->redi_infile[0]);
 	// fprintf(stderr, "check value redi_in[2]: %s\n", d_exec->redi_infile[2]);
 	//fprintf(stderr, "check value redi_out0: %s\n", d_exec->redi_outfile[0]);
@@ -97,9 +94,17 @@ int execution_with_pipes(t_exec *d_exec, t_pipe *d_pip, t_shell *shell_info)
 void execution_no_pipe(t_exec *d_exec, t_pipe *d_pip, t_shell *shell_info)
 {
 	int i;
-	char *builtins[] = {"cd", "echo", "env", "exit", "export", "pwd", "unset", NULL};
-	i = 0;
+	char *builtins[8];
 
+	builtins[0] = "cd";
+	builtins[1] = "echo";
+	builtins[2] = "env";
+	builtins[3] = "exit";
+	builtins[4] = "export";
+	builtins[5] = "pwd";
+	builtins[6] = "unset";
+	builtins[7] = NULL;
+	i = 0;
 	if(is_builtins(d_exec->tab_cmd[i], builtins) == 1)
 	{
 		//fprintf(stderr, "pipe = 0, builtins\n");
