@@ -55,33 +55,25 @@ char    *tab_to_str(char **tab, t_dlist **trash)
 }
 
 /* ---------------------------- 4.Remove quote --------------------------------*/
-char    *remove_quote(char *str)
+void    remove_quote(char *str)
 {
-    char    *cpy;
-    int     i;
-    int     j;
+    int     len;
+    int     read;
+    int     write;
 
-    i = 0;
-    j = 0;
-    cpy = str;
-    fprintf(stderr, "Str = %s\n", str);
-    while (cpy[i])
+    len = ft_strlen(str);
+    read = 0;
+    write = 0;
+    while (read < len)
     {
-        if (cpy[i + j])
+        if (str[read] != '\"')
         {
-            while (ft_isquote(cpy[i + j]))
-                j++;
+            str[write] = str[read];
+            write++;
         }
-        cpy[i] = cpy[i + j];
-        i++;
+        read++;
     }
-    if (cpy[i] != 0)
-    {
-        i--;
-        while (cpy[i])
-            cpy[i++] = 0;
-    }
-    return (cpy);
+    str[write] = '\0';
 }
 
 /* ---------------------------- 5.Type is sep --------------------------------*/
