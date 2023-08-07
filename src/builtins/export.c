@@ -77,7 +77,7 @@ void	export_minishell(t_shell *info, char **arg)
 	{
 		while (arg[i])
 		{
-			arg[i] = remove_quote(arg[i]);
+			remove_quote(arg[i]);
 			if (!ft_isalpha(arg[i][0])|| arg[i][0] == '$')
 				printf("minishell: export: `%s': not a valid identifier\n",
 					arg[i]);

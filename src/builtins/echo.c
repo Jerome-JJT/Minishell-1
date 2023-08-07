@@ -29,7 +29,7 @@ void	echo_minishell(char **tab, t_dlist **trash)
 		printf("\n");
 	else
 	{
-		*tab = remove_quote(*tab);
+		remove_quote(*tab);
 		tab = ft_split(*tab, ' ', trash);
 		while (ft_strncmp(tab[++i], "-n", 3) == 0)
 			check = 1;
