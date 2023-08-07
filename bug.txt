@@ -37,7 +37,7 @@ touch a .a 														[√]
 touc aa bb cc 													[√]
 rm a aa bb cc 													[√]
 echo a | $NO_ENV | cat; unset NO_ENV 							[x] --> $NO_ENV incorrectement géré
-echo salut |													[x] --> A regler dans Pars_shell avec readline si NULL après PIPE
+echo salut |													[√]
 "" | 															[x] --> Segfault
 
 / ------------- cd -------------- \
@@ -68,13 +68,4 @@ export HOME=; cd ; pwd 																																												[√]
 unset HOME; cd ; pwd 																																												[√]
 export HOME="./"; cd ; pwd 																																											[√]
 export HOME=""; cd ; pwd 																																											[√]
-export HOME="/"; cd; cd ../../../../../././././../../../././../../../; pwd 																															[]
-cd //; pwd; cd //bin; pwd 																																											[]
-cd ///; pwd; cd ///bin; pwd 																																										[]
-cd ////; pwd; cd ////bin; pwd 																																										[]
-cd /////; pwd; cd /////bin; pwd 																																									[]
-cd //////; pwd; cd //////bin; pwd 																																									[]
-cd ///////; pwd; cd ///////bin; pwd 																																								[]
-export HOME=//; cd 																																													[]
-export HOME=//bin/..////////////bin/../; cd 																																						[]
-export HOME=///; cd 																																												[]
+export HOME="/"; cd; cd ../../../../../././././../../../././../../../; pwd 																															[√]
