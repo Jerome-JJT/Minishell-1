@@ -25,7 +25,7 @@ void	echo_minishell(char **tab, t_dlist **trash)
 
 	check = 0;
 	i = -1;
-	if (!*tab)
+	if (!*tab || !**tab)
 		printf("\n");
 	else
 	{

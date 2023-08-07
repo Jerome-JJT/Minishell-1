@@ -64,10 +64,14 @@ char    *remove_quote(char *str)
     i = 0;
     j = 0;
     cpy = str;
+    fprintf(stderr, "Str = %s\n", str);
     while (cpy[i])
     {
-        while (ft_isquote(cpy[i + j]))
-            j++;
+        if (cpy[i + j])
+        {
+            while (ft_isquote(cpy[i + j]))
+                j++;
+        }
         cpy[i] = cpy[i + j];
         i++;
     }

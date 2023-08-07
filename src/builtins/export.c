@@ -83,9 +83,15 @@ void	export_minishell(t_shell *info, char **arg)
 					arg[i]);
 			else
 			{
-				node = ft_dlst_newcontent(NULL, &info->trash_lst);
-				str_to_node(arg[i], node, info, 0);
-				ft_dlst_addback(&info->env, node);
+				node = find_var_env(info->env, arg[i], 1);
+				if (!node)
+				{
+					node = ft_dlst_newcontent(NULL, &info->trash_lst);
+					str_to_node(arg[i], node, info, 0);
+					ft_dlst_addback(&info->env, node);
+				}
+				else
+					fill_node(node, node->variable, ft_strrchr(arg[i], '=') + 1, 1);
 			}
 			i++;
 		}	

@@ -44,10 +44,21 @@ t_list	*find_var_env(t_env *env, char *var, int if_dd)
 		var++;
 	while (node != NULL)
 	{
-		if (ft_strlen(var) == ft_strlen(node->variable))
+		if (var[ft_strlen(var) - 1] == '=')
+		{
 			if (ft_strncmp(var, node->variable,
-					ft_strlen(var)) == 0)
+					ft_strlen(var) - 2) == 0)
 				return (node);
+		}
+		else
+		{
+			if (ft_strlen(var) == ft_strlen(node->variable))
+			{
+				if (ft_strncmp(var, node->variable,
+						ft_strlen(var)) == 0)
+					return (node);
+			}
+		}
 		node = node->next;
 	}
 	return (NULL);

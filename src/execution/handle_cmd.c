@@ -24,7 +24,7 @@ char	*get_cmd_path(char *cmd, t_exec *info, t_dlist **trash)
 	{
 		while (info->access_path[i])
 		{
-			cmd_path = strjoin_exec(info->access_path[i], cmd, trash);
+			cmd_path = strjoin_exec(info->access_path[i], cmd);
 			if (access (cmd_path, F_OK) == 0)
 			{
 				return (cmd_path);
