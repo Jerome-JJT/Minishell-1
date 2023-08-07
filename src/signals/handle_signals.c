@@ -1,14 +1,22 @@
 #include "minishell.h"
+#include <errno.h>
 
 void set_signals()
 {
     struct sigaction sa;
+    struct termios tp;
+
+    if (tcgetattr(STDIN_FILENO, &tp) == - 1)
+        fprintf(stderr, "error getattr\n");
+    tp.c_lflag = tp.c_lflag & (~ECHOCTL);
+    if (tcsetattr(STDIN_FILENO, TCSANOW, &tp) == -1)
+        fprintf(stderr, "error setattr\n");
 
     sa.sa_handler = SIG_IGN;
     sigemptyset(&sa.sa_mask);
     sa.sa_flags = 0;
     sigaction(SIGQUIT, &sa, NULL); // ctrl backslash
-    
+
     sa.sa_handler = handler_sg;
     sigaction(SIGINT, &sa, NULL); // ctrl c
     //sigaction(EOF, &sa, NULL); // ctrl d
@@ -17,6 +25,7 @@ void set_signals()
 void handler_sg(int num)
 {
     (void)num;
+
     if (num == SIGINT)
     {
         write(1, "\n", 1);
@@ -30,6 +39,8 @@ void handler_sg(int num)
     //     write(1, "QUIT (core dumped ms)\n", 22);
     //     rl_redisplay();
     // }
+    // if (tcsetattr(0, TCSANOW, &save) == -1)
+    //     fprintf(stderr, "error setattr\n");
 }
 
 void handler_sg_update(int num)

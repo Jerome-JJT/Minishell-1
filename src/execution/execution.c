@@ -12,7 +12,7 @@ int shell_execution(t_exec *d_exec, char **env, t_shell *shell_info)
 
 	//char *builtins[] = {"cd", "echo", "env", "exit", "export", "pwd", "unset", NULL};
 	/*---------------------------------------------------*/
-	// fprintf(stderr, "check value tab_cmd: %s\n", d_exec->tab_cmd[0]);
+	fprintf(stderr, "check value tab_cmd: %s\n", d_exec->tab_cmd[0]);
 	//fprintf(stderr, "check value redi_in[0]: %s\n", d_exec->redi_infile[0]);
 	// fprintf(stderr, "check value redi_in[2]: %s\n", d_exec->redi_infile[2]);
 	//fprintf(stderr, "check value redi_out0: %s\n", d_exec->redi_outfile[0]);
@@ -31,7 +31,7 @@ int shell_execution(t_exec *d_exec, char **env, t_shell *shell_info)
 	d_exec->last_append = NULL;
 	handle_heredoc(d_exec);
 	handle_pipes(&d_pip.fd_pipe1, &d_pip.fd_pipe2);
-	//signals_update();
+	signals_update();
 	if (!d_exec->tab_cmd)
 		exit(0);
 	if(d_exec->number_of_pipes == 0)
@@ -107,7 +107,7 @@ void execution_no_pipe(t_exec *d_exec, t_pipe *d_pip, t_shell *shell_info)
 	i = 0;
 	if(is_builtins(d_exec->tab_cmd[i], builtins) == 1)
 	{
-		//fprintf(stderr, "pipe = 0, builtins\n");
+		fprintf(stderr, "pipe = 0, builtins\n");
 		int out_backup = dup(1);
 		handle_dup_fd_single_cmd(d_pip, d_exec);
 		create_cmd_n_args_builtins(d_exec);

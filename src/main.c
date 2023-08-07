@@ -39,7 +39,7 @@ int g_errno = 0;
 /* -------------------- 1.Check validity parsing ----------------------------*/
 static void	ft_check(int check, t_shell *parse, t_exec *exec, char **envp)
 {
-	if (check == 1) 
+	if (check == 1)
 	{
 		printf(""RED"Erreur"RESET": nombre quote invalide\n");
 		tok_clearlst(&parse->token);
@@ -65,12 +65,12 @@ int	main(int ac, char **av, char **envp)
 	(void) av;
 	(void) ac;
 	init_shell(&info_parse, &info_exec, envp);
-	set_signals();
 	while (1)
 	{
+		set_signals();
 		rl_on_new_line();
 		buffer = readline(""GREEN"$>"RESET" ");
-		if (!buffer) 
+		if (!buffer)
 			exit(0);
 		if (*buffer)
 			buffer = ft_strtrim(buffer, " ", &info_parse.trash_lst);

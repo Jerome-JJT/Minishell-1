@@ -6,9 +6,16 @@ void	command_not_found(char *cmd)
 	char	*msg_err;
 	char	*tmp;
 	g_errno = 127;
-	tmp = strjoin_exec("Minishell: Command not found: ", cmd);
-	msg_err = strjoin_exec(tmp, "\n");
-	ft_putstr_fd(msg_err, 2);
+	if (cmd)
+	{
+		tmp = strjoin_exec("Minishell: Command not found: ", cmd);
+		msg_err = strjoin_exec(tmp, "\n");
+		ft_putstr_fd(msg_err, 2);
+	}
+	else
+	{
+		write(2, "Minishell: : Command not found\n", 31);
+	}
 	// free(tmp);
 	// free(msg_err);
 	//printf("Command '%s' not found\n", cmd);
@@ -33,8 +40,7 @@ void error_infile_outfile(int error_nb, t_exec *exe)
 int perror_msg_system(int errn)
 {
 	fprintf(stderr, ">>errno: %d\n", errno);
-	// if (errno)
-	// 	perror("");
+	fprintf(stderr, ">>errn: %d\n", errn);
 	if (errn == 7)
 	{
 		perror("Fork");
@@ -63,11 +69,11 @@ int perror_msg_system(int errn)
 	else if (errno == 2 || errno == 0)
 	{
 		perror("Open");
-
 		//exit(EXIT_FAILURE);
 	}
+	exit (EXIT_FAILURE);
 	g_errno = errno;
-	return(g_errno);
-	//exit(EXIT_FAILURE);
+	//return(g_errno);
+	exit(EXIT_FAILURE);
 	return(1);
 }

@@ -21,7 +21,7 @@ char **handle_infile(t_exec *exe)
 	int i;
 	int in;
 	char **infile_tab;
-	fprintf(stderr, "handle infilee : %s\n", exe->redi_infile[0]);
+	//fprintf(stderr, "handle infilee : %s\n", exe->redi_infile[0]);
 	infile_tab = ft_split_exec(exe->redi_infile[exe->idx], ' ', 0);
 	i = 0;
 	if (infile_tab[0])
@@ -51,7 +51,7 @@ char **handle_outfile(t_exec *exe)
 	int i;
 	int out;
 	char **outfile_tab;
-	fprintf(stderr, "handle outfilee 0 : %s\n", exe->redi_outfile[exe->idx]);
+	//fprintf(stderr, "handle outfilee 0 : %s\n", exe->redi_outfile[exe->idx]);
 	outfile_tab = ft_split_exec(exe->redi_outfile[exe->idx], ' ', 0);
 	i = 0;
 	if (outfile_tab[0])

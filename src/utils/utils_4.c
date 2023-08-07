@@ -64,7 +64,7 @@ char    *remove_quote(char *str)
     i = 0;
     j = 0;
     cpy = str;
-    fprintf(stderr, "Str = %s\n", str);
+    //fprintf(stderr, "Str = %s\n", str);
     while (cpy[i])
     {
         if (cpy[i + j])

@@ -23,8 +23,8 @@ void close_pipes(t_pipe *d, int process)
 		close(d->fd_pipe2[1]);
 		close(d->fd_pipe2[0]);
 	}
-	if (close(d->fd_pipe1[1]) == -1 || close(d->fd_pipe1[0]) == -1
-		|| close(d->fd_pipe2[0]) == -1 || close(d->fd_pipe2[1] == -1))
+	if ((d->fd_pipe1[1]) == -1 || (d->fd_pipe1[0]) == -1
+		|| (d->fd_pipe2[0]) == -1 || (d->fd_pipe2[1] == -1))
 		perror_msg_system(6);
 }
 

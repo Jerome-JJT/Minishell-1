@@ -221,6 +221,7 @@ void		handle_dup_fd_single_cmd(t_pipe *d_pip, t_exec *exe);
 char    	*ft_strcpy(char *s1, char *s2);
 int			is_tab_heredoc_empty(char **tab);
 void		first_cmd(t_pipe *d, t_exec *d_exe);
+void		prepare_cmd(t_exec *d_exe, t_shell *d_shell, char *cmd);
 char		**create_tab(t_list **lst, t_dlist **trash);
 void		convert_tab_to_fd_heredoc(char **heredoc_res);
 void		middle_cmd(t_pipe *d, t_exec *exe, int process);

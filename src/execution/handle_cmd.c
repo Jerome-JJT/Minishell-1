@@ -20,17 +20,21 @@ char	*get_cmd_path(char *cmd, t_exec *info, t_dlist **trash)
 	char	*cmd_path;
 	(void)trash;
 	i = 0;
-	if (info->access_path)
+	//fprintf(stderr, "gwt cmd path\n");
+	if (cmd)
 	{
-		while (info->access_path[i])
+		if (info->access_path)
 		{
-			cmd_path = strjoin_exec(info->access_path[i], cmd);
-			if (access (cmd_path, F_OK) == 0)
+			while (info->access_path[i])
 			{
-				return (cmd_path);
+				cmd_path = strjoin_exec(info->access_path[i], cmd);
+				if (access (cmd_path, F_OK) == 0)
+				{
+					return (cmd_path);
+				}
+				else
+				i++;
 			}
-			else
-			i++;
 		}
 	}
 	//fprintf(stderr, "ft_get_command path; %s\n", cmd);
@@ -133,7 +137,8 @@ void setup_infile_cmd(t_pipe *d_pipe)
 		perror_msg_system(4);
 		return; // AJOUT
 	}
-	if (close(d_pipe->fd_in) == -1)
+	close(d_pipe->fd_in);
+	if (d_pipe->fd_in == -1)
 		perror_msg_system(6);
 }
 
@@ -161,7 +166,8 @@ void setup_outfile_cmd(t_pipe *d_pipe, t_exec *d_exe)
 		perror_msg_system(4);
 		return; // AJOUT
 	}
-	if (close(d_pipe->fd_out) == -1)
+	close(d_pipe->fd_out);
+	if (d_pipe->fd_out == -1)
 		perror_msg_system(6);
 }
 

@@ -1,7 +1,5 @@
 #include "minishell.h"
 
-void prepare_cmd(t_exec *d_exe, t_shell *d_shell, char *cmd);
-
 void handle_single_cmd(t_pipe *d_pip, t_exec *d_exe, t_shell *d_shell, char *cmd)
 {
     int fork_pid;
