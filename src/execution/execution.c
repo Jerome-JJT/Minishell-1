@@ -1,7 +1,5 @@
 #include "minishell.h"
 
-void update_env(t_exec *exe, t_shell *info);
-
 int shell_execution(t_exec *d_exec, char **env, t_shell *shell_info)
 {
 	(void)shell_info;
@@ -14,10 +12,11 @@ int shell_execution(t_exec *d_exec, char **env, t_shell *shell_info)
 
 	//char *builtins[] = {"cd", "echo", "env", "exit", "export", "pwd", "unset", NULL};
 	/*---------------------------------------------------*/
-	//d_exec->tab_cmd[0] = NULL;
-	//fprintf(stderr, "check value tab_cmd[0]: %s\n", d_exec->tab_cmd[0]);
-	//fprintf(stderr, "check value tab_cmd[1]: %s\n", d_exec->tab_cmd[1]);
-	//fprintf(stderr, "check value tab_cmd[2]: %s\n", d_exec->tab_cmd[2]);
+	// d_exec->tab_cmd[0] = NULL;
+	// d_exec->tab_cmd[2] = NULL;
+	// fprintf(stderr, "check value tab_cmd[0]: %s\n", d_exec->tab_cmd[0]);
+	// fprintf(stderr, "check value tab_cmd[1]: %s\n", d_exec->tab_cmd[1]);
+	// fprintf(stderr, "check value tab_cmd[2]: %s\n", d_exec->tab_cmd[2]);
 	//fprintf(stderr, "check value redi_in[0]: %s\n", d_exec->redi_infile[0]);
 	// fprintf(stderr, "check value redi_in[2]: %s\n", d_exec->redi_infile[2]);
 	//fprintf(stderr, "check value redi_out0: %s\n", d_exec->redi_outfile[0]);
@@ -100,6 +99,7 @@ int execution_with_pipes(t_exec *d_exec, t_pipe *d_pip, t_shell *shell_info)
 		d_exec->idx++;
 		d_exec->cmd_number++;
 	}
+	fprintf(stderr, "end of exec\n");
 	return (i);
 }
 
@@ -142,44 +142,21 @@ void execution_no_pipe(t_exec *d_exec, t_pipe *d_pip, t_shell *shell_info)
 
 void builtins_exec(char *builtins_name, t_shell *info, char **cmd, t_exec *exe)
 {
-	int i;
-	i = 0;
 	info->arg = cmd;
 	if(ft_strncmp("echo", builtins_name, ft_strlen(builtins_name)) == 0)
 		echo_minishell(exe->cmd_n_arg + 1, &info->trash_lst);
 	if(ft_strncmp("cd", builtins_name, ft_strlen(builtins_name)) == 0)
-	{
-		//fprintf(stderr, "built_cd_minishell\n");
 		cd_minishell(info, *(exe->cmd_n_arg + 1));
-	}
 	if(ft_strncmp("env", builtins_name, ft_strlen(builtins_name)) == 0)
 		env_minishell(info, *(exe->cmd_n_arg + 1));
 	if(ft_strncmp("exit", builtins_name, ft_strlen(builtins_name)) == 0)
-	{
 		exit_minishell(exe->cmd_n_arg + 1, &info->trash_lst);
-		//fprintf(stderr, "exit_minishell\n");
-	}
 	if(ft_strncmp("export", builtins_name, ft_strlen(builtins_name)) == 0)
-	{
-		//fprintf(stderr, "built_export_minishell0\n");
 		export_minishell(info, exe->cmd_n_arg + 1);
-		i = 1;
-		//fprintf(stderr, "built_export_minishell1\n");
-	}
 	if(ft_strncmp("pwd", builtins_name, ft_strlen(builtins_name)) == 0)
 		pwd_minishell(info);
 	if(ft_strncmp("unset", builtins_name, ft_strlen(builtins_name)) == 0)
-	{
 		unset_minishell(info, exe->cmd_n_arg + 1);
-		i = 1;
-		//fprintf(stderr, "built_unset_minishell\n");
-	}
-	if (i == 1)
-		update_env(exe, info);
-}
-
-void update_env(t_exec *exe, t_shell *info)
-{
 	exe->env_cpy = lst_to_tab(info->env, exe->trash_lst_exe);
 }
 
