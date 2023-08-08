@@ -139,7 +139,7 @@ void setup_infile_cmd(t_pipe *d_pipe)
 	}
 	close(d_pipe->fd_in);
 	if (d_pipe->fd_in == -1)
-		perror_msg_system(6);
+		perror_msg_system(2);
 }
 
 void setup_outfile_cmd(t_pipe *d_pipe, t_exec *d_exe)
@@ -168,7 +168,7 @@ void setup_outfile_cmd(t_pipe *d_pipe, t_exec *d_exe)
 	}
 	close(d_pipe->fd_out);
 	if (d_pipe->fd_out == -1)
-		perror_msg_system(6);
+		perror_msg_system(2);
 }
 
 void setup_middle_cmd(t_pipe *d_pipe, int option)

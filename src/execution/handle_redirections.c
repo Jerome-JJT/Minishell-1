@@ -31,7 +31,7 @@ char **handle_infile(t_exec *exe)
 			in = open(infile_tab[i], O_RDONLY, 0644);
 			//in = -1;
 			if (in == -1)
-				perror_msg_system(5);
+				perror_msg_system(7);
 			//fprintf(stderr, "after open failed\n");
 			close(in);
 			//in = -1;
@@ -62,7 +62,7 @@ char **handle_outfile(t_exec *exe)
 			out = open(outfile_tab[i], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 			//out = - 1;
 			if (out == - 1)
-				perror_msg_system(5);
+				perror_msg_system(7);
 			//fprintf(stderr, "after open failed\n");
 			close(out);
 			//out = -1;

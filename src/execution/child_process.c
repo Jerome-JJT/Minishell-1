@@ -32,7 +32,6 @@ void handle_dup_fd_single_cmd(t_pipe *d_pip, t_exec *exe)
 
     //fprintf(stderr, "handle_dup_fd_single\n");
 	//fprintf(stderr, "bugubuibui b %s\n", exe->cmd_path);
-	//dup(1);
 	handle_redirections(exe, d_pip);
     if (d_pip->infile)
     {
@@ -40,7 +39,6 @@ void handle_dup_fd_single_cmd(t_pipe *d_pip, t_exec *exe)
     }
     if (d_pip->outfile)
     {
-		//fprintf(stderr, "outfile oui\n");
         setup_outfile_cmd(d_pip, exe);
     }
 }

@@ -1,12 +1,6 @@
 #include "minishell.h"
 
 
-void	init_struc_exec(t_exec *d, t_shell infos, char **env)
-{
-	(void)infos;
-	d->env_cpy = env;
-}
-
 void	init_struc_pipe(t_pipe *d, char *infile, char *outfile, t_exec *exe)
 {
 	(void)exe;
