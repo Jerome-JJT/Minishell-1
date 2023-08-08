@@ -14,8 +14,8 @@ int shell_execution(t_exec *d_exec, char **env, t_shell *shell_info)
 	/*---------------------------------------------------*/
 	// d_exec->tab_cmd[0] = NULL;
 	// d_exec->tab_cmd[2] = NULL;
-	// fprintf(stderr, "check value tab_cmd[0]: %s\n", d_exec->tab_cmd[0]);
-	// fprintf(stderr, "check value tab_cmd[1]: %s\n", d_exec->tab_cmd[1]);
+	//fprintf(stderr, "check value tab_cmd[0]: %s\n", d_exec->tab_cmd[0]);
+	//fprintf(stderr, "check value tab_cmd[1]: %s\n", d_exec->tab_cmd[1]);
 	// fprintf(stderr, "check value tab_cmd[2]: %s\n", d_exec->tab_cmd[2]);
 	//fprintf(stderr, "check value redi_in[0]: %s\n", d_exec->redi_infile[0]);
 	// fprintf(stderr, "check value redi_in[2]: %s\n", d_exec->redi_infile[2]);
@@ -28,6 +28,8 @@ int shell_execution(t_exec *d_exec, char **env, t_shell *shell_info)
 	// fprintf(stderr, "check value apppend2: %s\n", d_exec->append[2]);
 	//fprintf(stderr, "nb de pipe0: %d\n", d_exec->number_of_pipes);
 	i = 0;
+	// if (tcsetattr(STDIN_FILENO, TCSANOW, &d_exec->save) == -1)
+ 	//   		fprintf(stderr, "erro tcsetattr\n");
 	while (d_exec->tab_cmd[i])
 		i++;
 	//d_exec->nb_probable_of_heredocs = i;
@@ -52,9 +54,9 @@ int shell_execution(t_exec *d_exec, char **env, t_shell *shell_info)
 	}
 	d_exec->cmd_number = 0;
 	d_exec->idx = 0;
+	sig_default();
 	while (i-- > 0)
 		wait(NULL);
-	//fprintf(stderr, "checkdsd\n");
 	return (0);
 }
 
@@ -72,12 +74,12 @@ int execution_with_pipes(t_exec *d_exec, t_pipe *d_pip, t_shell *shell_info)
 			{
 				if (i % 2 == 0)
 				{
-					// fprintf(stderr, ">> builtins_0 = %s, idx : %d\n", d_exec->tab_cmd[i], d_exec->idx);
+					fprintf(stderr, ">> builtins_0 = %s, idx : %d\n", d_exec->tab_cmd[i], d_exec->idx);
 					builtins_0(d_pip, d_exec, shell_info, d_exec->tab_cmd[i]);
 				}
 				else
 				{
-					// fprintf(stderr, ">> builtins_1 = %s\n", d_exec->tab_cmd[i]);
+					fprintf(stderr, ">> builtins_1 = %s\n", d_exec->tab_cmd[i]);
 					builtins_1(d_pip, d_exec, shell_info, d_exec->tab_cmd[i]);
 				}
 			}
@@ -99,7 +101,7 @@ int execution_with_pipes(t_exec *d_exec, t_pipe *d_pip, t_shell *shell_info)
 		d_exec->idx++;
 		d_exec->cmd_number++;
 	}
-	fprintf(stderr, "end of exec\n");
+	//fprintf(stderr, "end of exec\n");
 	return (i);
 }
 
@@ -120,7 +122,7 @@ void execution_no_pipe(t_exec *d_exec, t_pipe *d_pip, t_shell *shell_info)
 	{
 		if(is_builtins(d_exec->tab_cmd[0], builtins) == 1)
 		{
-			//fprintf(stderr, "pipe = 0, builtins\n");
+			fprintf(stderr, "pipe = 0, builtins\n");
 			out_backup = dup(1);
 			if (out_backup == -1)
 				perror_msg_system(5);
@@ -138,6 +140,8 @@ void execution_no_pipe(t_exec *d_exec, t_pipe *d_pip, t_shell *shell_info)
 			handle_single_cmd(d_pip, d_exec, shell_info, d_exec->tab_cmd[0]);
 		}
 	}
+	// if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &d_exec->save) == -1)
+ 	//  		fprintf(stderr, "erro tcsetattr\n");
 }
 
 void builtins_exec(char *builtins_name, t_shell *info, char **cmd, t_exec *exe)

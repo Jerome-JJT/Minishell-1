@@ -4,17 +4,11 @@
 void set_signals()
 {
     struct sigaction sa;
-    struct termios tp;
 
-    if (tcgetattr(STDIN_FILENO, &tp) == - 1)
-        fprintf(stderr, "error getattr\n");
-    tp.c_lflag = tp.c_lflag & (~ECHOCTL);
-    if (tcsetattr(STDIN_FILENO, TCSANOW, &tp) == -1)
-        fprintf(stderr, "error setattr\n");
-
-    sa.sa_handler = SIG_IGN;
-    sigemptyset(&sa.sa_mask);
     sa.sa_flags = 0;
+    sigemptyset(&sa.sa_mask);
+    sa.sa_handler = SIG_IGN;
+
     sigaction(SIGQUIT, &sa, NULL); // ctrl backslash
 
     sa.sa_handler = handler_sg;
@@ -22,16 +16,27 @@ void set_signals()
     //sigaction(EOF, &sa, NULL); // ctrl d
 }
 
+void sig_default()
+{
+    struct sigaction sa;
+
+    sa.sa_flags = 0;
+    sigemptyset(&sa.sa_mask);
+    sa.sa_handler = SIG_IGN;
+
+    sigaction(SIGQUIT, &sa, NULL);
+    sigaction(SIGINT, &sa, NULL);
+}
+
 void handler_sg(int num)
 {
-    (void)num;
 
     if (num == SIGINT)
     {
         write(1, "\n", 1);
-        rl_replace_line("", 0);
         rl_on_new_line();
-        rl_redisplay();
+        rl_replace_line("", 1);
+        //rl_redisplay();
     }
     // else if (num == EOF)
     // {
@@ -45,7 +50,6 @@ void handler_sg(int num)
 
 void handler_sg_update(int num)
 {
-    (void)num;
 
     if (num == SIGINT)
     {
@@ -62,12 +66,28 @@ void handler_sg_update(int num)
 void signals_update()
 {
     struct sigaction sa;
-
     sa.sa_flags = 0;
+    sigemptyset(&sa.sa_mask);
     sa.sa_handler = handler_sg_update;
 
-    sigemptyset(&sa.sa_mask);
     sigaction(SIGQUIT, &sa, NULL); // ctrl backslash
     sigaction(SIGINT, &sa, NULL); // ctrl c
     //sigaction(EOF, &sa, NULL); // ctrl d
+}
+
+void modify_terminal_attribut(t_exec *exe)
+{
+    //(void)struct termios tp;
+
+    if (tcgetattr(STDIN_FILENO, &exe->tp) == - 1)
+        fprintf(stderr, "error getattr\n");
+    exe->save = exe->tp;
+    exe->tp.c_lflag = exe->tp.c_lflag & (~ECHOCTL);
+    if (tcsetattr(STDIN_FILENO, TCSANOW, &exe->tp) == -1)
+        fprintf(stderr, "error setattr\n");
+    // if (tcgetattr(STDIN_FILENO, &tp) == - 1)
+    //     fprintf(stderr, "error getattr\n");
+    // tp.c_lflag = tp.c_lflag & (~ECHOCTL);
+    // if (tcsetattr(STDIN_FILENO, TCSANOW, &tp) == -1)
+    //     fprintf(stderr, "error setattr\n");
 }
