@@ -104,7 +104,6 @@ char	*ft_word(char *str, t_shell *info)
 	i = 0;
 	check = 0;
 	tmp = NULL;
-	//fprintf(stderr, "tok:%s\n", info->token->tok);
 	if (info->token && is_here_doc(info->token))
 	{
 		while (!ft_isparsing_char(str[i]))
@@ -116,10 +115,10 @@ char	*ft_word(char *str, t_shell *info)
 		while (!ft_isparsing_char(str[i]))
 		{
 			if (str[i] == '$' && check == 0)
-		{
+			{
 			tmp = ft_word_d(str, info->env, &info->trash_lst);
 			check++;
-		}
+			}
 			else if (str[i] == '$' && check != 0)
 				tmp = ft_word_d(tmp, info->env, &info->trash_lst);
 
