@@ -23,7 +23,7 @@ static void	echo_n(char **tab, int option_n)
 }
 
 /* -------------------- 2. Echo main function -----------------------*/
-void	echo_minishell(char **tab, t_dlist **trash)
+void	echo_minishell(char *tab, t_dlist **trash)
 {
 	int		check;
 	int		i;
@@ -31,15 +31,15 @@ void	echo_minishell(char **tab, t_dlist **trash)
 
 	check = 0;
 	i = 0;
-	if (!*tab || !**tab)
+	if (!tab || !*tab)
 		printf("\n");
 	else
 	{
-		if (**tab + 3 != 0)
+		if (*tab + 3 != 0)
 		{
-			if (**tab == '\"')
-				remove_quote(*tab);
-			tmp = ft_split(*tab, ' ', trash);
+			if (*tab == '\"')
+				remove_quote(tab);
+			tmp = ft_split(tab, ' ', trash);
 			while (tmp[i] && ft_strncmp(tmp[i++], "-n", 3) == 0)
 				check = 1;
 			if (check == 1)

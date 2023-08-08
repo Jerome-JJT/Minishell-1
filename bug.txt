@@ -1,6 +1,7 @@
 <<a <<b <<c														[√]
 <tx_a.txt cat -e > out											[√]
 < tx_a.txt cat -e | cat -e >out 								[√]
+>>ap1															[x] -->> Not a directory // Parsing
 
 / ------------- Syntax_error ---------------- \
 |																[√]
