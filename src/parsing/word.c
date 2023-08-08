@@ -124,7 +124,6 @@ char	*ft_word(char *str, t_shell *info)
 
 			i++;
 		}
-		fprintf(stderr, "ptr ?: %p\n", tmp);
 		creat_and_add(tmp, str, WORD, i, info);
 	}
 	return (str + i);
