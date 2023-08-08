@@ -43,7 +43,7 @@ static char	*if_env_var(char *str,  t_env *env, t_dlist **trash)
 	}
 	tmp[2] = ft_substr(str, 0, i, trash);
 	ret = find_var_env(env, tmp[2], 1);
-	if (ret)
+	if (ret != NULL)
 		tmp[0] = ft_strdup(ret->valeur, trash);
 	if (j > 0)
 		tmp[0] = ft_strjoin(tmp[0], tmp[1], trash);
@@ -79,16 +79,17 @@ static char	*ft_word_d(char *str, t_env *env, t_dlist **trash)
 	tmp[0] = str;
 	while (!ft_isparsing_char(str[i]) && str[i] != '$')
 		i++;
-	if (str[i] == '$' && (ft_isalnum(str[i + 1]) || str[i + 1] == '?'))
+	if (str[i] == '$' && ft_isalnum(str[i + 1] || str[i + 1] == '?'))
 		tmp[0] = ft_substr(str, 0, i, trash);
-	if (ft_isalnum(str[i + 1]))
+	i++;
+	if (ft_isalnum(str[i]))
 	{
-		tmp[1] = if_env_var(str + (i + 1), env, trash);
+		tmp[1] = if_env_var(str + i, env, trash);
 		tmp[0] = ft_strjoin(tmp[0], tmp[1], trash);
 	}
-	else if (str[i + 1] == '?')
+	else if (str[i] == '?')
 	{
-		tmp[1] = if_errno(str + (i + 2), trash);
+		tmp[1] = if_errno(str + (i + 1), trash);
 		tmp[0] = ft_strjoin(tmp[0], tmp[1], trash);
 	}
 	return (tmp[0]);
@@ -103,7 +104,7 @@ char	*ft_word(char *str, t_shell *info)
 
 	i = 0;
 	check = 0;
-	tmp = NULL;
+	tmp = "";
 	if (info->token && is_here_doc(info->token))
 	{
 		while (!ft_isparsing_char(str[i]))

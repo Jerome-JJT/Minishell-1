@@ -15,9 +15,9 @@ int shell_execution(t_exec *d_exec, char **env, t_shell *shell_info)
 	//char *builtins[] = {"cd", "echo", "env", "exit", "export", "pwd", "unset", NULL};
 	/*---------------------------------------------------*/
 	//d_exec->tab_cmd[0] = NULL;
-	//fprintf(stderr, "check value tab_cmd[0]: %s\n", d_exec->tab_cmd[0]);
-	//fprintf(stderr, "check value tab_cmd[1]: %s\n", d_exec->tab_cmd[1]);
-	//fprintf(stderr, "check value tab_cmd[2]: %s\n", d_exec->tab_cmd[2]);
+	fprintf(stderr, "check value tab_cmd[0]: %s\n", d_exec->tab_cmd[0]);
+	fprintf(stderr, "check value tab_cmd[1]: %s\n", d_exec->tab_cmd[1]);
+	fprintf(stderr, "check value tab_cmd[2]: %s\n", d_exec->tab_cmd[2]);
 	//fprintf(stderr, "check value redi_in[0]: %s\n", d_exec->redi_infile[0]);
 	// fprintf(stderr, "check value redi_in[2]: %s\n", d_exec->redi_infile[2]);
 	//fprintf(stderr, "check value redi_out0: %s\n", d_exec->redi_outfile[0]);
