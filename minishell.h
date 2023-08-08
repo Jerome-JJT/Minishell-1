@@ -228,7 +228,6 @@ void		middle_cmd(t_pipe *d, t_exec *exe, int process);
 void		handle_outfile_append_redirections(t_exec *exe);
 char		*ft_strcat_heredoc(char *dest, char *src, int end);
 char		*create_str_heredoc(char **exe_heredoc, t_exec *exe);
-void		init_struc_exec(t_exec *d, t_shell infos, char **env);
 char		*get_cmd_path(char *cmd, t_exec *info, t_dlist **trash);
 int			is_builtins(char *cmd_to_compare, char** builtins_list);
 

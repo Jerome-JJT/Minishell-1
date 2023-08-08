@@ -39,36 +39,40 @@ void error_infile_outfile(int error_nb, t_exec *exe)
 
 int perror_msg_system(int errn)
 {
-	fprintf(stderr, ">>errno: %d\n", errno);
-	fprintf(stderr, ">>errn: %d\n", errn);
-	if (errn == 7)
+	//(stderr, ">>errno: %d\n", errno);
+	//fprintf(stderr, ">>errn: %d\n", errn);
+	if (errn == 1 && (errno == EAGAIN || errno == ENOMEM))
 	{
 		perror("Fork");
 	}
-	else if (errn == 2)
+	else if (errn == 2 && (errno == EMFILE || errno == ENFILE || errno == EFAULT))
 	{
 		perror("Pipe");
 	}
-	else if (errn == 3)
+	else if (errn == 3 && (errno == EFAULT))
 	{
 		perror("Execve");
 	}
-	else if (errn == 4)
+	else if (errn == 4 && (errno == EBADF || errno == EBUSY))
+	{
+		perror("Dup2");
+	}
+	else if (errn == 5 && errno == EBADF)
 	{
 		perror("Dup");
 	}
-	else if (errno == 1)
-	{
-		perror("Open");
-	}
-	else if (errno == 9)
+	else if (errn == 6 && (errno == EACCES || errno == ENOENT || errno == EEXIST || errno == EISDIR || errno == ENFILE))
 	{
 		perror("Close");
 		///exit(EXIT_FAILURE);
 	}
-	else if (errno == 2 || errno == 0)
+	else if (errn == 7 && (errno == EACCES || errno == ENOENT || errno == EEXIST || errno == EISDIR || errno == ENFILE))
 	{
 		perror("Open");
+	}
+	else if (errno == 0)
+	{
+		perror("");
 		//exit(EXIT_FAILURE);
 	}
 	exit (EXIT_FAILURE);
