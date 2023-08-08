@@ -56,7 +56,7 @@ static void	ft_check(int check, t_shell *parse, t_exec *exec, char **envp)
 		tok_clearlst(&parse->token);
 	else if (check == 0)
 	{
-		print_parsing(exec, "test");
+		//print_parsing(exec, "test");
 		shell_execution(exec, envp, parse);
 		tok_clearlst(&parse->token);
 		reset_shelltab(exec);
@@ -74,9 +74,9 @@ int	main(int ac, char **av, char **envp)
 	(void) av;
 	(void) ac;
 	init_shell(&info_parse, &info_exec, envp);
+	set_signals();
 	while (1)
 	{
-		set_signals();
 		rl_on_new_line();
 		buffer = readline(""GREEN"$>"RESET" ");
 		if (!buffer)
