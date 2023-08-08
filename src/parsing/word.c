@@ -116,8 +116,8 @@ char	*ft_word(char *str, t_shell *info)
 		{
 			if (str[i] == '$' && check == 0)
 			{
-			tmp = ft_word_d(str, info->env, &info->trash_lst);
-			check++;
+				tmp = ft_word_d(str, info->env, &info->trash_lst);
+				check++;
 			}
 			else if (str[i] == '$' && check != 0)
 				tmp = ft_word_d(tmp, info->env, &info->trash_lst);

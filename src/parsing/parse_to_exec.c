@@ -18,7 +18,12 @@ static t_tok    *send_red(t_tok *lst, t_exec *exec, int type, int index, t_dlist
 
     tmp = NULL;
     if (type == WORD)
-        exec->tab_cmd[index] = fill_tab(exec->tab_cmd[index], lst->tok, trash);
+    {
+        if (lst->tok == NULL)
+            exec->tab_cmd[index] = NULL;
+        else
+            exec->tab_cmd[index] = fill_tab(exec->tab_cmd[index], lst->tok, trash);
+    }
     else
     {
         lst = lst->next;

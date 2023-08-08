@@ -6,7 +6,7 @@
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 14:04:23 by nrossel           #+#    #+#             */
-/*   Updated: 2023/08/02 11:05:26 by nrossel          ###   ########.fr       */
+/*   Updated: 2023/08/08 14:38:24 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ t_tok	*new_node(char *str, int token, t_dlist **trash)
 	new = my_malloc(1, sizeof(t_tok), trash);
 	if (!new)
 		return (NULL);
-	new->tok = str;
+	if (!str)
+		new->tok = NULL;
+	else
+		new->tok = str;
 	new->type = token;
 	new->next = 0;
 	new->prev = 0;
