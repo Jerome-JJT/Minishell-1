@@ -35,6 +35,14 @@ int g_errno = 0;
 //  	shell_execution(info_exec, envp, &infos);
 // 	//infos.status = shell_execution(infos.arg, info);
 // }
+static char	*purify_buffer(char *buff, t_dlist **trash)
+{
+	char	*tmp;
+
+	tmp = ft_strtrim(buff, " ", trash);
+	tmp = ft_strtrim(tmp, "\t", trash);
+	return (tmp);
+}
 
 /* -------------------- 1.Check validity parsing ----------------------------*/
 static void	ft_check(int check, t_shell *parse, t_exec *exec, char **envp)
@@ -73,7 +81,7 @@ int	main(int ac, char **av, char **envp)
 		if (!buffer)
 			exit(0);
 		if (*buffer)
-			buffer = ft_strtrim(buffer, " ", &info_parse.trash_lst);
+			buffer = purify_buffer(buffer, &info_parse.trash_lst);
 		if (buffer && *buffer)
 			add_history(buffer);
 		check = parse_shell (buffer, &info_parse, &info_exec);
