@@ -69,17 +69,10 @@ void	init_shell(t_shell *info, t_exec *exec, char **envp)
 void	ft_tabreset(char ***tab)
 {
 	int	i;
-	// int	j;
 
 	i = 0;
 	while ((*tab)[i])
-	{
-		// j = 0;
-		// while (tab[i][j])
-		// 	tab[i][j++] = 0;
-		(*tab)[i] = NULL;
-		i++;
-	}
+		(*tab)[i++] = NULL;
 	free(*tab);
 }
 

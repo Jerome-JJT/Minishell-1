@@ -1,131 +1,69 @@
 #include "../../minishell.h"
 
-/* -------------------- 1.If Here_Doc ----------------------------*/
-static int	is_here_doc(t_tok *token)
-{
-	t_tok	*ptr;
-
-	if (!token)
-		return (0);
-	ptr = token;
-	while (ptr != NULL && ptr->next != NULL)
-		ptr = ptr->next;
-	if (ptr->type == H_D)
-		return (1);
-	else if (!ptr->prev)
-		return (0);
-	else if (ptr->type == SPACEE && ptr->prev->type == H_D)
-		return (1);
-	return (0);
-}
-
-/* -------------------- 2.If $env_var ----------------------------*/
-static char	*if_env_var(char *str,  t_env *env, t_dlist **trash)
-{
-	int		i;
-	int 	j;
-	char	*tmp[3];
-	t_list	*ret;
-
-	i = 0;
-	j = 0;
-	tmp[0] = "";
-	ret = NULL;
-	while (ft_isalnum(str[i]) || str[i] == '_')
-		i++;
-	if (!ft_isparsing_char(str[i]) && ft_issigle(str[i])
-			&& str[i])
-	{
-		while (ft_isprint(str[i + j])
-				&& !ft_isparsing_char(str[i + j]))
-			j++;
-		tmp[1] = ft_substr(str + i, 0, j, trash);
-	}
-	tmp[2] = ft_substr(str, 0, i, trash);
-	ret = find_var_env(env, tmp[2], 1);
-	if (ret != NULL)
-		tmp[0] = ft_strdup(ret->valeur, trash);
-	if (j > 0)
-		tmp[0] = ft_strjoin(tmp[0], tmp[1], trash);
-	return (tmp[0]);
-}
-
-/* -------------------- 3.If $? ----------------------------*/
-static char	*if_errno(char *str, t_dlist **trash)
+/* -------------------- 1.Check if $ exist ----------------------------*/
+static char	*ft_word_d(char *buffer, t_env *env, t_dlist **trash)
 {
 	int		i;
 	char	*tmp[2];
 
 	i = 0;
-	if (!ft_isparsing_char(*str))
-	{
-		while (str[i] != '\0' && !ft_isparsing_char(str[i]))
-			i++;
-		tmp[1] = ft_substr(str, 0, i, trash);
-	}
-	tmp[0] = ft_strdup(ft_itoa(g_errno, trash), trash);
-	if (i > 0)
-		tmp[0] = ft_strjoin(tmp[0], tmp[1], trash);
-	return (tmp[0]);
-}
-
-/* -------------------- 4.Check if $ exist ----------------------------*/
-static char	*ft_word_d(char *str, t_env *env, t_dlist **trash)
-{
-	int		i;
-	char	*tmp[2];
-
-	i = 0;
-	tmp[0] = str;
-	while (!ft_isparsing_char(str[i]) && str[i] != '$')
+	tmp[0] = buffer;
+	while (!ft_isparsing_char(buffer[i]) && buffer[i] != '$')
 		i++;
-	if (str[i] == '$' && ft_isalnum(str[i + 1] || str[i + 1] == '?'))
-		tmp[0] = ft_substr(str, 0, i, trash);
+	if (buffer[i] == '$' && ft_isalnum(buffer[i + 1] || buffer[i + 1] == '?'))
+		tmp[0] = ft_subbuffer(buffer, 0, i, trash);
 	i++;
-	if (ft_isalnum(str[i]))
+	if (ft_isalnum(buffer[i]))
 	{
-		tmp[1] = if_env_var(str + i, env, trash);
-		tmp[0] = ft_strjoin(tmp[0], tmp[1], trash);
+		tmp[1] = if_env_var(buffer + i, env, trash);
+		tmp[0] = ft_bufferjoin(tmp[0], tmp[1], trash);
 	}
-	else if (str[i] == '?')
+	else if (buffer[i] == '?')
 	{
-		tmp[1] = if_errno(str + (i + 1), trash);
-		tmp[0] = ft_strjoin(tmp[0], tmp[1], trash);
+		tmp[1] = if_errno(buffer + (i + 1), trash);
+		tmp[0] = ft_bufferjoin(tmp[0], tmp[1], trash);
 	}
 	return (tmp[0]);
 }
 
-/* -------------------- 5.Word function ----------------------------*/
-char	*ft_word(char *str, t_shell *info)
+/* -------------------- 2.Analys buffer ----------------------------*/
+static char	*analys_buffer(char *ret, char *buffer, t_env *env, t_dlist **trash)
 {
-	int		i;
-	int		check;
-	char	*tmp;
+	int	check;
+	int	i;
 
-	i = 0;
 	check = 0;
-	tmp = "";
-	if (info->token && is_here_doc(info->token))
-	{
-		while (!ft_isparsing_char(str[i]))
-			i++;
-		creat_and_add(tmp, str, WORD, i, info);
-	}
-	else
-	{
-		while (!ft_isparsing_char(str[i]))
+	i = 0;
+	while (!ft_isparsing_char(buffer[i]))
 		{
-			if (str[i] == '$' && check == 0)
+			if (buffer[i] == '$' && check == 0)
 			{
-				tmp = ft_word_d(str, info->env, &info->trash_lst);
+				ret = ft_word_d(buffer, env, trash);
 				check++;
 			}
-			else if (str[i] == '$' && check != 0)
-				tmp = ft_word_d(tmp, info->env, &info->trash_lst);
+			else if (buffer[i] == '$' && check != 0)
+				ret = ft_word_d(ret, env, trash);
 
 			i++;
 		}
-		creat_and_add(tmp, str, WORD, i, info);
+	return (ret);
+}
+/* -------------------- 3.Word function ----------------------------*/
+char	*ft_word(char *buffer, t_shell *info)
+{
+	int		i;
+	char	*tmp;
+
+	i = 0;
+	tmp = NULL;
+	if (info->token && is_here_doc(info->token))
+	{
+		while (!ft_isparsing_char(buffer[i]))
+			i++;
+		creat_and_add(tmp, buffer, WORD, i, info);
 	}
-	return (str + i);
+	else
+		tmp = analys_buffer(tmp, buffer, info->env, &info->trash_lst);
+	creat_and_add(tmp, buffer, WORD, i, info);
+	return (buffer + i);
 }
