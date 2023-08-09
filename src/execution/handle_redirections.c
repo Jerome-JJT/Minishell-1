@@ -3,11 +3,11 @@
 void handle_redirections(t_exec *exe, t_pipe *pipe)
 {
 	//fprintf(stderr, ">>>HANDLE FILES, idx : %d\n", exe->idx);
-	if (exe->append && exe->append[exe->idx])
-	{
-		// fprintf(stderr, "append present: %s\n", exe->append[exe->idx]);
-		handle_append(exe);
-	}
+	// if (exe->append && exe->append[exe->idx])
+	// {
+	// 	fprintf(stderr, "append present: %s\n", exe->append[exe->idx]);
+	// 	handle_append(exe);
+	// }
 	handle_infile_heredoc_redirections(exe, pipe);
 	handle_outfile_append_redirections(exe);
 	//fprintf(stderr, "last_append[%d]:%s\n", exe->idx, exe->last_append);
