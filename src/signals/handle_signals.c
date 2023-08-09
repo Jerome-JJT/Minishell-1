@@ -13,7 +13,6 @@ void set_signals()
 
     sa.sa_handler = handler_sg;
     sigaction(SIGINT, &sa, NULL); // ctrl c
-    //sigaction(EOF, &sa, NULL); // ctrl d
 }
 
 void sig_default()
@@ -38,14 +37,6 @@ void handler_sg(int num)
         rl_replace_line("", 1);
         rl_redisplay();
     }
-    // else if (num == EOF)
-    // {
-    //     fprintf(stderr, "EOF\n");
-    //     write(1, "QUIT (core dumped ms)\n", 22);
-    //     rl_redisplay();
-    // }
-    // if (tcsetattr(0, TCSANOW, &save) == -1)
-    //     fprintf(stderr, "error setattr\n");
 }
 
 void handler_sg_update(int num)
@@ -85,6 +76,9 @@ void modify_terminal_attribut(t_exec *exe)
     exe->tp.c_lflag = exe->tp.c_lflag & (~ECHOCTL);
     if (tcsetattr(STDIN_FILENO, TCSANOW, &exe->tp) == -1)
         fprintf(stderr, "error setattr\n");
+
+    //faire fonction pour changer flag a nouveau
+
     // if (tcgetattr(STDIN_FILENO, &tp) == - 1)
     //     fprintf(stderr, "error getattr\n");
     // tp.c_lflag = tp.c_lflag & (~ECHOCTL);

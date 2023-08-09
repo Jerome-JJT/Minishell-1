@@ -80,7 +80,6 @@ int	main(int ac, char **av, char **envp)
 	set_signals();
 	while (1)
 	{
-		//set_signals();
 		rl_on_new_line();
 		buffer = readline(""GREEN"$>"RESET" ");
 		if (!buffer)
@@ -96,6 +95,7 @@ int	main(int ac, char **av, char **envp)
  		// 	fprintf(stderr, "erro tcsetattr\n");
 	}
 	ft_dlst_clear(&info_parse.trash_lst, free);
+	//restore terminal
 	free(info_parse.env);
 	return (0);
 }

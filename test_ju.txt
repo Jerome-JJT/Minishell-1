@@ -1,7 +1,6 @@
 
 						<<< signaux test >>>
 
-Avec heretic (<<a <<b), si ctrl d après avoir entrer ‘a’, SEGV
 - ne fonctionne pas dans heredoc
 - cat + ctrl c, pas de ^c
 - ctrl d
@@ -21,6 +20,8 @@ Avec heretic (<<a <<b), si ctrl d après avoir entrer ‘a’, SEGV
 	minishell: cd: no_such_file: Not a directory
 	bash: no_such_file: No such file or directory
 -> cd en trop, pas meme msg error
+-> ls <sfasf
+minishell: cd: sfasf: Not a directory
 
 						<<< Single cmd test >>>
 

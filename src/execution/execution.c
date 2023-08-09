@@ -4,6 +4,7 @@ int shell_execution(t_exec *d_exec, char **env, t_shell *shell_info)
 {
 	(void)shell_info;
 	(void) env;
+	//int statut;
 	int i;
 	t_pipe	d_pip;
 	// d_pip = (t_pipe){0};
@@ -35,6 +36,9 @@ int shell_execution(t_exec *d_exec, char **env, t_shell *shell_info)
 	d_exec->nb_probable_of_heredocs = d_exec->number_of_pipes + 1;
 	d_exec->last_append = NULL;
 	signals_update();
+	d_exec->save_pid = ft_calloc(sizeof(int), d_exec->number_of_pipes + 1);
+	if (d_exec->save_pid == NULL)
+		return(0);
 	handle_heredoc(d_exec);
 	handle_pipes(&d_pip.fd_pipe1, &d_pip.fd_pipe2);
 	if(d_exec->number_of_pipes == 0)
@@ -51,6 +55,7 @@ int shell_execution(t_exec *d_exec, char **env, t_shell *shell_info)
 	sig_default();
 	while (i-- > 0)
 		wait(NULL);
+	//waitpid(0, &statut, 0);
 	return (0);
 }
 
@@ -100,7 +105,6 @@ int execution_with_pipes(t_exec *d_exec, t_pipe *d_pip, t_shell *shell_info)
 		d_exec->idx++;
 		d_exec->cmd_number++;
 	}
-	//fprintf(stderr, "end of exec\n");
 	return (i);
 }
 
@@ -185,3 +189,8 @@ int is_builtins(char *cmd_to_compare, char** builtins_list)
 	}
 	return (0);
 }
+
+// void save_pid(t_exec *exe)
+// {
+// 	//...
+// }

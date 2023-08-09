@@ -82,6 +82,7 @@ typedef struct s_exec
 	int		idx;
 	struct termios	tp;
 	struct termios	save;
+	int		*save_pid;
 	char	**append;
 	char	*last_append;
 	char	*append_first_cmd;
