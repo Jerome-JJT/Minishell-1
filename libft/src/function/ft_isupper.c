@@ -6,13 +6,13 @@
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 08:46:39 by nrossel           #+#    #+#             */
-/*   Updated: 2023/05/23 16:37:44 by nrossel          ###   ########.fr       */
+/*   Updated: 2023/08/09 14:15:41 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/libft.h"
 
-int	ft_islower(int c)
+int	ft_isupper(int c)
 {
 	if ('A' <= c && c <= 'Z')
 		return (1);

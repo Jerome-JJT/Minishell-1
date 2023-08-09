@@ -120,10 +120,10 @@ typedef struct s_pipe
 void		pwd_minishell(t_shell *info);
 void		cd_minishell(t_shell *info, char *arg);
 void		env_minishell(t_shell *info, char *arg);
-void		unset_minishell(t_shell *info, char **arg);
+int			unset_minishell(t_shell *info, char **arg);
 void		echo_minishell(char *tab, t_dlist **trash);
 void		exit_minishell(char **arg, t_dlist **trash);
-void		export_minishell(t_shell *info, char **arg);
+int			export_minishell(t_shell *info, char **arg);
 
 /* -------------- Fonctions principales -----------------------*/
 int			parse_builtins(t_shell *info, t_exec *exec);

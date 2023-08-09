@@ -55,7 +55,6 @@ void	init_shell(t_shell *info, t_exec *exec, char **envp)
 	tab_to_lst(info, envp);
 	exec->env_cpy = envp;
 	exec->cmd_number = 0;
-	exec->append = NULL;
 	exec->idx = 0;
 	exec->nb_of_valid_heredoc = 0;
 	exec->nb_probable_of_heredocs = 0;
@@ -63,6 +62,7 @@ void	init_shell(t_shell *info, t_exec *exec, char **envp)
 	exec->heredoc = ft_calloc(20, sizeof(char *));
 	exec->redi_infile = ft_calloc(20, sizeof(char *));
 	exec->redi_outfile = ft_calloc(20, sizeof(char *));
+	exec->append = ft_calloc(20, sizeof(char *));
 }
 
 /* ---------------------- 5.Reset tab ----------------------------*/

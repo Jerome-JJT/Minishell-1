@@ -71,7 +71,6 @@ static int	ft_char_sort(char *buff, t_shell *info)
 			{
 				while (strlen > 0)
 				{
-					printf("%d\n", strlen);
 					buff--;
 					strlen--;
 				}

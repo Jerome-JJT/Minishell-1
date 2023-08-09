@@ -13,16 +13,21 @@ int shell_execution(t_exec *d_exec, char **env, t_shell *shell_info)
 	//char *builtins[] = {"cd", "echo", "env", "exit", "export", "pwd", "unset", NULL};
 	/*---------------------------------------------------*/
 	//d_exec->tab_cmd[0] = NULL;
-	//fprintf(stderr, "check value tab_cmd[0]: %s\n", d_exec->tab_cmd[0]);
-	//fprintf(stderr, "check value tab_cmd[1]: %s\n", d_exec->tab_cmd[1]);
+	// fprintf(stderr, "check value tab_cmd[0]: %s\n", d_exec->tab_cmd[0]);
+	// fprintf(stderr, "check value tab_cmd[1]: %s\n", d_exec->tab_cmd[1]);
 	// fprintf(stderr, "check value tab_cmd[2]: %s\n", d_exec->tab_cmd[2]);
 	//fprintf(stderr, "check value redi_in[0]: %s\n", d_exec->redi_infile[0]);
+<<<<<<< HEAD
 	// fprintf(stderr, "check value redi_in[1]: %s\n", d_exec->redi_infile[1]);
 	fprintf(stderr, "check value redi_out0: %s\n", d_exec->redi_outfile[0]);
+=======
+	// fprintf(stderr, "check value redi_in[2]: %s\n", d_exec->redi_infile[2]);
+	// fprintf(stderr, "check value redi_out0: %s\n", d_exec->redi_outfile[0]);
+>>>>>>> 24f9db9e5a066528aaa36f601d91a60810b8422d
 	// fprintf(stderr, "check value redi_out1: %s\n", d_exec->redi_outfile[1]);
 	// fprintf(stderr, "check value redi_out2: %s\n", d_exec->redi_outfile[2]);
 	//fprintf(stderr, "check value heredoc[0]: %s\n", d_exec->heredoc[0]);
-	//fprintf(stderr, "check value apppend0: %s\n", d_exec->append[0]);
+	fprintf(stderr, "check value apppend0: %s\n", d_exec->append[0]);
 	//fprintf(stderr, "check value apppend1: %s\n", d_exec->append[1]);
 	// fprintf(stderr, "check value apppend2: %s\n", d_exec->append[2]);
 	//fprintf(stderr, "nb de pipe0: %d\n", d_exec->number_of_pipes);
@@ -73,12 +78,20 @@ int execution_with_pipes(t_exec *d_exec, t_pipe *d_pip, t_shell *shell_info)
 			{
 				if (i % 2 == 0)
 				{
+<<<<<<< HEAD
+					// fprintf(stderr, ">> builtins_0 = %s, idx : %d\n", d_exec->tab_cmd[i], d_exec->idx);
+=======
 					//fprintf(stderr, ">> builtins_0 = %s, idx : %d\n", d_exec->tab_cmd[i], d_exec->idx);
+>>>>>>> 4b34dbc0a59b3af67318589d871265d2a7b66d2f
 					builtins_0(d_pip, d_exec, shell_info, d_exec->tab_cmd[i]);
 				}
 				else
 				{
+<<<<<<< HEAD
+					// fprintf(stderr, ">> builtins_1 = %s\n", d_exec->tab_cmd[i]);
+=======
 					//fprintf(stderr, ">> builtins_1 = %s\n", d_exec->tab_cmd[i]);
+>>>>>>> 4b34dbc0a59b3af67318589d871265d2a7b66d2f
 					builtins_1(d_pip, d_exec, shell_info, d_exec->tab_cmd[i]);
 				}
 			}
@@ -121,7 +134,7 @@ void execution_no_pipe(t_exec *d_exec, t_pipe *d_pip, t_shell *shell_info)
 	{
 		if(is_builtins(d_exec->tab_cmd[0], builtins) == 1)
 		{
-			fprintf(stderr, "pipe = 0, builtins\n");
+			// fprintf(stderr, "pipe = 0, builtins\n");
 			out_backup = dup(1);
 			if (out_backup == -1)
 				perror_msg_system(5);
@@ -145,17 +158,32 @@ void execution_no_pipe(t_exec *d_exec, t_pipe *d_pip, t_shell *shell_info)
 
 void builtins_exec(char *builtins_name, t_shell *info, char **cmd, t_exec *exe)
 {
+<<<<<<< HEAD
+	int i;
+
+	i = 0;
+=======
 	int i = 0;
 
+>>>>>>> 4b34dbc0a59b3af67318589d871265d2a7b66d2f
 	info->arg = cmd;
 	if(ft_strncmp("echo", builtins_name, ft_strlen(builtins_name)) == 0)
 		echo_minishell(*(exe->cmd_n_arg + 1), &info->trash_lst);
-	if(ft_strncmp("cd", builtins_name, ft_strlen(builtins_name)) == 0)
+	else if(ft_strncmp("cd", builtins_name, ft_strlen(builtins_name)) == 0)
 		cd_minishell(info, *(exe->cmd_n_arg + 1));
-	if(ft_strncmp("env", builtins_name, ft_strlen(builtins_name)) == 0)
+	else if(ft_strncmp("env", builtins_name, ft_strlen(builtins_name)) == 0)
 		env_minishell(info, *(exe->cmd_n_arg + 1));
-	if(ft_strncmp("exit", builtins_name, ft_strlen(builtins_name)) == 0)
+	else if(ft_strncmp("exit", builtins_name, ft_strlen(builtins_name)) == 0)
 		exit_minishell(exe->cmd_n_arg + 1, &info->trash_lst);
+<<<<<<< HEAD
+	else if(ft_strncmp("export", builtins_name, ft_strlen(builtins_name)) == 0)
+		i = export_minishell(info, exe->cmd_n_arg + 1);
+	else if(ft_strncmp("pwd", builtins_name, ft_strlen(builtins_name)) == 0)
+		pwd_minishell(info);
+	else if(ft_strncmp("unset", builtins_name, ft_strlen(builtins_name)) == 0)
+		i = unset_minishell(info, exe->cmd_n_arg + 1);
+	if (i == 1)
+=======
 	if(ft_strncmp("export", builtins_name, ft_strlen(builtins_name)) == 0)
 	{
 		export_minishell(info, exe->cmd_n_arg + 1);
@@ -169,6 +197,7 @@ void builtins_exec(char *builtins_name, t_shell *info, char **cmd, t_exec *exe)
 		i = 1;
 	}
 	if (i == 1 )
+>>>>>>> 4b34dbc0a59b3af67318589d871265d2a7b66d2f
 		exe->env_cpy = lst_to_tab(info->env, exe->trash_lst_exe);
 }
 
