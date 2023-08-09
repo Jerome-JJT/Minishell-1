@@ -7,7 +7,7 @@ static int	check_pipe(t_tok **node)
 
 	tmp = *node;
 	*node = (*node)->next;
-	if (!tmp->prev)
+	if (!tmp->prev || tmp->prev->type == PIPE)
 		return (ft_error_msg(258, tmp->tok));
 	else if (tmp->prev->type == SPACEE)
 	{
@@ -17,7 +17,7 @@ static int	check_pipe(t_tok **node)
 	return (0);
 }
 
-/* -------------------------- 2.If token is in_out_append ------------------------------- */
+/* -------------------------- 2.If token is in, out or append ------------------------------- */
 static int	in_out_append(t_tok **node)
 {
 	t_tok	*tmp;

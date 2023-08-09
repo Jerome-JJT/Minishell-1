@@ -73,20 +73,12 @@ int execution_with_pipes(t_exec *d_exec, t_pipe *d_pip, t_shell *shell_info)
 			{
 				if (i % 2 == 0)
 				{
-<<<<<<< HEAD
 					// fprintf(stderr, ">> builtins_0 = %s, idx : %d\n", d_exec->tab_cmd[i], d_exec->idx);
-=======
-					//fprintf(stderr, ">> builtins_0 = %s, idx : %d\n", d_exec->tab_cmd[i], d_exec->idx);
->>>>>>> 4b34dbc0a59b3af67318589d871265d2a7b66d2f
 					builtins_0(d_pip, d_exec, shell_info, d_exec->tab_cmd[i]);
 				}
 				else
 				{
-<<<<<<< HEAD
 					// fprintf(stderr, ">> builtins_1 = %s\n", d_exec->tab_cmd[i]);
-=======
-					//fprintf(stderr, ">> builtins_1 = %s\n", d_exec->tab_cmd[i]);
->>>>>>> 4b34dbc0a59b3af67318589d871265d2a7b66d2f
 					builtins_1(d_pip, d_exec, shell_info, d_exec->tab_cmd[i]);
 				}
 			}
@@ -153,14 +145,9 @@ void execution_no_pipe(t_exec *d_exec, t_pipe *d_pip, t_shell *shell_info)
 
 void builtins_exec(char *builtins_name, t_shell *info, char **cmd, t_exec *exe)
 {
-<<<<<<< HEAD
 	int i;
 
 	i = 0;
-=======
-	int i = 0;
-
->>>>>>> 4b34dbc0a59b3af67318589d871265d2a7b66d2f
 	info->arg = cmd;
 	if(ft_strncmp("echo", builtins_name, ft_strlen(builtins_name)) == 0)
 		echo_minishell(*(exe->cmd_n_arg + 1), &info->trash_lst);
@@ -170,7 +157,6 @@ void builtins_exec(char *builtins_name, t_shell *info, char **cmd, t_exec *exe)
 		env_minishell(info, *(exe->cmd_n_arg + 1));
 	else if(ft_strncmp("exit", builtins_name, ft_strlen(builtins_name)) == 0)
 		exit_minishell(exe->cmd_n_arg + 1, &info->trash_lst);
-<<<<<<< HEAD
 	else if(ft_strncmp("export", builtins_name, ft_strlen(builtins_name)) == 0)
 		i = export_minishell(info, exe->cmd_n_arg + 1);
 	else if(ft_strncmp("pwd", builtins_name, ft_strlen(builtins_name)) == 0)
@@ -178,21 +164,6 @@ void builtins_exec(char *builtins_name, t_shell *info, char **cmd, t_exec *exe)
 	else if(ft_strncmp("unset", builtins_name, ft_strlen(builtins_name)) == 0)
 		i = unset_minishell(info, exe->cmd_n_arg + 1);
 	if (i == 1)
-=======
-	if(ft_strncmp("export", builtins_name, ft_strlen(builtins_name)) == 0)
-	{
-		export_minishell(info, exe->cmd_n_arg + 1);
-		i = 1;
-	}
-	if(ft_strncmp("pwd", builtins_name, ft_strlen(builtins_name)) == 0)
-		pwd_minishell(info);
-	if(ft_strncmp("unset", builtins_name, ft_strlen(builtins_name)) == 0)
-	{
-		unset_minishell(info, exe->cmd_n_arg + 1);
-		i = 1;
-	}
-	if (i == 1 )
->>>>>>> 4b34dbc0a59b3af67318589d871265d2a7b66d2f
 		exe->env_cpy = lst_to_tab(info->env, exe->trash_lst_exe);
 }
 
