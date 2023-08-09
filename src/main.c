@@ -73,7 +73,10 @@ int	main(int ac, char **av, char **envp)
 
 	(void) av;
 	(void) ac;
+
+	modify_terminal_attribut(&info_exec);
 	init_shell(&info_parse, &info_exec, envp);
+	//set_signals();
 	while (1)
 	{
 		set_signals();
@@ -88,6 +91,8 @@ int	main(int ac, char **av, char **envp)
 		check = parse_shell (buffer, &info_parse, &info_exec);
 		ft_check(check, &info_parse, &info_exec, envp);
 		// Possible leaks ici si buffer non free !
+		// if (tcsetattr(STDIN_FILENO, TCSANOW, &info_exec.save) == -1)
+ 		// 	fprintf(stderr, "erro tcsetattr\n");
 	}
 	ft_dlst_clear(&info_parse.trash_lst, free);
 	free(info_parse.env);

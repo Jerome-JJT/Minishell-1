@@ -4,7 +4,9 @@ void handle_single_cmd(t_pipe *d_pip, t_exec *d_exe, t_shell *d_shell, char *cmd
 {
     int fork_pid;
 	int status;
- //   fprintf(stderr, "single cmd\n");
+
+    fprintf(stderr, "single cmd\n");
+
     fork_pid = fork();
     if (fork_pid == -1)
     {
@@ -14,6 +16,8 @@ void handle_single_cmd(t_pipe *d_pip, t_exec *d_exe, t_shell *d_shell, char *cmd
     }
     if (fork_pid == 0)
     {
+		// if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &d_exe->save) == -1)
+ 	 	// 	fprintf(stderr, "erro tcsetattr\n");
         prepare_cmd(d_exe, d_shell, cmd);
         handle_dup_fd_single_cmd(d_pip, d_exe);
         if (execve(d_exe->cmd_path, d_exe->cmd_n_arg, d_exe->env_cpy) == -1)
@@ -23,6 +27,8 @@ void handle_single_cmd(t_pipe *d_pip, t_exec *d_exe, t_shell *d_shell, char *cmd
             // return;
         }
     }
+	// if (tcsetattr(STDIN_FILENO, TCSANOW, &d_exe->save) == -1)
+ 	// 		fprintf(stderr, "erro tcsetattr\n");
     else
         waitpid(fork_pid, &status, 0);
 }

@@ -80,6 +80,8 @@ typedef struct s_shell
 typedef struct s_exec
 {
 	int		idx;
+	struct termios	tp;
+	struct termios	save;
 	char	**append;
 	char	*last_append;
 	char	*append_first_cmd;
@@ -249,7 +251,9 @@ void		handle_single_cmd(t_pipe *d_pip, t_exec *d_exe, t_shell *d_shell, char *cm
 
 void	set_signals();
 void	signals_update();
+void	sig_default();
 void	handler_sg(int num);
 void	handler_sg_update(int num);
+void	modify_terminal_attribut(t_exec *exe);
 
 #endif
