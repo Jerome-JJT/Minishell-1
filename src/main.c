@@ -76,10 +76,10 @@ int	main(int ac, char **av, char **envp)
 
 	modify_terminal_attribut(&info_exec);
 	init_shell(&info_parse, &info_exec, envp);
-	//set_signals();
+	set_signals();
 	while (1)
 	{
-		set_signals();
+		//set_signals();
 		rl_on_new_line();
 		buffer = readline(""GREEN"$>"RESET" ");
 		if (!buffer)
