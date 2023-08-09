@@ -20,7 +20,7 @@ int	is_here_doc(t_tok *token)
 }
 
 /* -------------------- 2.If buff has $env_var ----------------------------*/
-char	*if_env_var(char *str,  t_env *env, t_dlist **trash)
+char	*if_env_var_word(char *str,  t_env *env, t_dlist **trash)
 {
 	int		i;
 	int 	j;
@@ -51,7 +51,7 @@ char	*if_env_var(char *str,  t_env *env, t_dlist **trash)
 }
 
 /* -------------------- 3.If buff has $? ----------------------------*/
-char	*if_errno(char *str, t_dlist **trash)
+char	*if_errno_word(char *str, t_dlist **trash)
 {
 	int		i;
 	char	*tmp[2];
