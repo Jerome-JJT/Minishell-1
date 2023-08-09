@@ -37,11 +37,7 @@ static int	in_out_append(t_tok **node)
 	{
 		if ((*node)->type == RED_IN)
 		{
-<<<<<<< HEAD
 			if (open(tmp->tok, O_RDWR) < 0) // -->> A changer selon le type de permissions accordées de base au fichier
-=======
-			if (open(tmp->tok, O_RDWR) < 0)
->>>>>>> 24f9db9e5a066528aaa36f601d91a60810b8422d
 				return (ft_error_msg(1, tmp->tok));
 		}
 		// else
