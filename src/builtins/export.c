@@ -68,9 +68,11 @@ static void	export_no_args(t_shell *info)
 int	export_minishell(t_shell *info, char **arg)
 {
 	t_list	*node;
+	char	*tmp;
 	int		i;
 
 	i = 0;
+	tmp = NULL;
 	if (!*arg)
 	{
 		export_no_args(info);
@@ -81,6 +83,7 @@ int	export_minishell(t_shell *info, char **arg)
 		while (arg[i])
 		{
 			remove_quote(arg[i]);
+			tmp = ft_strrchr(arg[i], '=');
 			if (!ft_isalpha(arg[i][0])|| arg[i][0] == '$')
 				printf("minishell: export: `%s': not a valid identifier\n",
 					arg[i]);
@@ -94,7 +97,12 @@ int	export_minishell(t_shell *info, char **arg)
 					ft_dlst_addback(&info->env, node);
 				}
 				else
-					fill_node(node, node->variable, ft_strrchr(arg[i], '=') + 1, 1);
+				{
+					if (tmp + 1 == 0)
+						fill_node(node, node->variable, NULL, 1);
+					else
+						fill_node(node, node->variable, tmp, 1);
+				}
 			}
 			i++;
 		}	

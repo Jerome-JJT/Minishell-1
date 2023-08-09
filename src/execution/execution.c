@@ -22,7 +22,7 @@ int shell_execution(t_exec *d_exec, char **env, t_shell *shell_info)
 	// fprintf(stderr, "check value redi_out1: %s\n", d_exec->redi_outfile[1]);
 	// fprintf(stderr, "check value redi_out2: %s\n", d_exec->redi_outfile[2]);
 	//fprintf(stderr, "check value heredoc[0]: %s\n", d_exec->heredoc[0]);
-	fprintf(stderr, "check value apppend0: %s\n", d_exec->append[0]);
+	// fprintf(stderr, "check value apppend0: %s\n", d_exec->append[0]);
 	//fprintf(stderr, "check value apppend1: %s\n", d_exec->append[1]);
 	// fprintf(stderr, "check value apppend2: %s\n", d_exec->append[2]);
 	//fprintf(stderr, "nb de pipe0: %d\n", d_exec->number_of_pipes);
@@ -163,8 +163,8 @@ void builtins_exec(char *builtins_name, t_shell *info, char **cmd, t_exec *exe)
 		pwd_minishell(info);
 	else if(ft_strncmp("unset", builtins_name, ft_strlen(builtins_name)) == 0)
 		i = unset_minishell(info, exe->cmd_n_arg + 1);
-	if (i == 1)
-		exe->env_cpy = lst_to_tab(info->env, exe->trash_lst_exe);
+	// if (i == 1)
+	// 	exe->env_cpy = lst_to_tab(info->env, exe->trash_lst_exe);
 }
 
 int is_builtins(char *cmd_to_compare, char** builtins_list)

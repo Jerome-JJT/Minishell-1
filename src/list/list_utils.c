@@ -97,7 +97,6 @@ char	**lst_to_tab(t_env *lst, t_dlist **trash)
 		i++;
 		node = node->next;
 	}
-	// print_tab(tab, "lst_to_tab");
 	return (tab);
 }
 

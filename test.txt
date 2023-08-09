@@ -1,6 +1,6 @@
 <<a <<b <<c														[√]
 <tx_a.txt cat -e > out											[√]
-< tx_a.txt cat -e | cat -e >out 								[x]
+< tx_a.txt cat -e | cat -e >out 								[√]
 >>ap1															[√]
 
 / ------------- Syntax_error ---------------- \

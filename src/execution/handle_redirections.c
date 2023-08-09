@@ -56,7 +56,7 @@ char **handle_outfile(t_exec *exe)
 	i = 0;
 	if (outfile_tab[0])
 	{
-		remove_prefixe_outfile(outfile_tab);
+		//remove_prefixe_outfile(outfile_tab);
 		while (outfile_tab[i])
 		{
 			out = open(outfile_tab[i], O_WRONLY | O_CREAT | O_TRUNC, 0644);
