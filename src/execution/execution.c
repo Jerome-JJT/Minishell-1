@@ -38,9 +38,9 @@ int shell_execution(t_exec *d_exec, char **env, t_shell *shell_info)
 	//d_exec->number_of_pipes = i - 1;
 	//fprintf(stderr, "nb de pipe1: %d\n", d_exec->number_of_pipes);
 	d_exec->last_append = NULL;
+	signals_update();
 	handle_heredoc(d_exec);
 	handle_pipes(&d_pip.fd_pipe1, &d_pip.fd_pipe2);
-	signals_update();
 	// if (!d_exec->tab_cmd)
 	// 	exit(0);
 	if(d_exec->number_of_pipes == 0)
