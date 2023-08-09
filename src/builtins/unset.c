@@ -17,7 +17,7 @@ static void	clear_node(t_shell *info, t_list *node)
 	info->env->len--;
 }
 
-void	unset_minishell(t_shell *info, char **arg)
+int	unset_minishell(t_shell *info, char **arg)
 {
 	t_list	*node;
 	int		i;
@@ -29,8 +29,11 @@ void	unset_minishell(t_shell *info, char **arg)
 		{
 			node = find_var_env(info->env, arg[i++], 1);
 			if (node != NULL)
+			{
 				clear_node(info, node);
-			// print_list(info->env, NULL, 2);
+				return (1);
+			}
 		}
 	}
+	return (0);
 }

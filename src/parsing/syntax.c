@@ -35,18 +35,18 @@ static int	in_out_append(t_tok **node)
 		return (ft_error_msg(258, tmp->tok));
 	else if (ft_isword(tmp->type) == 1)
 	{
-		if ((*node)->type == RED_IN || (*node)->type == APPEND)
+		if ((*node)->type == RED_IN)
 		{
-			if (open(tmp->tok, O_RDWR) < 0) // -->> A changer selon le type de permissions accordées de base au fichier
+			if (open(tmp->tok, O_RDWR) < 0)
 				return (ft_error_msg(1, tmp->tok));
 		}
-		else
-		{
-			if (access(tmp->tok, F_OK) == 0)
-				unlink(tmp->tok);
-			if (open(tmp->tok, O_WRONLY | O_CREAT | O_TRUNC, 0644) < 0)
-				return (ft_error_msg(1, tmp->tok));
-		}
+		// else
+		// {
+		// 	if (access(tmp->tok, F_OK) == 0)
+		// 		unlink(tmp->tok);
+		// 	if (open(tmp->tok, O_WRONLY | O_CREAT | O_TRUNC, 0644) < 0)
+		// 		return (ft_error_msg(1, tmp->tok));
+		// }
 		(*node) = tmp->next;
 	}
 	return (0);

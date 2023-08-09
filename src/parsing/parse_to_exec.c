@@ -29,12 +29,13 @@ static t_tok    *send_red(t_tok *lst, t_exec *exec, int type, int index, t_dlist
         else if (type == RED_OUT)
         {
             tmp = ft_strjoin("O_", lst->tok, trash);
-            exec->redi_outfile[index] = fill_tab(exec->redi_outfile[index], tmp, trash);
+            exec->append[index] = fill_tab(exec->append[index], tmp, trash);
+            exec->redi_outfile[index] = fill_tab(exec->redi_outfile[index], lst->tok, trash);
         }
         else if (type == APPEND)
         {
             tmp = ft_strjoin("A_", lst->tok, trash);
-            exec->redi_outfile[index] = fill_tab(exec->redi_outfile[index], tmp, trash);
+            exec->append[index] = fill_tab(exec->append[index], tmp, trash);
         }
         else if (type == H_D)
             exec->heredoc[index] = fill_tab(exec->heredoc[index], lst->tok, trash);
@@ -53,13 +54,10 @@ void pars_to_exec(t_shell *info, t_exec *exec, t_dlist **trash)
     {
         if (tmp->type == RED_IN)
             tmp = send_red(tmp, exec, RED_IN, pipe, trash);
-        else if (tmp->type == RED_OUT || tmp->type == APPEND)
-        {
-            if (tmp->type == RED_OUT)
-                tmp = send_red(tmp, exec, RED_OUT, pipe, trash);
-            else
-                tmp = send_red(tmp, exec, APPEND, pipe, trash);
-        }
+        else if (tmp->type == RED_OUT)
+            tmp = send_red(tmp, exec, RED_OUT, pipe, trash);
+        else if (tmp->type == APPEND)
+            tmp = send_red(tmp, exec, APPEND, pipe, trash);
         else if (tmp->type == H_D)
             tmp = send_red(tmp, exec, H_D, pipe, trash);
         else if (ft_isword(tmp->type))

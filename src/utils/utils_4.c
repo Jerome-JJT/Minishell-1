@@ -4,8 +4,10 @@
 void    reset_shelltab(t_exec *exec)
 {
     if(exec->tab_cmd)
+    {
         ft_tabreset(&exec->tab_cmd);
         exec->tab_cmd = ft_calloc(20, sizeof(char *));
+    }
     if(exec->redi_infile)
     {
         ft_tabreset(&exec->redi_infile);
@@ -20,6 +22,11 @@ void    reset_shelltab(t_exec *exec)
     {
         ft_tabreset(&exec->heredoc);
 	    exec->heredoc = ft_calloc(20, sizeof(char *));
+    }
+    if(exec->append)
+    {
+        ft_tabreset(&exec->append);
+        exec->append = ft_calloc(20, sizeof(char *));
     }
 
 }

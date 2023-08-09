@@ -47,7 +47,6 @@ static char	*analys_buffer(char *ret, char *buffer, t_env *env, t_dlist **trash,
 			i++;
 		}
 	*index = i;
-	fprintf(stderr, "Analys_buffer: %p\n", ret);
 	return (ret);
 }
 /* -------------------- 3.Word function ----------------------------*/
@@ -65,7 +64,9 @@ char	*ft_word(char *buffer, t_shell *info)
 		creat_and_add(tmp, buffer, WORD, i, info);
 	}
 	else
+	{
 		tmp = analys_buffer(tmp, buffer, info->env, &info->trash_lst, &i);
-	creat_and_add(tmp, buffer, WORD, i, info);
+		creat_and_add(tmp, buffer, WORD, i, info);
+	}
 	return (buffer + i);
 }

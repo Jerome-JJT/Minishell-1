@@ -81,6 +81,8 @@ void	print_parsing(t_exec *exec, char *ft)
 		print_tab(exec->redi_infile, "test red_in");
 	if (*exec->redi_outfile)
 		print_tab(exec->redi_outfile, "test red_out");
+	if (*exec->append)
+		print_tab(exec->append, "test append");
 }
 
 void	print_trash(t_dlist **trash)

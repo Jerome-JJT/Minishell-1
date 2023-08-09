@@ -6,7 +6,7 @@
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:04:11 by nrossel           #+#    #+#             */
-/*   Updated: 2023/05/26 13:11:56 by nrossel          ###   ########.fr       */
+/*   Updated: 2023/08/09 14:16:23 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int			ft_isascii(int c);
 int			ft_isprint(int c);
 int			ft_islower(int c);
 int			ft_tolower(int c);
-int			ft_islower(int c);
+int			ft_isupper(int c);
 int			ft_toupper(int c);
 int			ft_atob(char *str);
 int			ft_nbrlen_d(int nbr);

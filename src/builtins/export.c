@@ -64,15 +64,18 @@ static void	export_no_args(t_shell *info)
 	ft_trialpha(env);
 }
 
-/* ------------------------- 5.Fonction export ------------------------------*/
-void	export_minishell(t_shell *info, char **arg)
+/* ------------------------- 4.Fonction export ------------------------------*/
+int	export_minishell(t_shell *info, char **arg)
 {
 	t_list	*node;
 	int		i;
 
 	i = 0;
 	if (!*arg)
+	{
 		export_no_args(info);
+		return (0);
+	}
 	else
 	{
 		while (arg[i])
@@ -96,4 +99,5 @@ void	export_minishell(t_shell *info, char **arg)
 			i++;
 		}	
 	}
+	return (1);
 }
