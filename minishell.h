@@ -5,7 +5,6 @@
 # include <stdio.h>
 # include <fcntl.h>
 # include <curses.h>
-// # include <term.h>
 # include <dirent.h>
 # include <unistd.h>
 # include <stdlib.h>
@@ -154,14 +153,18 @@ int			check_printchar(char c);
 void		remove_quote(char *str);
 void		ft_tabreset(char ***tab);
 int			ft_checkquote(char *str);
+int			is_here_doc(t_tok *token);
 int			ft_isparsing_char(char c);
 void    	reset_shelltab(t_exec *exec);
 void		ft_strswap(char **s1, char **s2);
 int			ft_error_msg(int errno, char *str);
 int			found_char(const char *str, int c);
 char    	*tab_to_str(char **tab, t_dlist **trash);
+char		*if_errno_word(char *str, t_dlist **trash);
 char		**ft_split_var(char *var, t_dlist **trash);
 char		**split_arg(char *str, int egal, t_dlist **trash);
+char		*ft_strdup_pars(const char *str, t_dlist **trash);
+char		*if_env_var_word(char *str,  t_env *env, t_dlist **trash);
 
 /* -------------- Fonctions utiles liste -----------------------*/
 void		tok_clearlst(t_tok **lst);
@@ -196,17 +199,14 @@ char		*get_path(char **env);
 void		handle_append(t_exec *exe);
 void		command_not_found(char *cmd);
 char		**handle_infile(t_exec *exe);
+int			perror_msg_system(int errno);
 char		**handle_outfile(t_exec *exe);
-int			number_of_valid_heredoc(t_exec *d_exe);
-void		fill_name_cmd_builtins(t_exec *exe, char *name);
 void		handle_heredoc(t_exec *d_exe);
-int			execution_with_pipes(t_exec *d_exec, t_pipe *d_pip, t_shell *shell_info);
-void		execution_no_pipe(t_exec *d_exec, t_pipe *d_pip, t_shell *shell_info);
 void		create_heredoc_tab(t_exec *exe);
 void		setup_infile_cmd(t_pipe *d_pipe);
-int			perror_msg_system(int errno);
 void		close_pipes(t_pipe *d, int process);
 int 		number_of_valid_heredoc(t_exec *d_exe);
+int			number_of_valid_heredoc(t_exec *d_exe);
 void		create_cmd_n_args_builtins(t_exec *exe);
 char		*find_last_element(char **tab_append_out);
 void		handle_pipes(int (*fd1)[2], int (*fd2)[2]);
@@ -216,20 +216,23 @@ void		handle_redirections(t_exec *exe, t_pipe *pipe);
 void		error_infile_outfile(int error_nb, t_exec *exe);
 void		last_cmd(t_pipe *d, int process, t_exec *d_exe);
 void 		fill_name_cmd_builtins(t_exec *exe, char *name);
+void		fill_name_cmd_builtins(t_exec *exe, char *name);
 void		setup_outfile_cmd(t_pipe *d_pipe, t_exec *d_exe);
 char		**ft_split_exec(const char *str, char c, int var);
 void		handle_dup_fd_single_cmd(t_pipe *d_pip, t_exec *exe);
+void		execution_no_pipe(t_exec *d_exec, t_pipe *d_pip, t_shell *shell_info);
+int			execution_with_pipes(t_exec *d_exec, t_pipe *d_pip, t_shell *shell_info);
 
 char    	*ft_strcpy(char *s1, char *s2);
 int			is_tab_heredoc_empty(char **tab);
 void		first_cmd(t_pipe *d, t_exec *d_exe);
-void		prepare_cmd(t_exec *d_exe, t_shell *d_shell, char *cmd);
 char		**create_tab(t_list **lst, t_dlist **trash);
 void		convert_tab_to_fd_heredoc(char **heredoc_res);
 void		middle_cmd(t_pipe *d, t_exec *exe, int process);
 void		handle_outfile_append_redirections(t_exec *exe);
 char		*ft_strcat_heredoc(char *dest, char *src, int end);
 char		*create_str_heredoc(char **exe_heredoc, t_exec *exe);
+void		prepare_cmd(t_exec *d_exe, t_shell *d_shell, char *cmd);
 char		*get_cmd_path(char *cmd, t_exec *info, t_dlist **trash);
 int			is_builtins(char *cmd_to_compare, char** builtins_list);
 

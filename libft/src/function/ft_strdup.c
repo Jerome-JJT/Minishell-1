@@ -6,7 +6,7 @@
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 11:21:49 by nrossel           #+#    #+#             */
-/*   Updated: 2023/05/23 16:39:22 by nrossel          ###   ########.fr       */
+/*   Updated: 2023/08/08 18:17:39 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	*ft_strdup(const char *s1, t_dlist **trash)
 	int		len;
 	char	*s_cpy;
 
+	if (!s1)
+		return (NULL);
 	i = 0;
 	len = ft_strlen(s1);
 	s_cpy = my_malloc(len + 1, sizeof(char), trash);

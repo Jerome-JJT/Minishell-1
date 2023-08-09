@@ -1,13 +1,15 @@
 #include "../../minishell.h"
 
 /* -------------------- 1.Echo with -n option or not -----------------------*/
-static void	echo_n(char **tab, int option_n)
+static void	print_echo(char **tab, int option_n)
 {
 	int		i;
 
 	i = 0;
 	if (!*tab)
 		return ;
+	if (!**tab)
+		printf(" ");
 	else
 	{
 		while (tab[i])
@@ -22,14 +24,39 @@ static void	echo_n(char **tab, int option_n)
 	}
 }
 
+/* -------------------- 2. Check -n variant -----------------------*/
+static int	check_n(char *str)
+{
+	int	check;
+	int	i;
+	int	j;
+
+	check = 0;
+	i = 0;
+	j = 0;
+	if (ft_strncmp(str, "-n", 2) == 0)
+	{
+		if (ft_strncmp(str, "-n", 3) == 0)
+			return (1);
+		else
+		{
+			while(str[i + 2] == 'n')
+				i++;
+			if (str[i + 2] != '\0' && ft_isalpha(str[i + 2]))
+				return (0);
+			else
+				return (2);
+		}
+	}
+	return (0);
+}
+
 /* -------------------- 2. Echo main function -----------------------*/
 void	echo_minishell(char *str, t_dlist **trash)
 {
-	int		check;
 	int		i;
 	char	**tmp;
 
-	check = 0;
 	i = 0;
 	if (!str || !*str)
 		printf("\n");
@@ -38,14 +65,16 @@ void	echo_minishell(char *str, t_dlist **trash)
 		if (*str == '\"')
 			remove_quote(str);
 		tmp = ft_split(str, ' ', trash);
-		if (tmp[1] != NULL)
+		if (check_n(*tmp) == 2 && tmp + 1 != NULL)
+			print_echo(tmp + 1, 1);
+		else if (check_n(*tmp) == 1)
 		{
-			while (ft_strncmp(tmp[i++], "-n", 3) == 0)
-				check = 1;
-			if (check == 1)
-				echo_n(tmp + i, 1);
-			else
-				echo_n(tmp, 0);
+			while (ft_strncmp(tmp[i], "-n", 3) == 0)
+				i++;
+			if (tmp + i != NULL)
+				print_echo(tmp + i, 1);
 		}
+		else if (check_n(*tmp) == 0)
+			print_echo(tmp, 0);
 	}
 }

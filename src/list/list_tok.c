@@ -6,32 +6,13 @@
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 14:04:23 by nrossel           #+#    #+#             */
-/*   Updated: 2023/08/08 14:38:24 by nrossel          ###   ########.fr       */
+/*   Updated: 2023/08/09 11:26:13 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-/* -------------------------- 1.New token node ------------------------------- */
-t_tok	*new_node(char *str, int token, t_dlist **trash)
-{
-	t_tok	*new;
-
-	new = my_malloc(1, sizeof(t_tok), trash);
-	if (!new)
-		return (NULL);
-	if (!str)
-		new->tok = NULL;
-	else
-		new->tok = str;
-	new->type = token;
-	new->next = 0;
-	new->prev = 0;
-	new->len =	0;
-	return (new);
-}
-
-/* -------------------------- 2.Add token node to lst ------------------------------- */
+/* -------------------------- 1.Add token node to lst ------------------------------- */
 void	tok_addlst(t_tok **lst, t_tok *token)
 {
 	t_tok	*ptr;
@@ -56,7 +37,7 @@ void	tok_addlst(t_tok **lst, t_tok *token)
 	token->len++;
 }
 
-/* -------------------------- 3.Clear token lst ------------------------------- */
+/* -------------------------- 2.Clear token lst ------------------------------- */
 void	tok_clearlst(t_tok **lst)
 {
 	t_tok	*ptr;

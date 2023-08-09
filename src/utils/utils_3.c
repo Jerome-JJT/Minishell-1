@@ -42,7 +42,7 @@ void	creat_and_add(char *tmp, char *str, int type, int index, t_shell *info)
 {
 	t_tok	*token;
 
-	if (!tmp)
+	if (tmp == NULL)
 	{
 		if (type == S_QUOTE || type == D_QUOTE)
 			token = new_node(ft_substr(str, 1, index - 1, &info->trash_lst), type, &info->trash_lst);
@@ -52,6 +52,6 @@ void	creat_and_add(char *tmp, char *str, int type, int index, t_shell *info)
 			token = new_node(ft_substr(str, 0, index, &info->trash_lst), type, &info->trash_lst);
 	}
 	else
-		token = new_node(ft_strdup(tmp, &info->trash_lst), type, &info->trash_lst);
+		token = new_node(ft_strdup_pars(tmp, &info->trash_lst), type, &info->trash_lst);
 	tok_addlst(&info->token, token);
 }
