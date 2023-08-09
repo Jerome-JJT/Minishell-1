@@ -47,7 +47,7 @@ static char	*analys_buffer(char *ret, char *buffer, t_env *env, t_dlist **trash,
 			i++;
 		}
 	*index = i;
-	fprintf(stderr, "Analys_buffer: %p\n", ret);
+	//fprintf(stderr, "Analys_buffer: %p\n", ret);
 	return (ret);
 }
 /* -------------------- 3.Word function ----------------------------*/

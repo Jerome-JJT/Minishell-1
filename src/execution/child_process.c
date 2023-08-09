@@ -5,7 +5,7 @@ void handle_single_cmd(t_pipe *d_pip, t_exec *d_exe, t_shell *d_shell, char *cmd
     int fork_pid;
 	int status;
 
-    fprintf(stderr, "single cmd\n");
+    //fprintf(stderr, "single cmd\n");
 
     fork_pid = fork();
     if (fork_pid == -1)

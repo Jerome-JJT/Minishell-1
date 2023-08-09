@@ -13,12 +13,12 @@ int shell_execution(t_exec *d_exec, char **env, t_shell *shell_info)
 	//char *builtins[] = {"cd", "echo", "env", "exit", "export", "pwd", "unset", NULL};
 	/*---------------------------------------------------*/
 	//d_exec->tab_cmd[0] = NULL;
-	fprintf(stderr, "check value tab_cmd[0]: %s\n", d_exec->tab_cmd[0]);
-	fprintf(stderr, "check value tab_cmd[1]: %s\n", d_exec->tab_cmd[1]);
-	fprintf(stderr, "check value tab_cmd[2]: %s\n", d_exec->tab_cmd[2]);
-	//fprintf(stderr, "check value redi_in[0]: %s\n", d_exec->redi_infile[0]);
-	// fprintf(stderr, "check value redi_in[2]: %s\n", d_exec->redi_infile[2]);
-	//fprintf(stderr, "check value redi_out0: %s\n", d_exec->redi_outfile[0]);
+	//fprintf(stderr, "check value tab_cmd[0]: %s\n", d_exec->tab_cmd[0]);
+	//fprintf(stderr, "check value tab_cmd[1]: %s\n", d_exec->tab_cmd[1]);
+	// fprintf(stderr, "check value tab_cmd[2]: %s\n", d_exec->tab_cmd[2]);
+	// fprintf(stderr, "check value redi_in[0]: %s\n", d_exec->redi_infile[0]);
+	// fprintf(stderr, "check value redi_in[1]: %s\n", d_exec->redi_infile[1]);
+	// fprintf(stderr, "check value redi_out0: %s\n", d_exec->redi_outfile[1]);
 	// fprintf(stderr, "check value redi_out1: %s\n", d_exec->redi_outfile[1]);
 	// fprintf(stderr, "check value redi_out2: %s\n", d_exec->redi_outfile[2]);
 	//fprintf(stderr, "check value heredoc[0]: %s\n", d_exec->heredoc[0]);
@@ -73,12 +73,12 @@ int execution_with_pipes(t_exec *d_exec, t_pipe *d_pip, t_shell *shell_info)
 			{
 				if (i % 2 == 0)
 				{
-					fprintf(stderr, ">> builtins_0 = %s, idx : %d\n", d_exec->tab_cmd[i], d_exec->idx);
+					//fprintf(stderr, ">> builtins_0 = %s, idx : %d\n", d_exec->tab_cmd[i], d_exec->idx);
 					builtins_0(d_pip, d_exec, shell_info, d_exec->tab_cmd[i]);
 				}
 				else
 				{
-					fprintf(stderr, ">> builtins_1 = %s\n", d_exec->tab_cmd[i]);
+					//fprintf(stderr, ">> builtins_1 = %s\n", d_exec->tab_cmd[i]);
 					builtins_1(d_pip, d_exec, shell_info, d_exec->tab_cmd[i]);
 				}
 			}
@@ -86,12 +86,12 @@ int execution_with_pipes(t_exec *d_exec, t_pipe *d_pip, t_shell *shell_info)
 			{
 				if (i % 2 == 0)
 				{
-					// fprintf(stderr, ">> process_0 = %s, idx : %d\n", d_exec->tab_cmd[i], d_exec->idx);
+					//fprintf(stderr, ">> process_0 = %s, idx : %d\n", d_exec->tab_cmd[i], d_exec->idx);
 					child_process_0(d_pip, d_exec, shell_info, d_exec->tab_cmd[i]);
 				}
 				else
 				{
-					// fprintf(stderr, ">> process_1 = %s\n", d_exec->tab_cmd[i]);
+					//fprintf(stderr, ">> process_1 = %s\n", d_exec->tab_cmd[i]);
 					child_process_1(d_pip, d_exec, shell_info, d_exec->tab_cmd[i]);
 				}
 			}
@@ -145,6 +145,8 @@ void execution_no_pipe(t_exec *d_exec, t_pipe *d_pip, t_shell *shell_info)
 
 void builtins_exec(char *builtins_name, t_shell *info, char **cmd, t_exec *exe)
 {
+	int i = 0;
+
 	info->arg = cmd;
 	if(ft_strncmp("echo", builtins_name, ft_strlen(builtins_name)) == 0)
 		echo_minishell(*(exe->cmd_n_arg + 1), &info->trash_lst);
@@ -155,12 +157,19 @@ void builtins_exec(char *builtins_name, t_shell *info, char **cmd, t_exec *exe)
 	if(ft_strncmp("exit", builtins_name, ft_strlen(builtins_name)) == 0)
 		exit_minishell(exe->cmd_n_arg + 1, &info->trash_lst);
 	if(ft_strncmp("export", builtins_name, ft_strlen(builtins_name)) == 0)
+	{
 		export_minishell(info, exe->cmd_n_arg + 1);
+		i = 1;
+	}
 	if(ft_strncmp("pwd", builtins_name, ft_strlen(builtins_name)) == 0)
 		pwd_minishell(info);
 	if(ft_strncmp("unset", builtins_name, ft_strlen(builtins_name)) == 0)
+	{
 		unset_minishell(info, exe->cmd_n_arg + 1);
-	exe->env_cpy = lst_to_tab(info->env, exe->trash_lst_exe);
+		i = 1;
+	}
+	if (i == 1 )
+		exe->env_cpy = lst_to_tab(info->env, exe->trash_lst_exe);
 }
 
 int is_builtins(char *cmd_to_compare, char** builtins_list)
