@@ -1,5 +1,8 @@
 #include "minishell.h"
 
+// void heredoc_signals(int num);
+// void set_heredoc_signals();
+
 void handle_heredoc(t_exec *d_exe)
 {
     int		i;
@@ -17,6 +20,7 @@ void handle_heredoc(t_exec *d_exe)
     size = ft_tabsize(heredoc_tab);
     while(heredoc_tab[i])
     {
+		//set_heredoc_signals();
 		if (buffer)
 		{
         	if (ft_strncmp(buffer, heredoc_tab[i], (ft_strlen(heredoc_tab[i]) + 1)) == 0)
@@ -33,3 +37,28 @@ void handle_heredoc(t_exec *d_exe)
 	//free(buffer)
 	convert_tab_to_fd_heredoc(heredoc_res);
 }
+
+// void set_heredoc_signals()
+// {
+//     struct sigaction sa;
+
+//     sa.sa_flags = 0;
+//     sigemptyset(&sa.sa_mask);
+//     sa.sa_handler = heredoc_signals;
+
+//     sigaction(SIGQUIT, &sa, NULL); // ctrl backslash
+//     sigaction(SIGINT, &sa, NULL); // ctrl c
+//     //sigaction(EOF, &sa, NULL); // ctrl d
+// }
+
+// void heredoc_signals(int num)
+// {
+// 	if (num == SIGINT)
+// 	{
+// 		//return;
+// 	}
+// 	if (num == SIGQUIT)
+// 	{
+// 		//kill(SIGKILL, 0);
+// 	}
+// }

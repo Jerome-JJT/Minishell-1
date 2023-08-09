@@ -1,20 +1,35 @@
 #include "minishell.h"
 #include <errno.h>
 
+//static int is_a_path(char *cmd);
+
 void	command_not_found(char *cmd)
 {
 	char	*msg_err;
 	char	*tmp;
 	g_errno = 127;
-	if (cmd)
+
+	// if (cmd && is_a_path(cmd) > 1)
+	// {
+	// 	tmp = strjoin_exec("Minishell(EXEC): ", cmd);
+	// 	msg_err = strjoin_exec(tmp, ": Not a directory\n");
+	// 	ft_putstr_fd(msg_err, 2);
+	// }
+	if (cmd && cmd[0] == '/')
 	{
-		tmp = strjoin_exec("Minishell: Command not found: ", cmd);
-		msg_err = strjoin_exec(tmp, "\n");
+		tmp = strjoin_exec("Minishell(EXEC): ", cmd);
+		msg_err = strjoin_exec(tmp, ": No such file or directory\n");
+		ft_putstr_fd(msg_err, 2);
+	}
+	else if (cmd)
+	{
+		tmp = strjoin_exec("Minishell(EXEC): ", cmd);
+		msg_err = strjoin_exec(tmp, ": command not found\n");
 		ft_putstr_fd(msg_err, 2);
 	}
 	else
 	{
-		write(2, "Minishell: : Command not found\n", 31);
+		write(2, "Minishell(EXEC ELSE): : command not found\n", 42);
 	}
 	// free(tmp);
 	// free(msg_err);
@@ -40,7 +55,7 @@ void error_infile_outfile(int error_nb, t_exec *exe)
 int perror_msg_system(int errn)
 {
 	//(stderr, ">>errno: %d\n", errno);
-	//fprintf(stderr, ">>errn: %d\n", errn);
+	fprintf(stderr, ">>errn: %d\n", errn);
 	if (errn == 1 && (errno == EAGAIN || errno == ENOMEM))
 	{
 		perror("Fork");
@@ -81,3 +96,20 @@ int perror_msg_system(int errn)
 	exit(EXIT_FAILURE);
 	return(1);
 }
+
+// static int is_a_path(char *cmd)
+// {
+// 	int i;
+// 	int count;
+
+// 	i = 0;
+// 	count = 0;
+
+// 	while(cmd[i])
+// 	{
+// 		if (cmd[i] == '/')
+// 			count++;
+// 		i++;
+// 	}
+// 	return (count);
+// }

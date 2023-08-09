@@ -11,7 +11,7 @@ void handle_redirections(t_exec *exe, t_pipe *pipe)
 	handle_infile_heredoc_redirections(exe, pipe);
 	handle_outfile_append_redirections(exe);
 	//fprintf(stderr, "last_append[%d]:%s\n", exe->idx, exe->last_append);
-	//fprintf(stderr, "AFTER control redi infile: %s\n", exe->redi_infile[0]);
+	//fprintf(stderr, "AFTER control redi infile: %s pour command idx: %d\n\n", exe->redi_infile[0], exe->idx);
 	//fprintf(stderr, "AFTER control redi outfile[0]: %s pour command idx: %d\n", exe->redi_outfile[0], exe->idx);
 	init_struc_pipe(pipe, exe->redi_infile[0], exe->redi_outfile[0], exe);
 }
@@ -99,11 +99,11 @@ void handle_infile_heredoc_redirections(t_exec *exe, t_pipe *pipe)
 	}
 	else
 	{
-		//fprintf(stderr, "heredoc empty\n");
+		//fprintf(stderr, "infile : %s, idx : %d\n", exe->redi_infile[exe->idx], exe->idx);
 		if (exe->redi_infile[exe->idx] != NULL)
 			exe->redi_infile = handle_infile(exe);
-		//else
-		//	exe->redi_infile[0] = NULL;
+		else
+			exe->redi_infile[0] = NULL;
 	}
 }
 

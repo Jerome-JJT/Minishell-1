@@ -36,7 +36,7 @@ void handler_sg(int num)
         write(1, "\n", 1);
         rl_on_new_line();
         rl_replace_line("", 1);
-        //rl_redisplay();
+        rl_redisplay();
     }
     // else if (num == EOF)
     // {
