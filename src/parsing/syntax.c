@@ -1,9 +1,10 @@
 #include "../../minishell.h"
 
 /* -------------------------- 1.if token is pipe ------------------------------- */
-static int	check_pipe(t_tok **node)
+static int	check_pipe(t_tok **node, t_shell *info)
 {
 	t_tok	*tmp;
+	char	*buff;
 
 	tmp = *node;
 	*node = (*node)->next;
@@ -14,6 +15,15 @@ static int	check_pipe(t_tok **node)
 		if (type_is_sep(tmp->prev->prev->type))
 			return (ft_error_msg(258, tmp->tok));
 	}
+	if (*node == NULL)
+		{
+			if (tmp->type == PIPE || (tmp->type == SPACEE && tmp->prev->type == PIPE))
+			{
+				buff = readline(""GREEN"->"RESET" ");
+				add_history(buff);
+				ft_char_sort(buff, info);
+			}
+		}
 	return (0);
 }
 
@@ -37,15 +47,27 @@ static int	in_out_append(t_tok **node)
 	{
 		if ((*node)->type == RED_IN)
 		{
-			if (open(tmp->tok, O_RDWR) < 0)
+			if (open(tmp->tok, O_RDWR) < 0) // -->> A changer selon le type de permissions accordées de base au fichier
 				return (ft_error_msg(1, tmp->tok));
 		}
-		else if ((*node)->type == RED_OUT)
+		// else if ((*node)->type == RED_OUT)
+		// {
+		// 	if (access(tmp->tok, F_OK) == 0)
+		// 		unlink(tmp->tok);
+		// 	if (open(tmp->tok, O_WRONLY | O_CREAT | O_TRUNC, 0644) < 0)
+		// 		return (ft_error_msg(1, tmp->tok));
+		else
 		{
-			if (access(tmp->tok, F_OK) == 0)
-				unlink(tmp->tok);
-			if (open(tmp->tok, O_WRONLY | O_CREAT | O_TRUNC, 0644) < 0)
-				return (ft_error_msg(1, tmp->tok));
+			// if (access(tmp->tok, F_OK) == 0)
+			// 	unlink(tmp->tok);
+			
+			// if ((*node)->type == RED_OUT)
+			if (strncmp((*node)->tok, ">", 2) == 0)
+			{
+				//fprintf(stderr, "PLOP\n");
+				if (open(tmp->tok, O_WRONLY | O_CREAT | O_TRUNC, 0644) < 0)
+					return (ft_error_msg(1, tmp->tok));
+			}
 		}
 		(*node) = tmp->next;
 	}
@@ -97,7 +119,7 @@ static void	word(t_tok **current_node, t_tok *next_node, t_dlist **trash)
 }
 
 /* -------------------------- 5.Syntax ------------------------------- */
-int	check_syntax(t_tok *lst, t_dlist **trash)
+int	check_syntax(t_shell *info, t_tok *lst, t_dlist **trash)
 {
 	t_tok	*node;
 	int		check;
@@ -107,7 +129,7 @@ int	check_syntax(t_tok *lst, t_dlist **trash)
 	while (node != NULL)
 	{
 		if (node->type == PIPE)
-			check = (check_pipe(&node));
+			check = (check_pipe(&node, info));
 		else if (node->type == RED_IN || node->type == RED_OUT
 			|| node->type == APPEND)
 			check = (in_out_append(&node));

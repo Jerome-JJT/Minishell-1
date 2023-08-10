@@ -6,7 +6,7 @@
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 13:33:08 by nrossel           #+#    #+#             */
-/*   Updated: 2023/05/24 10:35:41 by nrossel          ###   ########.fr       */
+/*   Updated: 2023/08/10 15:54:55 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*ft_substr(char *s, size_t start, size_t len, t_dlist **trash)
 	size_t			i;
 	char			*str;
 
-	if (!s)
+	if (!s || !*s || (start == 0 && len == 0))
 		return (NULL);
 	if (start > ft_strlen(s))
 		return (my_malloc(1, 1, trash));
@@ -32,6 +32,7 @@ char	*ft_substr(char *s, size_t start, size_t len, t_dlist **trash)
 		str[i] = s[start + i];
 		i++;
 	}
+	str[i] = '\0';
 	return (str);
 }
 

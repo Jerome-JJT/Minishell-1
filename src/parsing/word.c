@@ -7,7 +7,7 @@ static char	*ft_word_d(char *buffer, t_env *env, t_dlist **trash)
 	char	*tmp[2];
 
 	i = 0;
-	tmp[0] = "";
+	tmp[0] = NULL;
 	while (!ft_isparsing_char(buffer[i]) && buffer[i] != '$')
 		i++;
 	if (buffer[i] == '$' && ft_isalnum(buffer[i + 1] || buffer[i + 1] == '?'))
@@ -29,11 +29,11 @@ static char	*ft_word_d(char *buffer, t_env *env, t_dlist **trash)
 /* -------------------- 2.Analys buffer ----------------------------*/
 static char	*analys_buffer(char *ret, char *buffer, t_env *env, t_dlist **trash, int *index)
 {
-	int	check;
 	int	i;
+	int	check;
 
-	check = 0;
 	i = 0;
+	check = 0;
 	while (!ft_isparsing_char(buffer[i]))
 		{
 			if (buffer[i] == '$' && check == 0)

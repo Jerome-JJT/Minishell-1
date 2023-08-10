@@ -50,12 +50,17 @@ static char	*sort_type(char *buff, t_shell *info)
 }
 
 /* -------------------------- 4.Char Sorting ------------------------------- */
-static int	ft_char_sort(char *buff, t_shell *info)
+int	ft_char_sort(char *buff, t_shell *info)
 {
-	t_tok	*tmp;
-	int		strlen;
+	// t_tok	*tmp;
+	// int		strlen;
 
-	strlen = ft_strlen(buff);
+	// strlen = ft_strlen(buff);
+	if (*buff == '\t' || *buff == ' ')
+	{
+		while(*buff == '\t' || *buff == ' ')
+			buff++;
+	}
 	while (*buff)
 	{
 		buff = sort_type(buff, info);
@@ -64,22 +69,22 @@ static int	ft_char_sort(char *buff, t_shell *info)
 			g_errno = 1;
 			return (1);
 		}
-		if (*buff == '\0')
-		{
-			tmp = tok_lastnode(info->token);
-			if (tmp->type == PIPE || (tmp->type == SPACEE && tmp->prev->type == PIPE))
-			{
-				while (strlen > 0)
-				{
-					buff--;
-					strlen--;
-				}
-				free(buff);
-				buff = readline(""BLUE">"RESET" ");
-				add_history(buff);
-				strlen = ft_strlen(buff);
-			}
-		}
+		// if (*buff == '\0')
+		// {
+		// 	tmp = tok_lastnode(info->token);
+		// 	if (tmp->type == PIPE || (tmp->type == SPACEE && tmp->prev->type == PIPE))
+		// 	{
+		// 		while (strlen > 0)
+		// 		{
+		// 			buff--;
+		// 			strlen--;
+		// 		}
+		// 		free(buff);
+		// 		buff = readline(""BLUE">"RESET" ");
+		// 		add_history(buff);
+		// 		strlen = ft_strlen(buff);
+		// 	}
+		// }
 	}
 	return (0);
 }
@@ -90,11 +95,6 @@ int	parse_shell(char *buff, t_shell *info, t_exec *exec)
 {
 	int	strlen;
 
-	if (*buff == '\t')
-	{
-		while(*buff == '\t')
-			buff++;
-	}
 	strlen = ft_strlen(buff);
 	if (!buff)
 		exit(0);
@@ -102,7 +102,7 @@ int	parse_shell(char *buff, t_shell *info, t_exec *exec)
 		return (3);
 	if (ft_char_sort(buff, info) > 0)
 		return (1);
-	if (check_syntax(info->token, &info->trash_lst))
+	if (check_syntax(info, info->token, &info->trash_lst))
 		return (2);
 	pars_to_exec(info, exec, &info->trash_lst);
 	return (0);

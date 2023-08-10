@@ -82,6 +82,7 @@ typedef struct s_exec
 	int		idx;
 	struct termios	tp;
 	struct termios	save;
+	int		*save_pid;
 	char	**append;
 	char	*last_append;
 	char	*append_first_cmd;
@@ -135,11 +136,12 @@ int 		shell_execution(t_exec *info_exec, char **env, t_shell *info);
 char		*ft_word(char *str, t_shell *info);
 char		*ft_squote(char *str, t_shell *info);
 char		*ft_dquote(char *str, t_shell *info);
-int			check_syntax(t_tok *lst, t_dlist **trash);
+int			ft_char_sort(char *buff, t_shell *info);
 char		*red_in(char *str, t_tok **lst, t_dlist **trash);
 char		*red_out(char *str, t_tok **lst, t_dlist **trash);
 char		*ft_pipe(char *str, t_tok **lst, t_dlist **trash);
 char		*ft_space(char *str, t_tok **lst, t_dlist **trash);
+int			check_syntax(t_shell *info, t_tok *lst, t_dlist **trash);
 void 		pars_to_exec(t_shell *info, t_exec *exec, t_dlist **trash);
 
 /* -------------- Fonctions utilitaires -----------------------*/

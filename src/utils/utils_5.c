@@ -29,7 +29,7 @@ char	*if_env_var_word(char *str,  t_env *env, t_dlist **trash)
 
 	i = 0;
 	j = 0;
-	tmp[0] = "";
+	tmp[0] = NULL;
 	ret = NULL;
 	while (ft_isalnum(str[i]) || str[i] == '_')
 		i++;

@@ -80,7 +80,7 @@ char	**lst_to_tab(t_env *lst, t_dlist **trash)
 	i = 0;
 	while (node != NULL && node->variable != NULL)
 	{
-		if (*node->valeur)
+		if (node->valeur)
 		{
 			var = ft_strlen(node->variable) + 1;
 			val = ft_strlen(node->valeur) + 1;
@@ -90,7 +90,7 @@ char	**lst_to_tab(t_env *lst, t_dlist **trash)
 			tab[i] = ft_strjoin(node->variable, "=", trash);
 			tab[i] = ft_strjoin(tab[i], node->valeur, trash);
 		}
-		else if (!*node->valeur && ft_isupper(*node->variable))
+		else if (!node->valeur && ft_isupper(*node->variable))
 			tab[i] = ft_strjoin(node->variable, "=", trash);
 		else
 			tab[i] = ft_strdup(node->variable, trash);

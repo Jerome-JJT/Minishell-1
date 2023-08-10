@@ -6,6 +6,8 @@ int	found_char(const char *str, int c)
 	char	*cpy_str;
 	int		i;
 
+	if (!str || !*str)
+		return (-1);
 	cpy_str = (char *)str;
 	i = 0;
 	while (*cpy_str)

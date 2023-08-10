@@ -49,7 +49,7 @@ char **heredoc_data_saved(char *to_check, t_exec *d_exe, char *buffer)
     t_list *heredoc_lst = NULL;
     t_list *node = NULL;
 	buffer = readline("> ");
-    while(ft_strncmp(buffer, to_check, (ft_strlen(to_check) + 1)) != 0)
+    while(buffer != NULL && ft_strncmp(buffer, to_check, (ft_strlen(to_check) + 1)) != 0)
     {
         node = ft_lstnew_heredoc(buffer, trash);
         ft_lstadd_front(&heredoc_lst, node);

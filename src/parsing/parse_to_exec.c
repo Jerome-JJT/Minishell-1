@@ -17,7 +17,7 @@ static t_tok    *send_red(t_tok *lst, t_exec *exec, int type, int index, t_dlist
     char    *tmp;
 
     tmp = NULL;
-    if (type == WORD)
+    if (ft_isword(type))
         exec->tab_cmd[index] = fill_tab(exec->tab_cmd[index], lst->tok, trash);
     else
     {

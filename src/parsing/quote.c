@@ -12,7 +12,7 @@ static char	*if_env_var(char *str,  t_env *env, t_dlist **trash)
 	j = 0;
 	tmp[0] = "";
 	ret = NULL;
-	while (ft_isalnum(str[i]))
+	while (ft_isalnum(str[i]) || str[i] == '_')
 		i++;
 	if (str[i] != '\"' && ft_issigle(str[i])
 			&& str[i])
@@ -56,7 +56,7 @@ static char	*ft_quote_d(char *str, t_env *env, t_dlist **trash)
 	char	*tmp[2];
 
 	i = 0;
-	tmp[0] = str;
+	tmp[0] = NULL;
 	while (str[i] != '\"' && str[i] != '$')
 		i++;
 	if (str[i] == '$' && (ft_isalnum(str[i + 1]) || str[i + 1] == '?'))
@@ -71,6 +71,7 @@ static char	*ft_quote_d(char *str, t_env *env, t_dlist **trash)
 		tmp[1] = if_errno(str + (i + 2), trash);
 		tmp[0] = ft_strjoin(tmp[0], tmp[1], trash);
 	}
+	// fprintf(stderr, "%s\n", tmp[0]);
 	return (tmp[0]);
 }
 /* -------------------- 4.Double quote function ----------------------------*/
@@ -92,10 +93,12 @@ char	*ft_dquote(char *str, t_shell *info)
 		}
 		else if (str[i] == '$' && check != 0)
 			tmp = ft_quote_d(tmp, info->env, &info->trash_lst);
-			
 		i++;
 	}
-	creat_and_add(tmp, str, D_QUOTE, i, info);
+	if (!tmp && check > 0)
+		creat_and_add(tmp, tmp, D_QUOTE, 0, info);
+	else
+		creat_and_add(tmp, str, D_QUOTE, i, info);
 	return (str + (i + 1));
 }
 

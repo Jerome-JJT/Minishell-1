@@ -51,20 +51,25 @@ static int	check_n(char *str)
 	return (0);
 }
 
-/* -------------------- 2. Echo main function -----------------------*/
+/* -------------------- 3. Echo main function -----------------------*/
 void	echo_minishell(char *str, t_dlist **trash)
 {
 	int		i;
 	char	**tmp;
 
 	i = 0;
-	if (!str || !*str)
+	if (!str || *str == '\0')
 		printf("\n");
 	else
 	{
 		if (*str == '\"')
 			remove_quote(str);
 		tmp = ft_split(str, ' ', trash);
+		if (!tmp)
+		{
+			printf("\n");
+			return ;
+		}
 		if (check_n(*tmp) == 2 && tmp + 1 != NULL)
 			print_echo(tmp + 1, 1);
 		else if (check_n(*tmp) == 1)

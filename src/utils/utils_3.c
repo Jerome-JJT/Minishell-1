@@ -44,10 +44,12 @@ void	creat_and_add(char *tmp, char *str, int type, int index, t_shell *info)
 
 	if (tmp == NULL)
 	{
-		if (type == S_QUOTE || type == D_QUOTE)
+		if ((type == S_QUOTE || type == D_QUOTE) && str)
 			token = new_node(ft_substr(str, 1, index - 1, &info->trash_lst), type, &info->trash_lst);
-		else if (type == WORD)
+		else if (type == WORD && str)
 			token = new_node(ft_substr(str, 0, index, &info->trash_lst), type, &info->trash_lst);
+		else if ((type == S_QUOTE || type == D_QUOTE || type == WORD) && !str)
+			token = new_node(ft_substr(tmp, 0, 0, &info->trash_lst), type, &info->trash_lst);
 		else
 			token = new_node(ft_substr(str, 0, index, &info->trash_lst), type, &info->trash_lst);
 	}

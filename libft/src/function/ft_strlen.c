@@ -6,7 +6,7 @@
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 14:10:55 by nrossel           #+#    #+#             */
-/*   Updated: 2023/05/23 16:39:51 by nrossel          ###   ########.fr       */
+/*   Updated: 2023/08/10 15:15:10 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ size_t	ft_strlen(const char *s)
 {
 	int	i;
 
+	if (!s)
+		return(0);
 	i = 0;
 	while (s[i])
 		i++;

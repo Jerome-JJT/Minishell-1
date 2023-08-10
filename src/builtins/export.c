@@ -7,28 +7,27 @@ static void	print_export(char **var)
 	int	j;
 
 	i = -1;
-	while (var[i])
+	while (var[++i])
 	{
+		j = 0;
 		if (found_char(var[i], '='))
 		{
-			j = 1;
 			printf("declare -x ");
-			while (var[i][j - 1] != '=')
+			while (var[i][j] != '=')
 				printf("%c", var[i][j++]);
-			printf("\"");
+			j++;
+			printf("=\"");
 			while (var[i][j])
 				printf("%c", var[i][j++]);
 			printf("\"\n");
 		}
 		else
 		{
-			j = 0;
 			printf("declare -x ");
 			while(var[i][j])
 				printf("%c", var[i][j++ - 1]);
 			printf("\n");
 		}
-		i++;
 	}
 }
 
@@ -83,7 +82,8 @@ int	export_minishell(t_shell *info, char **arg)
 		while (arg[i])
 		{
 			remove_quote(arg[i]);
-			tmp = ft_strrchr(arg[i], '=');
+			tmp = ft_strrchr(arg[i], '=') + 1;
+			fprintf(stderr, "export tmp -> %s\n", tmp);
 			if (!ft_isalpha(arg[i][0])|| arg[i][0] == '$')
 				printf("minishell: export: `%s': not a valid identifier\n",
 					arg[i]);
@@ -98,7 +98,7 @@ int	export_minishell(t_shell *info, char **arg)
 				}
 				else
 				{
-					if (tmp + 1 == 0)
+					if (*tmp == '\0')
 						fill_node(node, node->variable, NULL, 1);
 					else
 						fill_node(node, node->variable, tmp, 1);

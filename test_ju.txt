@@ -1,60 +1,34 @@
-Redirections test:
 
--$> > file | cat < no_such_file
-minishell: cd: no_such_file: Not a directory
-bash: no_such_file: No such file or directory
+						<<< signaux test >>>
+
+- ne fonctionne pas dans heredoc
+- cat + ctrl c, pas de ^c
+- ctrl d
+
+						<<< ENV variables >>
+-> &NO_ENV
+-> $HOME
+-> $> echo a > $NO
+	exit
+	minishell: exit: too many arguments
+	bash-3.2$ echo a > $NO_ENV
+	bash: $NO_ENV: ambiguous redirect
+
+						<<< redirection test >>>
+
+-> >file | cat < no_such_file
+	minishell: cd: no_such_file: Not a directory
+	bash: no_such_file: No such file or directory
 -> cd en trop, pas meme msg error
+-> ls <sfasf
+minishell: cd: sfasf: Not a directory
 
-Autres bugs : 1ere input : cat -e | echo bla
-Puis ls | ls -
-Un espace en trop après result
-Ne print rien a la fin de l exec, contrairment au autre cas ( cat -e | echo bla, ctrl c, ls)
-> fonctionne si ignals désactives, pb avec ctrl c
--> le programme lag quand signaux actives et utilisation de l historique. Pb venant des signaux.
+						<<< Single cmd test >>>
 
-Minishell lag, avec commandes du haut, commande flottante plus au top, lag dans l historique
+-> /bin/ls/ddd
+	Minishell(EXEC): /bin/ls/ddd: No such file or directory
+	bash-3.2$ /bin/ls/ddd
+	bash: /bin/ls/ddd: Not a directory
 
-$> cat -e | echo bla
-check value tab_cmd: cat -e
-bla
-checkdsd
-$> 
-.git/                     A voir.excalidraw         bug.txt                   minishell                 test.txt
-.gitignore                Makefile                  dir/                      minishell.h               test1.c
-.heredoc.txt              Pseudo-code minishell.md  dirm/                     out                       tx_a.txt
-.vscode/                  README.md                 libft/                    src/                      tx_b.txt
-$> 
-.git/                     A voir.excalidraw         bug.txt                   minishell                 test.txt
-.gitignore                Makefile                  dir/                      minishell.h               test1.c
-.heredoc.txt              Pseudo-code minishell.md  dirm/                     out                       tx_a.txt
-.vscode/                  README.md                 libft/                    src/                      tx_b.txt
-$> 
-.git/                     A voir.excalidraw         bug.txt                   minishell                 test.txt
-.gitignore                Makefile                  dir/                      minishell.h               test1.c
-.heredoc.txt              Pseudo-code minishell.md  dirm/                     out                       tx_a.txt
-.vscode/    
-
--> imprime ou lance commande quand utilisation de l historique si signals actives.
--> après plusieurs commandes, les commandes flottantes ne le sont plus.
-
-Pb avec cat -e et ctrl c et ctrl \
-
-
-Gere &NO_ENV,
-$HOME
-
-Ctrl d
-Signaux
-
-Codes erreurs got
-Erreur GitHub jo
-
-Faire tab dans struct pour builtins, gain de lignes.
-
-
-cat -e | echo bla
-ls | ls
-cat -e | echo bla
-
-$> >>app1
-minishell: cd: app1: Not a directory
+bash-3.2$ /bin/no_such_dir/file
+bash: /bin/no_such_dir/file: No such file or directory

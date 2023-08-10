@@ -6,7 +6,7 @@
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 10:29:27 by nrossel           #+#    #+#             */
-/*   Updated: 2023/05/23 16:39:12 by nrossel          ###   ########.fr       */
+/*   Updated: 2023/08/10 16:47:10 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ char	**ft_split(char const *s, char c, t_dlist **trash)
 {
 	char	**split;
 
-	if (!*s)
+	if (!*s || !s)
 		return (0);
 	split = new_split(s, c, trash);
 	return (split);

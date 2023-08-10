@@ -4,6 +4,7 @@ int shell_execution(t_exec *d_exec, char **env, t_shell *shell_info)
 {
 	(void)shell_info;
 	(void) env;
+	//int statut;
 	int i;
 	t_pipe	d_pip;
 	// d_pip = (t_pipe){0};
@@ -17,8 +18,8 @@ int shell_execution(t_exec *d_exec, char **env, t_shell *shell_info)
 	// fprintf(stderr, "check value tab_cmd[1]: %s\n", d_exec->tab_cmd[1]);
 	// fprintf(stderr, "check value tab_cmd[2]: %s\n", d_exec->tab_cmd[2]);
 	//fprintf(stderr, "check value redi_in[0]: %s\n", d_exec->redi_infile[0]);
-	// fprintf(stderr, "check value redi_in[2]: %s\n", d_exec->redi_infile[2]);
-	// fprintf(stderr, "check value redi_out0: %s\n", d_exec->redi_outfile[0]);
+	// fprintf(stderr, "check value redi_in[1]: %s\n", d_exec->redi_infile[1]);
+	//fprintf(stderr, "check value redi_out0: %s\n", d_exec->redi_outfile[0]);
 	// fprintf(stderr, "check value redi_out1: %s\n", d_exec->redi_outfile[1]);
 	// fprintf(stderr, "check value redi_out2: %s\n", d_exec->redi_outfile[2]);
 	//fprintf(stderr, "check value heredoc[0]: %s\n", d_exec->heredoc[0]);
@@ -33,15 +34,13 @@ int shell_execution(t_exec *d_exec, char **env, t_shell *shell_info)
 		i++;
 	//d_exec->nb_probable_of_heredocs = i;
 	d_exec->nb_probable_of_heredocs = d_exec->number_of_pipes + 1;
-	//fprintf(stderr, "nb probable heredoc: % d\n", d_exec->nb_probable_of_heredocs);
-	//d_exec->number_of_pipes = i - 1;
-	//fprintf(stderr, "nb de pipe1: %d\n", d_exec->number_of_pipes);
 	d_exec->last_append = NULL;
 	signals_update();
+	d_exec->save_pid = ft_calloc(sizeof(int), d_exec->number_of_pipes + 1);
+	if (d_exec->save_pid == NULL)
+		return(0);
 	handle_heredoc(d_exec);
 	handle_pipes(&d_pip.fd_pipe1, &d_pip.fd_pipe2);
-	// if (!d_exec->tab_cmd)
-	// 	exit(0);
 	if(d_exec->number_of_pipes == 0)
 	{
 		//fprintf(stderr, "exec no pipe begin\n");
@@ -56,6 +55,7 @@ int shell_execution(t_exec *d_exec, char **env, t_shell *shell_info)
 	sig_default();
 	while (i-- > 0)
 		wait(NULL);
+	//waitpid(0, &statut, 0);
 	return (0);
 }
 
@@ -67,6 +67,11 @@ int execution_with_pipes(t_exec *d_exec, t_pipe *d_pip, t_shell *shell_info)
 	i = 0;
 	while (i <= d_exec->number_of_pipes)
 	{
+		if (d_exec->append && d_exec->append[i])
+		{
+	 	 	//fprintf(stderr, "append present: %s\n", d_exec->append[d_exec->idx]);
+	 		handle_append(d_exec);
+		}
 		if (d_exec->tab_cmd[i])
 		{
 			if(is_builtins(d_exec->tab_cmd[i], builtins) == 1)
@@ -100,7 +105,6 @@ int execution_with_pipes(t_exec *d_exec, t_pipe *d_pip, t_shell *shell_info)
 		d_exec->idx++;
 		d_exec->cmd_number++;
 	}
-	//fprintf(stderr, "end of exec\n");
 	return (i);
 }
 
@@ -117,6 +121,11 @@ void execution_no_pipe(t_exec *d_exec, t_pipe *d_pip, t_shell *shell_info)
 	builtins[5] = "pwd";
 	builtins[6] = "unset";
 	builtins[7] = NULL;
+	if (d_exec->append && d_exec->append[0])
+	{
+		// fprintf(stderr, "append present: %s\n", exe->append[exe->idx]);
+		handle_append(d_exec);
+	}
 	if (d_exec->tab_cmd[0])
 	{
 		if(is_builtins(d_exec->tab_cmd[0], builtins) == 1)
@@ -180,3 +189,8 @@ int is_builtins(char *cmd_to_compare, char** builtins_list)
 	}
 	return (0);
 }
+
+// void save_pid(t_exec *exe)
+// {
+// 	//...
+// }

@@ -5,9 +5,10 @@ void handle_single_cmd(t_pipe *d_pip, t_exec *d_exe, t_shell *d_shell, char *cmd
     int fork_pid;
 	int status;
 
-    // fprintf(stderr, "single cmd\n");
+    fprintf(stderr, "single cmd\n");
 
     fork_pid = fork();
+	//fork_pid = -1;
     if (fork_pid == -1)
     {
 		perror_msg_system(1);
@@ -26,11 +27,19 @@ void handle_single_cmd(t_pipe *d_pip, t_exec *d_exe, t_shell *d_shell, char *cmd
             // fprintf(stderr, "execve error\n");
             // return;
         }
+		exit(1);
     }
-	// if (tcsetattr(STDIN_FILENO, TCSANOW, &d_exe->save) == -1)
- 	// 		fprintf(stderr, "erro tcsetattr\n");
-    else
-        waitpid(fork_pid, &status, 0);
+	if (tcsetattr(STDIN_FILENO, TCSANOW, &d_exe->save) == -1)
+ 			fprintf(stderr, "erro tcsetattr\n");
+    waitpid(fork_pid, &status, 0);
+	if (WIFEXITED(status))
+	{
+		g_errno = WEXITSTATUS(status);
+	}
+	// page 547
+	//while(1) ;
+	// {
+	// }
 }
 
 void handle_dup_fd_single_cmd(t_pipe *d_pip, t_exec *exe)
@@ -56,6 +65,7 @@ void		child_process_0(t_pipe *d_pip, t_exec *d_exe, t_shell *d_shell, char *cmd)
 	fork_pid = fork();
 	if (fork_pid == -1)
 		perror_msg_system(1);//fprintf(stderr, "fork errot\n");
+	//save_pid();
 	if (fork_pid == 0)
 	{
 		//fprintf(stderr, ">>child proces_0: %s\n", cmd);
@@ -74,6 +84,7 @@ void		child_process_0(t_pipe *d_pip, t_exec *d_exe, t_shell *d_shell, char *cmd)
 		}
 		if (execve (d_exe->cmd_path, d_exe->cmd_n_arg, d_exe->env_cpy) == -1)
 			perror_msg_system(3); // fprintf(stderr, "error excve\n");
+		exit(1);
 	}
 	close_pipes(d_pip, 3);
 	if (pipe(d_pip->fd_pipe1) == -1)

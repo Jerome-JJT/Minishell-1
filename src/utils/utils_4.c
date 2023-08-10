@@ -68,19 +68,24 @@ void    remove_quote(char *str)
     int     read;
     int     write;
 
+    if (!str || !*str)
+        return ;
     len = ft_strlen(str);
     read = 0;
     write = 0;
-    while (read < len)
+    if (*str == '\"')
     {
-        if (str[read] != '\"')
+        while (read < len)
         {
-            str[write] = str[read];
-            write++;
+            if (str[read] != '\"')
+            {
+                str[write] = str[read];
+                write++;
+            }
+            read++;
         }
-        read++;
+        str[write] = '\0';
     }
-    str[write] = '\0';
 }
 
 /* ---------------------------- 5.Type is sep --------------------------------*/
