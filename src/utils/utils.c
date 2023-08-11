@@ -6,8 +6,13 @@ int	found_char(const char *str, int c)
 	char	*cpy_str;
 	int		i;
 
+	// printf("str = %s\n", str);
 	if (!str || !*str)
+	{
+		// printf("check A\n");
 		return (-1);
+	}
+	// printf("check B\n");
 	cpy_str = (char *)str;
 	i = 0;
 	while (*cpy_str)

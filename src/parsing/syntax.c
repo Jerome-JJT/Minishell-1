@@ -9,11 +9,11 @@ static int	check_pipe(t_tok **node, t_shell *info)
 	tmp = *node;
 	*node = (*node)->next;
 	if (!tmp->prev || tmp->prev->type == PIPE)
-		return (ft_error_msg(258, tmp->tok));
+		return (ft_error_msg(258, tmp->tok, "check_pipe"));
 	else if (tmp->prev->type == SPACEE)
 	{
 		if (type_is_sep(tmp->prev->prev->type))
-			return (ft_error_msg(258, tmp->tok));
+			return (ft_error_msg(258, tmp->tok, "check_pipe"));
 	}
 	if (*node == NULL)
 		{
@@ -34,21 +34,21 @@ static int	in_out_append(t_tok **node)
 
 	tmp = (*node)->next;
 	if (!tmp)
-		return (ft_error_msg(258, NULL));
+		return (ft_error_msg(258, NULL, "in_out_append"));
 	else if (tmp->type == SPACEE)
 	{
 		tmp = tmp->next;
 		if (!tmp)
-			return (ft_error_msg(258, NULL));
+			return (ft_error_msg(258, NULL, "in_out_append"));
 	}
 	if (tmp->type != WORD)
-		return (ft_error_msg(258, tmp->tok));
+		return (ft_error_msg(258, tmp->tok, "in_out_append"));
 	else if (ft_isword(tmp->type) == 1)
 	{
 		if ((*node)->type == RED_IN)
 		{
 			if (open(tmp->tok, O_RDWR) < 0) // -->> A changer selon le type de permissions accordées de base au fichier
-				return (ft_error_msg(1, tmp->tok));
+				return (ft_error_msg(1, tmp->tok, "in_out_append"));
 		}
 		// else if ((*node)->type == RED_OUT)
 		// {
@@ -66,7 +66,7 @@ static int	in_out_append(t_tok **node)
 			{
 				//fprintf(stderr, "PLOP\n");
 				if (open(tmp->tok, O_WRONLY | O_CREAT | O_TRUNC, 0644) < 0)
-					return (ft_error_msg(1, tmp->tok));
+					return (ft_error_msg(1, tmp->tok, "in_out_append"));
 			}
 		}
 		(*node) = tmp->next;
@@ -81,13 +81,13 @@ static int	heredoc(t_tok **node)
 
 	tmp = (*node)->next;
 	if (!tmp)
-		return (ft_error_msg(258, NULL));
+		return (ft_error_msg(258, NULL, "here_doc"));
 	else if (tmp->type == SPACEE)
 		tmp = tmp->next;
 	if (!tmp)
-		return (ft_error_msg(258, NULL));
+		return (ft_error_msg(258, NULL, "here_doc"));
 	else if (tmp->type != WORD)
-		return (ft_error_msg(258, tmp->tok));
+		return (ft_error_msg(258, tmp->tok, "here_doc"));
 	(*node) = tmp->next;
 	return (0);
 }
@@ -95,6 +95,7 @@ static int	heredoc(t_tok **node)
 /* -------------------------- 4.If token is quotes or word ------------------------------- */
 static void	word(t_tok **current_node, t_tok *next_node, t_dlist **trash)
 {
+	// printf("current_node->tok: %s\n", (*current_node)->tok);
 	if ((ft_isword((*current_node)->type) && next_node != NULL)
 				&& ft_isword(next_node->type))
 	{
@@ -108,7 +109,7 @@ static void	word(t_tok **current_node, t_tok *next_node, t_dlist **trash)
 		}
 	}
 	else if (((*current_node)->type == S_QUOTE || (*current_node)->type == D_QUOTE)
-			&& found_char((*current_node)->tok, ' ' > 0))
+			&& found_char((*current_node)->tok, ' ') > 0)
 	{
 		(*current_node)->tok = ft_strjoin("\"", (*current_node)->tok, trash);
 		(*current_node)->tok = ft_strjoin((*current_node)->tok, "\"", trash);

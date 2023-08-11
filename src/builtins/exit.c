@@ -1,39 +1,97 @@
 #include "../../minishell.h"
 
-/* ------------------------- fonction exit ------------------------------*/
-void	exit_minishell(char **arg, t_dlist **trash)
+static int	ft_isonlyspace(char *str)
 {
-	char	*str;
+	int	len_max;
 
-	str = tab_to_str(arg, trash);
-	if (!str)
+	len_max = ft_strlen(str);
+	while (*str)
 	{
-		printf("exit\n");
-		exit (g_errno);
+		if (*str == ' ')
+			len_max--;
+		str++;
 	}
-	else if (ft_isalpha(*str))
-		ft_error_msg(255, str);
-	else if (ft_tabsize(arg) > 1)
-		ft_error_msg(1, NULL);
-	else
+	if (len_max > 0)
+		return (0);
+	return (1);
+}
+/* ------------------------- 1. Check if alpha is in str ------------------------------*/
+static int	check_digitchar(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
 	{
-		printf("exit\n");
-		exit(ft_atoi(str));
+		if (ft_isdigit(str[i]) == 0 && str[i] != '\0')
+			ft_error_msg(255, str, "exit");
+		i++;
 	}
+	return (0);
 }
 
-/*
-Test déjà effectué:
---------------------------------------------|
-1.exit = quitte le programme avec le dernier errno
-2.exit 123 = quitte le programme avec erreur 123
-3.exit abc = erreur 255
-4.exit 123 123 = erreur 1 - trop d'arguments
-5. exit 123a = erreur 255 ->> à corriger /!\
+/* ------------------------- 2. Check if str is "--" ------------------------------*/
+static int	check_line(char **arg)
+{
+	print_tab(arg, "check_line");
+	if (!arg)
+		exit (g_errno);
+	else if (ft_isdigit(**arg) == 0)
+		ft_error_msg(255, *arg, "exit");
+	else
+	{
+		check_digitchar(*arg);
+		if (*(arg + 1) != NULL)
+			ft_error_msg(1, NULL, "exit");
+		else
+		{
+			printf("exit\n");
+			exit (ft_atoi(*arg));
+		}
+	}
+	return (0);
+}
 
 
+/* ------------------------- 3. Main fonction exit ------------------------------*/
+int	exit_minishell(char *arg, t_dlist **trash)
+{
+	char	**tab;
+	char	*s_tmp;
 
-
-
-
-*/
+	if (!arg)
+		exit (g_errno);
+	printf("Entrée exit: %s\n", arg);
+	remove_quote(arg);
+	if (ft_isonlyspace(arg))
+		ft_error_msg(255, arg, "exit");
+	s_tmp = ft_strtrim(arg, " ", trash);
+	tab = ft_split(s_tmp, ' ', trash);
+	print_tab(tab, "Tab with str");
+	if (!tab)
+	{
+		printf("1\n");
+		exit (g_errno);
+	}
+	else if (strncmp(*tab, "--", 3) == 0)
+	{
+		printf("3\n");
+		check_line(tab + 1);
+	}
+	else
+	{
+		printf("4\n");
+		// printf("tab + 1 = %s\n", *(tab + 1));
+		check_digitchar(*tab);
+		if (*(tab + 1) != NULL)
+		{
+			printf("5\n");
+			return (ft_error_msg(1, NULL, "exit"));
+		}
+		printf("6\n");
+		printf("exit\n");
+		exit (ft_atoi(*tab));
+	}
+	// printf("7\n");
+	return (0);
+}

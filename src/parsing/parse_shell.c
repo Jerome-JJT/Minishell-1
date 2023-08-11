@@ -38,7 +38,7 @@ static char	*sort_type(char *buff, t_shell *info)
 		buff = ft_word(buff, info);
 	else if ((*buff == '\'' || *buff == '\"'))
 		buff = parse_quote(buff, info);
-	else if (*buff == ' ')
+	else if (*buff == ' ' || *buff == '\t')
 		buff = ft_space(buff, &info->token, &info->trash_lst);
 	else if (*buff == '<' || *buff == '>')
 		buff = parse_red(buff, &info->token, &info->trash_lst);
@@ -52,10 +52,6 @@ static char	*sort_type(char *buff, t_shell *info)
 /* -------------------------- 4.Char Sorting ------------------------------- */
 int	ft_char_sort(char *buff, t_shell *info)
 {
-	// t_tok	*tmp;
-	// int		strlen;
-
-	// strlen = ft_strlen(buff);
 	if (*buff == '\t' || *buff == ' ')
 	{
 		while(*buff == '\t' || *buff == ' ')
@@ -69,22 +65,6 @@ int	ft_char_sort(char *buff, t_shell *info)
 			g_errno = 1;
 			return (1);
 		}
-		// if (*buff == '\0')
-		// {
-		// 	tmp = tok_lastnode(info->token);
-		// 	if (tmp->type == PIPE || (tmp->type == SPACEE && tmp->prev->type == PIPE))
-		// 	{
-		// 		while (strlen > 0)
-		// 		{
-		// 			buff--;
-		// 			strlen--;
-		// 		}
-		// 		free(buff);
-		// 		buff = readline(""BLUE">"RESET" ");
-		// 		add_history(buff);
-		// 		strlen = ft_strlen(buff);
-		// 	}
-		// }
 	}
 	return (0);
 }
@@ -102,8 +82,10 @@ int	parse_shell(char *buff, t_shell *info, t_exec *exec)
 		return (3);
 	if (ft_char_sort(buff, info) > 0)
 		return (1);
+	// print_token(&info->token, "before check");
 	if (check_syntax(info, info->token, &info->trash_lst))
 		return (2);
+	// print_token(&info->token, "after check");
 	pars_to_exec(info, exec, &info->trash_lst);
 	return (0);
 }

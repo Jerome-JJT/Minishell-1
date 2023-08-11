@@ -9,9 +9,15 @@ t_tok	*new_node(char *str, int token, t_dlist **trash)
 	if (!new)
 		return (NULL);
 	if (!str)
+	{
+		// printf("check 3\n");
 		new->tok = NULL;
+	}
 	else
+	{
+		// printf("check 4\n");
 		new->tok = str;
+	}
 	new->type = token;
 	new->next = 0;
 	new->prev = 0;

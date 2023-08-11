@@ -50,6 +50,7 @@ void pars_to_exec(t_shell *info, t_exec *exec, t_dlist **trash)
 
     pipe = 0;
     tmp = info->token;
+    // print_token(&info->token, "Test pars_to_exec");
     while (tmp)
     {
         if (tmp->type == RED_IN)

@@ -10,7 +10,7 @@ static char	*if_env_var(char *str,  t_env *env, t_dlist **trash)
 
 	i = 0;
 	j = 0;
-	tmp[0] = "";
+	tmp[0] = NULL;
 	ret = NULL;
 	while (ft_isalnum(str[i]) || str[i] == '_')
 		i++;
@@ -71,7 +71,7 @@ static char	*ft_quote_d(char *str, t_env *env, t_dlist **trash)
 		tmp[1] = if_errno(str + (i + 2), trash);
 		tmp[0] = ft_strjoin(tmp[0], tmp[1], trash);
 	}
-	// fprintf(stderr, "%s\n", tmp[0]);
+	// fprintf(stderr, "tmp (quote_d): %s\n", tmp[0]);
 	return (tmp[0]);
 }
 /* -------------------- 4.Double quote function ----------------------------*/
@@ -81,24 +81,32 @@ char	*ft_dquote(char *str, t_shell *info)
 	int		check;
 	char	*tmp;
 
-	tmp = NULL;
-	i = 1;
+	i = 0;
 	check = 0;
-	while (str[i] != '\"')
+	tmp = NULL;
+	while (str[++i] != '\"')
 	{
-		if (str[i] == '$' && check == 0)
+		// printf("str[%d]: %c\n", i, str[i]);
+		if (str[i] == '$' && ft_isalpha(str[i + 1] && check == 0))
 		{
 			tmp = ft_quote_d(str + 1, info->env, &info->trash_lst);
 			check++;
 		}
 		else if (str[i] == '$' && check != 0)
 			tmp = ft_quote_d(tmp, info->env, &info->trash_lst);
-		i++;
 	}
+
+	// printf("check = %d\n tmp = %s\n", check, tmp);
 	if (!tmp && check > 0)
-		creat_and_add(tmp, tmp, D_QUOTE, 0, info);
+	{
+		// printf("check 1.a\n");
+		creat_and_add(tmp, NULL, D_QUOTE, 0, info);
+	}
 	else
+	{
+		// printf("check 1.b\n");
 		creat_and_add(tmp, str, D_QUOTE, i, info);
+	}
 	return (str + (i + 1));
 }
 

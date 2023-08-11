@@ -165,7 +165,7 @@ void builtins_exec(char *builtins_name, t_shell *info, char **cmd, t_exec *exe)
 	else if(ft_strncmp("env", builtins_name, ft_strlen(builtins_name)) == 0)
 		env_minishell(info, *(exe->cmd_n_arg + 1));
 	else if(ft_strncmp("exit", builtins_name, ft_strlen(builtins_name)) == 0)
-		exit_minishell(exe->cmd_n_arg + 1, &info->trash_lst);
+		exit_minishell(*(exe->cmd_n_arg + 1), &info->trash_lst);
 	else if(ft_strncmp("export", builtins_name, ft_strlen(builtins_name)) == 0)
 		i = export_minishell(info, exe->cmd_n_arg + 1);
 	else if(ft_strncmp("pwd", builtins_name, ft_strlen(builtins_name)) == 0)

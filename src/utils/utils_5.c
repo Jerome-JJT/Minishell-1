@@ -91,3 +91,16 @@ char	*ft_strdup_pars(const char *str, t_dlist **trash)
 	s_cpy[i] = 0;
 	return (s_cpy);
 }
+
+// /* -------------------- 5. Remplace oldchar -> newchar ----------------------------*/
+// void	remplace_char(char *s, char old, char new)
+// {
+// 	if (!s || !*s)
+// 		return ;
+// 	while (*s)
+// 	{
+// 		if (*s == old)
+// 			*s = new;
+// 		s++;
+// 	}
+// }

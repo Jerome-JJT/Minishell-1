@@ -27,7 +27,7 @@ static char	*ft_word_d(char *buffer, t_env *env, t_dlist **trash)
 }
 
 /* -------------------- 2.Analys buffer ----------------------------*/
-static char	*analys_buffer(char *ret, char *buffer, t_env *env, t_dlist **trash, int *index)
+static char	*analys_buffer(char *ret, char *buffer, t_shell *info, int *index, int *if_$)
 {
 	int	i;
 	int	check;
@@ -36,26 +36,29 @@ static char	*analys_buffer(char *ret, char *buffer, t_env *env, t_dlist **trash,
 	check = 0;
 	while (!ft_isparsing_char(buffer[i]))
 		{
-			if (buffer[i] == '$' && check == 0)
+			if (buffer[i] == '$' && !ft_isparsing_char(buffer[i + 1] && check == 0))
 			{
-				ret = ft_word_d(buffer, env, trash);
+				ret = ft_word_d(buffer, info->env, &info->trash_lst);
 				check++;
 			}
 			else if (buffer[i] == '$' && check != 0)
-				ret = ft_word_d(ret, env, trash);
+				ret = ft_word_d(ret, info->env, &info->trash_lst);
 
 			i++;
 		}
 	*index = i;
+	*if_$ = check;
 	return (ret);
 }
 /* -------------------- 3.Word function ----------------------------*/
 char	*ft_word(char *buffer, t_shell *info)
 {
 	int		i;
+	int		check;
 	char	*tmp;
 
 	i = 0;
+	check = 0;
 	tmp = NULL;
 	if (info->token && is_here_doc(info->token))
 	{
@@ -64,9 +67,11 @@ char	*ft_word(char *buffer, t_shell *info)
 		creat_and_add(tmp, buffer, WORD, i, info);
 	}
 	else
-	{
-		tmp = analys_buffer(tmp, buffer, info->env, &info->trash_lst, &i);
+		tmp = analys_buffer(tmp, buffer, info, &i, &check);
+	
+	if (!tmp && check > 0)
+		creat_and_add(tmp, NULL, WORD, 0, info);
+	else
 		creat_and_add(tmp, buffer, WORD, i, info);
-	}
 	return (buffer + i);
 }

@@ -7,9 +7,11 @@ void	print_tab(char **tab, char *ft)
 	// i = 0;
 	printf("%s\n", ft);
 	printf("----------------------------------------------------------------\n");
-	while (*tab)
+	while (1)
 	{
-		printf("-->> %s\n", *tab);
+		printf("-->> %s|\n", *tab);
+		if (*tab == NULL)
+			break;
 		tab++;
 	}
 	printf("----------------------------------------------------------------\n\n\n");

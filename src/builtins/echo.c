@@ -25,7 +25,7 @@ static void	print_echo(char **tab, int option_n)
 }
 
 /* -------------------- 2. Check -n variant -----------------------*/
-static int	check_n(char *str)
+static int	check_n(char **tab)
 {
 	int	check;
 	int	i;
@@ -33,35 +33,33 @@ static int	check_n(char *str)
 
 	check = 0;
 	i = 0;
-	j = 0;
-	if (ft_strncmp(str, "-n", 2) == 0)
+	while (ft_strncmp(tab[i], "-n", 2) == 0)
 	{
-		if (ft_strncmp(str, "-n", 3) == 0)
-			return (1);
-		else
+		if (ft_strncmp(tab[i], "-n", 3))
 		{
-			while(str[i + 2] == 'n')
-				i++;
-			if (str[i + 2] != '\0' && ft_isalpha(str[i + 2]))
-				return (0);
-			else
-				return (2);
+			j = 2;
+			while(tab[i][j] == 'n')
+				j++;
+			if (tab[i][j] != '\0' && ft_isprint(tab[i][j]))
+				return (i);
 		}
+		i++;
 	}
-	return (0);
+	return (i);
 }
 
 /* -------------------- 3. Echo main function -----------------------*/
 void	echo_minishell(char *str, t_dlist **trash)
 {
-	int		i;
+	int		check;
 	char	**tmp;
 
-	i = 0;
+	check = 0;
 	if (!str || *str == '\0')
 		printf("\n");
 	else
 	{
+		// fprintf(stderr, "%s\n", str);
 		if (*str == '\"')
 			remove_quote(str);
 		tmp = ft_split(str, ' ', trash);
@@ -70,16 +68,21 @@ void	echo_minishell(char *str, t_dlist **trash)
 			printf("\n");
 			return ;
 		}
-		if (check_n(*tmp) == 2 && tmp + 1 != NULL)
-			print_echo(tmp + 1, 1);
-		else if (check_n(*tmp) == 1)
-		{
-			while (ft_strncmp(tmp[i], "-n", 3) == 0)
-				i++;
-			if (tmp + i != NULL)
-				print_echo(tmp + i, 1);
-		}
-		else if (check_n(*tmp) == 0)
+		check = check_n(tmp);
+		if (check > 0)
+			print_echo(tmp + check, 1);
+		else
 			print_echo(tmp, 0);
+		// if (check_n(*tmp) == 2 && tmp + 1 != NULL)
+		// 	print_echo(tmp + 1, 1);
+		// else if (check_n(*tmp) == 1)
+		// {
+		// 	while (ft_strncmp(tmp[i], "-n", 3) == 0)
+		// 		i++;
+		// 	if (tmp + i != NULL)
+		// 		print_echo(tmp + i, 1);
+		// }
+		// else if (check_n(*tmp) == 0)
+		// 	print_echo(tmp, 0);
 	}
 }

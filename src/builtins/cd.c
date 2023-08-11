@@ -30,12 +30,12 @@ void	cd_minishell(t_shell *info, char *arg)
 		if (stat(info->cwd, &filestat) == 0)
 		{
 			if (S_ISREG(filestat.st_mode))
-				ft_error_msg(1, arg);
+				ft_error_msg(1, arg, "cd");
 			else if (S_ISDIR(filestat.st_mode))
 			{
 				ret = chdir(arg);
 				if (ret == -1)
-					ft_error_msg(1, arg);
+					ft_error_msg(1, arg, "cd");
 				else
 					getcwd(info->cwd, 1024);
 			}

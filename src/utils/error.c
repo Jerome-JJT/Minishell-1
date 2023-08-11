@@ -5,13 +5,14 @@
 
 // }
 
-int	ft_error_msg(int errn, char *str)
+int	ft_error_msg(int errn, char *str, char *ft)
 {
+	(void) ft;
+	g_errno = errn;
 	if (errn == 1 && !str)
 	{
 		printf("exit\n");
 		printf(""RED"minishell"RESET": exit: too many arguments\n");
-		g_errno = 1;
 	}
 	else if (errn == 1)
 	{
@@ -35,8 +36,9 @@ int	ft_error_msg(int errn, char *str)
 	}
 	else if(errn == 255)
 	{
+		printf("exit\n");
 		printf(""RED"minishell"RESET": exit: %s: numeric argument required\n", str);
-		g_errno = errn;
+		exit (g_errno);
 	}
 	else if (errn == 258 && str == NULL)
 	{

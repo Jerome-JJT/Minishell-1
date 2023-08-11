@@ -16,23 +16,36 @@ static void	print_env(t_env *env)
 }
 
 /* ------------------------- 2.Env avec args ------------------------------*/
-static void	env_with_arg(t_shell *info, char *arg)
+static void	env_with_arg(t_shell *info, char **arg)
 {
-	if (ft_strncmp(arg, "env", 4) == 0)
-		print_env(info->env);
-	else if (ft_strncmp(arg, "/", 1) == 0 && !access(*info->arg, F_OK))
+	if (ft_strncmp(*arg, "env", 4) == 0)
 	{
-		if (access(arg, W_OK) != 0)
-			ft_error_msg(126, arg);
+		while (ft_strncmp(*arg, "env", 4) == 0 && *arg != NULL)
+			arg++;
+		// fprintf(stderr, "*arg = %s\n", *arg);
+		if (arg != NULL)
+		{
+				// fprintf(stderr, "ici ?\n");
+				ft_error_msg(127, *arg, "env");
+				return ;
+		}
+		print_env(info->env);
+		g_errno = 0;
+	}
+	else if (ft_strncmp(*arg, "/", 1) == 0 && !access(*info->arg, F_OK))
+	{
+		if (access(*arg, W_OK) != 0)
+			ft_error_msg(126, *arg, "env");
 	}
 	else
-		ft_error_msg(127, arg);
+		ft_error_msg(127, *arg, "env");
 }
 
 /* ------------------------- 3.Fonction env ------------------------------*/
 void	env_minishell(t_shell *info, char *arg)
 {
 	t_list	*node;
+	char	**tab_arg;
 
 	if (!info->env->head)
 	{
@@ -41,7 +54,10 @@ void	env_minishell(t_shell *info, char *arg)
 	}
 	node = info->env->head;
 	if (arg)
-		env_with_arg(info, arg);
+	{
+		tab_arg = ft_split(arg, ' ', &info->trash_lst);
+		env_with_arg(info, tab_arg);
+	}
 	else
 	{
 		while (node != NULL)
@@ -50,8 +66,8 @@ void	env_minishell(t_shell *info, char *arg)
 				printf("%s=%s\n", node->variable, node->valeur);
 			node = node->next;
 		}
+		g_errno = 0;
 	}
-	g_errno = 0;
 }
 
 /*

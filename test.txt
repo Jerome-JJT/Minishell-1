@@ -1,107 +1,165 @@
-<<a <<b <<c														[√]
-<tx_a.txt cat -e > out											[√]
-< tx_a.txt cat -e | cat -e >out 								[√]
->>ap1															[√]
+<<a <<b <<c																										[~] (testé le : 11 Août 23) -->> errno 13 & 3 ?
+<tx_a.txt cat -e > out																							[√] (testé le : 11 Août 23)
+< tx_a.txt cat -e | cat -e >out 																				[√] (testé le : 11 Août 23)
+>>ap1																											[√] (testé le : 11 Août 23)
 
 / ------------- Syntax_error ---------------- \
-|																[√]
-| |																[√]
->																[√]
->>																[√]
->>>																[√]
->>>>															[√]
-<																[√]
-< >																[√]
-| echo															[√]
-echo | |														[√]
-cat < >															[√]
-echo '															[√]
-echo "															[√]
+|																												[√] (testé le : 11 Août 23)
+| |																												[√] (testé le : 11 Août 23)
+>																												[√] (testé le : 11 Août 23)
+>>																												[√] (testé le : 11 Août 23)
+>>>																												[√] (testé le : 11 Août 23)
+>>>>																											[√] (testé le : 11 Août 23)
+<																												[√] (testé le : 11 Août 23)
+< >																												[√] (testé le : 11 Août 23)
+| echo																											[√] (testé le : 11 Août 23)
+echo | |																										[√] (testé le : 11 Août 23)
+cat < >																											[√] (testé le : 11 Août 23)
+echo '																											[√] (testé le : 11 Août 23)
+echo "																											[√] (testé le : 11 Août 23)
 
 / ------------- Simple_command -------------- \
-/bin/ls															[√]
-/bin/ls -a														[√]
-/bin/ls | /usr/bin/grep a										[√]
-/bin/ls | /usr/bin/grep a | /usr/bin/grep c						[√]
-ls																[√]
-ls -a															[√]
-ls | grep a 													[√]
-ls | grep a | grep c 											[√]
-echo hello world | cat 											[√]
-no_such_file 													[√]
-./no_such_file 													[√]
-/bin/ls/no_such_file 											[√]
-/bin/no_such_dir/file 											[√]
-mkdir dir 														[√]
-rm -rf dir 														[√]
-touch a .a 														[√]
-touch aa bb cc 													[√]
-rm a aa bb cc 													[√]
-echo a | $NO_ENV | cat; unset NO_ENV 							[√]
-echo salut |													[√]
-"" | 															[√]
+/bin/ls																											[√] (testé le : 11 Août 23)
+/bin/ls -a																										[√] (testé le : 11 Août 23)
+/bin/ls | /usr/bin/grep a																						[√] (testé le : 11 Août 23)
+/bin/ls | /usr/bin/grep a | /usr/bin/grep c																		[√] (testé le : 11 Août 23)
+ls																												[√] (testé le : 11 Août 23)
+ls -a																											[√] (testé le : 11 Août 23)
+ls | grep a 																									[√] (testé le : 11 Août 23)
+ls | grep a | grep c 																							[√] (testé le : 11 Août 23)
+echo hello world | cat 																							[√] (testé le : 11 Août 23)
+no_such_file 																									[√] (testé le : 11 Août 23)
+./no_such_file 																									[√] (testé le : 11 Août 23)
+/bin/ls/no_such_file 																							[√] (testé le : 11 Août 23)
+/bin/no_such_dir/file 																							[√] (testé le : 11 Août 23)
+mkdir dir 																										[√] (testé le : 11 Août 23)
+rm -rf dir 																										[√] (testé le : 11 Août 23)
+touch a .a 																										[√] (testé le : 11 Août 23)
+touch aa bb cc 																									[√] (testé le : 11 Août 23)
+rm a aa bb cc 																									[√] (testé le : 11 Août 23)
+echo a | $NO_ENV | cat; unset NO_ENV 																			[√] (testé le : 11 Août 23)
+echo salut |																									[√] (testé le : 11 Août 23)
+"" | 																											[√] (testé le : 11 Août 23)
 
 / ------------- Cd -------------- \
-cd NO_SUCH_FILE; pwd 																																												[x] -> "Not a directory" -->> "No such file or directory"
-cd hello world; pwd 																																												[x] -> "hello world: Not a directory" -->> "hello: No such file or directory"
-mkdir dir; cd dir; pwd 																																												[√]
-mkdir dir; cd dir; cd .; pwd 																																										[√]
-mkdir dir; cd dir; cd ./; pwd 																																										[√]
-mkdir dir; cd dir; cd ..; pwd 																																										[√]
-mkdir dir; cd dir; cd ../; pwd 																																										[√]
-touch testfile; cd testfile 																																										[√]
-cd /; cd ../../akjwyefgjkwveyjfgweyugyuwegf76t273/../../ ;pwd																																		[√]
-mkdir dir; cd dir; cd ../nosuchdir/../dir; pwd 																																						[√]
-mkdir hello; cd hello world; pwd 																																									[√]
-cd /; pwd 																																															[√]
-cd /bin; pwd 																																														[√]
-cd /bin/../; pwd 																																													[√]
-mkdir dir; cd DIR; pwd 																																												[√]
-mkdir DIR; cd dir; pwd 																																												[√]																																				[√]
-mkdir dir; ln -s dir link; cd link; pwd 																																							[√]
-mkdir dir; ln -s dir link; rmdir dir; cd link; pwd 																																					[√]
-mkdir dir; cd dir; rmdir ../dir; cd ./; pwd;cd .; pwd; cd ./././././; pwd; cd .////////./; pwd; cd ../; pwd 																						[√]
-mkdir -p a/b/c; cd a/b/c; rm -rf ../../b; cd ./; pwd; cd ../; pwd; cd .////./; pwd 																													[√]
-mkdir -p a/b/c; cd a/b/c; rm -rf ../../b; cd ./; pwd; cd .././.; pwd; cd ./; pwd; cd ../; pwd 																										[√]
-cd ; pwd 																																															[√]
-export HOME=; cd ; pwd 																																												[√]
-unset HOME; cd ; pwd 																																												[√]
-export HOME="./"; cd ; pwd 																																											[√]
-export HOME=""; cd ; pwd 																																											[√]
-export HOME="/"; cd; cd ../../../../../././././../../../././../../../; pwd 																															[√]
+cd NO_SUCH_FILE; pwd 																							[x] (testé le : 11 Août 23) -> "Not a directory" -->> "No such file or directory"
+cd hello world; pwd 																							[x] (testé le : 11 Août 23) -> "hello world: Not a directory" -->> "hello: No such file or directory"
+mkdir dir; cd dir; pwd 																							[√] (testé le : 11 Août 23)
+mkdir dir; cd dir; cd .; pwd 																					[√] (testé le : 11 Août 23)
+mkdir dir; cd dir; cd ./; pwd 																					[√] (testé le : 11 Août 23)
+mkdir dir; cd dir; cd ..; pwd 																					[√] (testé le : 11 Août 23)
+mkdir dir; cd dir; cd ../; pwd 																					[√] (testé le : 11 Août 23)
+touch testfile; cd testfile 																					[√] (testé le : 11 Août 23)
+cd /; cd ../../akjwyefgjkwveyjfgweyugyuwegf76t273/../../ ;pwd													[√] (testé le : 11 Août 23)
+mkdir dir; cd dir; cd ../nosuchdir/../dir; pwd 																	[√] (testé le : 11 Août 23)
+mkdir hello; cd hello world; pwd 																				[√] (testé le : 11 Août 23)
+cd /; pwd 																										[√] (testé le : 11 Août 23)
+cd /bin; pwd 																									[√] (testé le : 11 Août 23)
+cd /bin/../; pwd 																								[√] (testé le : 11 Août 23)
+mkdir dir; cd DIR; pwd 																							[√] (testé le : 11 Août 23)
+mkdir DIR; cd dir; pwd 																							[√] (testé le : 11 Août 23)
+mkdir dir; ln -s dir link; cd link; pwd 																		[√] (testé le : 11 Août 23)
+mkdir dir; ln -s dir link; rmdir dir; cd link; pwd 																[√] (testé le : 11 Août 23)
+mkdir dir; cd dir; rmdir ../dir; cd ./; pwd;cd .; pwd; cd ./././././; pwd; cd .////////./; pwd; cd ../; pwd		[√] (testé le : 11 Août 23)
+mkdir -p a/b/c; cd a/b/c; rm -rf ../../b; cd ./; pwd; cd ../; pwd; cd .////./; pwd 								[√] (testé le : 11 Août 23)
+mkdir -p a/b/c; cd a/b/c; rm -rf ../../b; cd ./; pwd; cd .././.; pwd; cd ./; pwd; cd ../; pwd 					[√] (testé le : 11 Août 23)
+cd ; pwd 																										[√] (testé le : 11 Août 23)
+export HOME=; cd ; pwd 																							[√] (testé le : 11 Août 23)
+unset HOME; cd ; pwd 																							[√] (testé le : 11 Août 23)
+export HOME="./"; cd ; pwd 																						[√] (testé le : 11 Août 23)
+export HOME=""; cd ; pwd 																						[√] (testé le : 11 Août 23)
+export HOME="/"; cd; cd ../../../../../././././../../../././../../../; pwd 										[√] (testé le : 11 Août 23)
 
 / ------------- Echo -------------- \
-echo															[√]
-echo a															[√]
-echo	tab														[√]
-echo "	tab	"													[√]
-echo		tab													[√]
-echo hello world												[√]
-echo -n															[√]
-echo -n a														[√]
-echo -n hello world												[√]
-echo -nnnnnnnn													[√]
-echo -nnnnnnnn a												[√]
-echo -nnnnnnnn hello world										[√]
-echo -nnnnnnnn -nnnnnnnn										[√]
-echo -nnnnnnnn -nnnnnnnn a										[√]
-echo -nnnnnnnn -nnnnnnnn hello world							[√]
-echo -nk hello													[√]
-echo -nnnnnnnnnnk hello											[√]
-echo -nknknknk hello											[√]
-echo hello -n													[√]
-echo hello -nnnnnnn												[√]
-echo hello -nknknknknk											[√]
-echo hello -nnnnnnnnn -nnnnnnnnn								[√]
-echo "-n" hello													[√]
-echo '-n' hello													[√]
-echo "-n" "hello"												[√]
-echo '-n' 'hello'												[√]
-echo $PATH														[√]
-echo "$PATH"													[√]
-echo '$PATH'													[√]
-echo a "" b "" c												[√]
-echo a "$NO_SUCH_ENV" b $NO_SUCH_ENV c, unset NO_SUCH_ENV		[x] -> segfault > inf_var_env
-echo		hello												[√]
-echo "$ $ $ $ $ $ "												[x] -> le dernier guillemet apparait
-echo $															[x] -> N'imprime rien -->> doit imprimer le dollar
+echo																											[√] (testé le : 11 Août 23)
+echo a																											[√] (testé le : 11 Août 23)
+echo	tab																										[√] (testé le : 11 Août 23)
+echo "	tab	"																									[√] (testé le : 11 Août 23)
+echo		tab																									[√] (testé le : 11 Août 23)
+echo hello world																								[√] (testé le : 11 Août 23)
+echo -n																											[√] (testé le : 11 Août 23)
+echo -n a																										[√] (testé le : 11 Août 23)
+echo -n hello world																								[√] (testé le : 11 Août 23)
+echo -nnnnnnnn																									[√] (testé le : 11 Août 23)
+echo -nnnnnnnn a																								[√] (testé le : 11 Août 23)
+echo -nnnnnnnn hello world																						[√] (testé le : 11 Août 23)
+echo -nnnnnnnn -nnnnnnnn																						[√] (testé le : 11 Août 23)
+echo -nnnnnnnn -nnnnnnnn a																						[√] (testé le : 11 Août 23)
+echo -nnnnnnnn -nnnnnnnn hello world																			[√] (testé le : 11 Août 23)
+echo -nk hello																									[√] (testé le : 11 Août 23)
+echo -nnnnnnnnnnk hello																							[√] (testé le : 11 Août 23)
+echo -nknknknk hello																							[√] (testé le : 11 Août 23)
+echo hello -n																									[√] (testé le : 11 Août 23)
+echo hello -nnnnnnn																								[√] (testé le : 11 Août 23)
+echo hello -nknknknknk																							[√] (testé le : 11 Août 23)
+echo hello -nnnnnnnnn -nnnnnnnnn																				[√] (testé le : 11 Août 23)
+echo "-n" hello																									[√] (testé le : 11 Août 23)
+echo '-n' hello																									[√] (testé le : 11 Août 23)
+echo "-n" "hello"																								[√] (testé le : 11 Août 23)
+echo '-n' 'hello'																								[√] (testé le : 11 Août 23)
+echo $PATH																										[√] (testé le : 11 Août 23)
+echo "$PATH"																									[√] (testé le : 11 Août 23)
+echo '$PATH'																									[√] (testé le : 11 Août 23)
+echo a "" b "" c																								[√] (testé le : 11 Août 23)
+echo a "$NO_SUCH_ENV" b $NO_SUCH_ENV c, unset NO_SUCH_ENV														[√] (testé le : 11 Août 23)
+echo		hello																								[√] (testé le : 11 Août 23)
+echo "$ $ $ $ $ $ "																								[√] (testé le : 11 Août 23)
+echo $																											[√] (testé le : 11 Août 23)
+
+/ ------------- Env -------------- \
+env																												[√] (testé le : 11 Août 23)
+env env																											[√] (testé le : 11 Août 23)
+env 123																											[√] (testé le : 11 Août 23)
+env env 123																										[√] (testé le : 11 Août 23)
+env | grep -v -E '^_=' | sort																					[√] (testé le : 11 Août 23)
+env | grep -v -E '^_=' | sort, export A=hello																	[√] (testé le : 11 Août 23)
+cd ../; env | grep -v -E '^_=' | sort																			[√] (testé le : 11 Août 23)
+
+/ ------------- Exit -------------- \
+exit 0																											[√] (testé le : 11 Août 23)
+exit 1																											[√] (testé le : 11 Août 23)
+exit -1																											[√] (testé le : 11 Août 23)
+exit 2147483647																									[√] (testé le : 11 Août 23)
+exit 2147483648																									[√] (testé le : 11 Août 23)
+exit -2147483648																								[√] (testé le : 11 Août 23)
+exit -2147483649																								[√] (testé le : 11 Août 23)
+exit 9223372036854775807																						[√] (testé le : 11 Août 23)
+exit 9223372036854775808																						[x] -> exit (0) -->> bash: exit: 9223372036854775808: numeric argument required
+exit -9223372036854775808																						[√] (testé le : 11 Août 23)
+exit -9223372036854775809																						[x] -> exit (0) -->> bash: exit: -9223372036854775809: numeric argument required
+exit -- 42																										[√] (testé le : 11 Août 23)
+exit "        42           "																					[√] (testé le : 11 Août 23)
+exit -- -- 42																									[√] (testé le : 11 Août 23)
+exit -- 42 42																									[√] (testé le : 11 Août 23)
+exit --42																										[√] (testé le : 11 Août 23)
+exit ++42																										[√] (testé le : 11 Août 23)
+exit 42 42																										[√] (testé le : 11 Août 23)
+exit a																											[√] (testé le : 11 Août 23)
+exit 1a																											[√] (testé le : 11 Août 23)
+exit +																											[√] (testé le : 11 Août 23)
+exit -																											[√] (testé le : 11 Août 23)
+exit "          "																								[√] (testé le : 11 Août 23)
+exit 0 0;																										[√] (testé le : 11 Août 23)
+exit 0 0; exit																									[√] (testé le : 11 Août 23)
+exit 0 0 | echo hello																							[√] (testé le : 11 Août 23)
+
+/ ------------- Export -------------- \
+export | grep -v -E '^declare -x _='
+export 1 _+ _OK _2? _OK2=VAR =NG OK3=; export | grep -v -E '^declare -x _='
+export dquote='"' dollar='$' backslash='\' backquote='`' newline='\n'; export | grep -v -E '^declare -x _='
+export APPEND=1; export APPEND+=2; export | grep APPEND
+export APPEND_NONE=1; export APPEND_NONE+=; export | grep APPEND_NONE
+export APPEND_NONE=; export APPEND_NONE=; export APPEND_NONE+=; export | grep APPEND_NONE
+export APPEND_EMPTY=""; export APPEND_EMPTY=""; export APPEND_EMPTY=""; export | grep APPEND_EMPTY
+export OVERWRITE=42; export OVERWRITE=a; export | grep OVERWRITE
+export A=B=C=D; export | grep A
+export PATH; export | grep PATH
+export PWD; export | grep PWD
+export OLDPWD; export | grep OLDPWD
+unset PWD; cd ..; export | grep PWD
+unset OLDPWD; cd ..; export | grep OLDPWD
+unset PWD; cd ..; export PWD=new_value; export | grep PWD
+unset OLDPWD; cd ..; export OLDPWD=new_value; export | grep OLDPWD
+unset PWD; cd ..; export PWD; export | grep PWD
+unset OLDPWD; cd ..; export OLDPWD; export | grep OLDPWD
+export =
