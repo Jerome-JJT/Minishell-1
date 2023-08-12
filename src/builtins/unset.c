@@ -17,17 +17,19 @@ static void	clear_node(t_shell *info, t_list *node)
 	info->env->len--;
 }
 
-int	unset_minishell(t_shell *info, char **arg)
+int	unset_minishell(t_shell *info, char *arg)
 {
 	t_list	*node;
+	char	**tab;
 	int		i;
 
 	i = 0;
-	if (*arg)
+	tab = ft_split(arg, ' ', &info->trash_lst);
+	if (tab)
 	{
-		while (arg[i])
+		while (tab[i])
 		{
-			node = find_var_env(info->env, arg[i++], 1);
+			node = find_var_env(info->env, tab[i++], 1);
 			if (node != NULL)
 			{
 				clear_node(info, node);

@@ -6,7 +6,7 @@
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:04:11 by nrossel           #+#    #+#             */
-/*   Updated: 2023/08/09 14:16:23 by nrossel          ###   ########.fr       */
+/*   Updated: 2023/08/12 13:10:32 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct s_clist
 }	t_clist;
 
 /* ----------- Fonction Int/Long --------------- */
+long long	ft_atoll(const char *str);
 int			ft_itob(int nbr);
 int			ft_isalpha(int c);
 int			ft_isdigit(int c);
@@ -61,7 +62,6 @@ int			ft_toupper(int c);
 int			ft_atob(char *str);
 int			ft_nbrlen_d(int nbr);
 int			ft_nbrlen_exa(int nbr);
-long		ft_atoi(const char *str);
 int			ft_nbrlen_b(unsigned int nbr);
 int			ft_exit(int i, char *error_msg);
 int			ft_power(int nbr, unsigned int power);

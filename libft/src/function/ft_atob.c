@@ -6,7 +6,7 @@
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 08:24:52 by nrossel           #+#    #+#             */
-/*   Updated: 2023/05/23 16:36:36 by nrossel          ###   ########.fr       */
+/*   Updated: 2023/08/12 13:13:02 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 
 int	ft_atob(char *str)
 {
-	int		decimal;
-	int		len;
-	int		bin;
-	char	*bin_str;
+	long long	decimal;
+	int			len;
+	int			bin;
+	char		*bin_str;
 
-	decimal = ft_atoi(str);
+	decimal = ft_atoll(str);
 	len = ft_nbrlen_b(decimal);
 	bin = 0;
 	bin_str = NULL;
@@ -35,7 +35,7 @@ int	ft_atob(char *str)
 		decimal /= 2;
 		len--;
 	}
-	bin = ft_atoi(bin_str);
+	bin = ft_atoll(bin_str);
 	free(bin_str);
 	return (bin);
 }

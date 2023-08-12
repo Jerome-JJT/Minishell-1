@@ -6,16 +6,16 @@
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 14:35:08 by nrossel           #+#    #+#             */
-/*   Updated: 2023/05/23 16:36:47 by nrossel          ###   ########.fr       */
+/*   Updated: 2023/08/12 13:10:24 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/libft.h"
 
-long	ft_atoi(const char *str)
+long long	ft_atoll(const char *str)
 {
-	int		sign;
-	long	result;
+	int			sign;
+	long long	result;
 
 	sign = 1;
 	result = 0;

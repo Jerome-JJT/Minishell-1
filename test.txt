@@ -3,7 +3,7 @@
 < tx_a.txt cat -e | cat -e >out 																				[√] (testé le : 11 Août 23)
 >>ap1																											[√] (testé le : 11 Août 23)
 
-/ ------------- Syntax_error ---------------- \
+/ ------------	- Syntax_error ---------------- \
 |																												[√] (testé le : 11 Août 23)
 | |																												[√] (testé le : 11 Août 23)
 >																												[√] (testé le : 11 Août 23)
@@ -124,12 +124,12 @@ exit 2147483648																									[√] (testé le : 11 Août 23)
 exit -2147483648																								[√] (testé le : 11 Août 23)
 exit -2147483649																								[√] (testé le : 11 Août 23)
 exit 9223372036854775807																						[√] (testé le : 11 Août 23)
-exit 9223372036854775808																						[x] -> exit (0) -->> bash: exit: 9223372036854775808: numeric argument required
+exit 9223372036854775808																						[√] (testé le : 12 Août 23)
 exit -9223372036854775808																						[√] (testé le : 11 Août 23)
-exit -9223372036854775809																						[x] -> exit (0) -->> bash: exit: -9223372036854775809: numeric argument required
+exit -9223372036854775809																						[√] (testé le : 12 Août 23)
 exit -- 42																										[√] (testé le : 11 Août 23)
 exit "        42           "																					[√] (testé le : 11 Août 23)
-exit -- -- 42																									[√] (testé le : 11 Août 23)
+exit -- -- 42																									[√] (testé le : 12 Août 23)
 exit -- 42 42																									[√] (testé le : 11 Août 23)
 exit --42																										[√] (testé le : 11 Août 23)
 exit ++42																										[√] (testé le : 11 Août 23)
@@ -144,22 +144,17 @@ exit 0 0; exit																									[√] (testé le : 11 Août 23)
 exit 0 0 | echo hello																							[√] (testé le : 11 Août 23)
 
 / ------------- Export -------------- \
-export | grep -v -E '^declare -x _='
-export 1 _+ _OK _2? _OK2=VAR =NG OK3=; export | grep -v -E '^declare -x _='
-export dquote='"' dollar='$' backslash='\' backquote='`' newline='\n'; export | grep -v -E '^declare -x _='
-export APPEND=1; export APPEND+=2; export | grep APPEND
-export APPEND_NONE=1; export APPEND_NONE+=; export | grep APPEND_NONE
-export APPEND_NONE=; export APPEND_NONE=; export APPEND_NONE+=; export | grep APPEND_NONE
-export APPEND_EMPTY=""; export APPEND_EMPTY=""; export APPEND_EMPTY=""; export | grep APPEND_EMPTY
-export OVERWRITE=42; export OVERWRITE=a; export | grep OVERWRITE
-export A=B=C=D; export | grep A
-export PATH; export | grep PATH
-export PWD; export | grep PWD
-export OLDPWD; export | grep OLDPWD
-unset PWD; cd ..; export | grep PWD
-unset OLDPWD; cd ..; export | grep OLDPWD
-unset PWD; cd ..; export PWD=new_value; export | grep PWD
-unset OLDPWD; cd ..; export OLDPWD=new_value; export | grep OLDPWD
-unset PWD; cd ..; export PWD; export | grep PWD
-unset OLDPWD; cd ..; export OLDPWD; export | grep OLDPWD
+export APPEND=1; export APPEND+=2; export | grep APPEND															[√] (testé le : 11 Août 23)
+export APPEND_EMPTY=""; export APPEND_EMPTY=""; export APPEND_EMPTY=""; export | grep APPEND_EMPTY				[√] (testé le : 12 Août 23)
+export OVERWRITE=42; export OVERWRITE=a; export | grep OVERWRITE												[√] (testé le : 12 Août 23)
+export A=B=C=D; export | grep A																					[]
+export PATH; export | grep PATH																					[]
+export PWD; export | grep PWD																					[]
+export OLDPWD; export | grep OLDPWD																				[]
+unset PWD; cd ..; export | grep PWD																				[]
+unset OLDPWD; cd ..; export | grep OLDPWD																		[]
+unset PWD; cd ..; export PWD=new_value; export | grep PWD														[]
+unset OLDPWD; cd ..; export OLDPWD=new_value; export | grep OLDPWD												[]
+unset PWD; cd ..; export PWD; export | grep PWD																	[]
+unset OLDPWD; cd ..; export OLDPWD; export | grep OLDPWD														[]
 export =

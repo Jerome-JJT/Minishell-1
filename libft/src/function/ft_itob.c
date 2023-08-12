@@ -6,7 +6,7 @@
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 08:25:33 by nrossel           #+#    #+#             */
-/*   Updated: 2023/05/23 16:37:53 by nrossel          ###   ########.fr       */
+/*   Updated: 2023/08/12 13:12:04 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	ft_itob(int nbr)
 		nbr /= 2;
 		len--;
 	}
-	d = ft_atoi(b);
+	d = ft_atoll(b);
 	free(b);
 	return (d);
 }

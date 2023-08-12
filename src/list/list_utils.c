@@ -78,12 +78,14 @@ char	**lst_to_tab(t_env *lst, t_dlist **trash)
 		return (NULL);
 	node = lst->head;
 	i = 0;
+	val = 0;
 	while (node != NULL && node->variable != NULL)
 	{
 		if (node->valeur)
 		{
 			var = ft_strlen(node->variable) + 1;
-			val = ft_strlen(node->valeur) + 1;
+			if (node->valeur != NULL)
+				val = ft_strlen(node->valeur) + 1;
 			tab[i] = my_malloc((var + val), sizeof(char), trash);
 			if (!tab[i])
 				return (NULL);

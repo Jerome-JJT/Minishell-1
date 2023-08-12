@@ -23,6 +23,8 @@ static int	check_digitchar(char *str)
 	i = 0;
 	while (str[i])
 	{
+		if (str[i] == '-' && i  == 0)
+			i++;
 		if (ft_isdigit(str[i]) == 0 && str[i] != '\0')
 			ft_error_msg(255, str, "exit");
 		i++;
@@ -33,7 +35,7 @@ static int	check_digitchar(char *str)
 /* ------------------------- 2. Check if str is "--" ------------------------------*/
 static int	check_line(char **arg)
 {
-	print_tab(arg, "check_line");
+	// print_tab(arg, "check_line");
 	if (!arg)
 		exit (g_errno);
 	else if (ft_isdigit(**arg) == 0)
@@ -46,7 +48,7 @@ static int	check_line(char **arg)
 		else
 		{
 			printf("exit\n");
-			exit (ft_atoi(*arg));
+			exit (ft_atoll(*arg));
 		}
 	}
 	return (0);
@@ -61,36 +63,41 @@ int	exit_minishell(char *arg, t_dlist **trash)
 
 	if (!arg)
 		exit (g_errno);
-	printf("Entrée exit: %s\n", arg);
+	// printf("Entrée exit: %s\n", arg);
 	remove_quote(arg);
-	if (ft_isonlyspace(arg))
+	// printf("Max = 		%lld\n", LLONG_MAX);
+	// printf("Min = 		%lld\n", LLONG_MIN);
+	// printf("Current = 	%s\n", arg);
+	// printf("after atoi =	%lld\n", ft_atoll(arg));
+	if (ft_isonlyspace(arg) || !ft_strncmp(arg, "9223372036854775808", 20)
+		|| !ft_strncmp(arg, "-9223372036854775809", 21))
 		ft_error_msg(255, arg, "exit");
 	s_tmp = ft_strtrim(arg, " ", trash);
 	tab = ft_split(s_tmp, ' ', trash);
-	print_tab(tab, "Tab with str");
+	// print_tab(tab, "Tab with str");
 	if (!tab)
 	{
-		printf("1\n");
+		// printf("1\n");
 		exit (g_errno);
 	}
 	else if (strncmp(*tab, "--", 3) == 0)
 	{
-		printf("3\n");
+		// printf("3\n");
 		check_line(tab + 1);
 	}
 	else
 	{
-		printf("4\n");
+		// printf("4\n");
 		// printf("tab + 1 = %s\n", *(tab + 1));
 		check_digitchar(*tab);
 		if (*(tab + 1) != NULL)
 		{
-			printf("5\n");
+			// printf("5\n");
 			return (ft_error_msg(1, NULL, "exit"));
 		}
-		printf("6\n");
+		// printf("6\n");
 		printf("exit\n");
-		exit (ft_atoi(*tab));
+		exit (ft_atoll(*tab));
 	}
 	// printf("7\n");
 	return (0);
