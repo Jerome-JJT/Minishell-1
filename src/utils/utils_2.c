@@ -39,25 +39,25 @@ char **ft_split_var(char *var, t_dlist **trash)
 }
 
 /* ---------------------------- 3.Check valid quote --------------------------------*/
-int	ft_checkquote(char *str)
+int	ft_checkquote(char *str, int s_or_d)
 {
-	int	s_quote;
-	int	d_quote;
-	int	i;
+    int i;
 
-	s_quote = 0;
-	d_quote = 0;
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '\'')
-			s_quote++;
-		else if (str[i] == '\"')
-			d_quote++;
-		i++;
-	}
-	if (s_quote % 2 != 0 || d_quote % 2 != 0)
-		return (1);
+    i = 1;
+	if (s_or_d == 1)
+    {
+        while (str[i] != '\'' && str[i])
+            i++;
+        if (str[i] == '\0')
+            return (1);
+    }
+    if (s_or_d == 2)
+    {
+        while (str[i] != '\"' && str[i])
+            i++;
+        if (str[i] == '\0')
+            return (1);
+    }
 	return (0);
 }
 /* ---------------------------- 4.Check char is quote--------------------------------*/

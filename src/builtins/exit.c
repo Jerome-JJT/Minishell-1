@@ -63,18 +63,12 @@ int	exit_minishell(char *arg, t_dlist **trash)
 
 	if (!arg)
 		exit (g_errno);
-	// printf("Entrée exit: %s\n", arg);
-	remove_quote(arg);
-	// printf("Max = 		%lld\n", LLONG_MAX);
-	// printf("Min = 		%lld\n", LLONG_MIN);
-	// printf("Current = 	%s\n", arg);
-	// printf("after atoi =	%lld\n", ft_atoll(arg));
+	remove_quote(arg, '\"');
 	if (ft_isonlyspace(arg) || !ft_strncmp(arg, "9223372036854775808", 20)
 		|| !ft_strncmp(arg, "-9223372036854775809", 21))
 		ft_error_msg(255, arg, "exit");
 	s_tmp = ft_strtrim(arg, " ", trash);
 	tab = ft_split(s_tmp, ' ', trash);
-	// print_tab(tab, "Tab with str");
 	if (!tab)
 	{
 		// printf("1\n");

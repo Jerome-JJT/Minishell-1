@@ -8,12 +8,18 @@ static char	*parse_quote(char *buff, t_shell *info)
 	char	*str;
 
 	str = buff;
-	if (ft_checkquote(str) != 0)
-		return (NULL);
 	if (*str == '\'')
+	{
+		if (ft_checkquote(str, 1) != 0)
+			return (NULL);
 		str = ft_squote(str, info);
+	}
 	else if (*str == '\"')
+	{
+		if (ft_checkquote(str, 2) != 0)
+			return (NULL);
 		str = ft_dquote(str, info);
+	}
 	return (str);
 }
 

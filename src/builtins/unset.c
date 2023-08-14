@@ -70,7 +70,7 @@ int	unset_minishell(t_shell *info, char *arg)
 	if (!arg || !*arg)
 		return (0);
 	if (arg[0] == '\"')
-		remove_quote(arg);
+		remove_quote(arg, '\"');
 	check = 0;
 	tab = ft_split(arg, ' ', &info->trash_lst);
 	if (tab)

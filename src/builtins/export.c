@@ -83,7 +83,7 @@ int	export_minishell(t_shell *info, char *arg)
 		while (tab[i])
 		{
 			if (tab[i][0] == '\"')
-				remove_quote(tab[i]);
+				remove_quote(tab[i], '\"');
 			// fprintf(stderr, "export tmp -> %s\n", tmp);
 			// printf("tab[%d] = %s\n", i, tab[i]);
 			if (!ft_isalpha(tab[i][0]) && tab[i][0] != '_')

@@ -62,7 +62,7 @@ char    *tab_to_str(char **tab, t_dlist **trash)
 }
 
 /* ---------------------------- 4.Remove quote --------------------------------*/
-void    remove_quote(char *str)
+void    remove_quote(char *str, char quote)
 {
     int     len;
     int     read;
@@ -73,11 +73,11 @@ void    remove_quote(char *str)
     len = ft_strlen(str);
     read = 0;
     write = 0;
-    if (*str == '\"')
+    if (*str == quote)
     {
         while (read < len)
         {
-            if (str[read] != '\"')
+            if (str[read] != quote)
             {
                 str[write] = str[read];
                 write++;

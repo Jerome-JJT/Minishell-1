@@ -39,7 +39,7 @@ static char	*if_errno(char *str, t_dlist **trash)
 	i = 0;
 	if (*str && *str != '\"')
 	{
-		while (!ft_isquote(str[i]))
+		while (!ft_isquote(str[i]) && str[i])
 			i++;
 		tmp[1] = ft_substr(str, 0, i, trash);
 	}
@@ -87,7 +87,7 @@ char	*ft_dquote(char *str, t_shell *info)
 	while (str[++i] != '\"')
 	{
 		// printf("str[%d]: %c\n", i, str[i]);
-		if (str[i] == '$' && ft_isalpha(str[i + 1] && check == 0))
+		if (str[i] == '$' && (ft_isalpha(str[i + 1]) || str[i + 1] == '?') && check == 0)
 		{
 			tmp = ft_quote_d(str + 1, info->env, &info->trash_lst);
 			check++;

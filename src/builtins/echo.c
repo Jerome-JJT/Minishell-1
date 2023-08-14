@@ -59,9 +59,8 @@ void	echo_minishell(char *str, t_dlist **trash)
 		printf("\n");
 	else
 	{
-		// fprintf(stderr, "%s\n", str);
-		if (*str == '\"')
-			remove_quote(str);
+		if (*str == '\"' && ft_strlen(str) > 1)
+			remove_quote(str, '\"');
 		tmp = ft_split(str, ' ', trash);
 		if (!tmp)
 		{
@@ -73,16 +72,5 @@ void	echo_minishell(char *str, t_dlist **trash)
 			print_echo(tmp + check, 1);
 		else
 			print_echo(tmp, 0);
-		// if (check_n(*tmp) == 2 && tmp + 1 != NULL)
-		// 	print_echo(tmp + 1, 1);
-		// else if (check_n(*tmp) == 1)
-		// {
-		// 	while (ft_strncmp(tmp[i], "-n", 3) == 0)
-		// 		i++;
-		// 	if (tmp + i != NULL)
-		// 		print_echo(tmp + i, 1);
-		// }
-		// else if (check_n(*tmp) == 0)
-		// 	print_echo(tmp, 0);
 	}
 }
