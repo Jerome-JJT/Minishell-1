@@ -6,7 +6,7 @@ static void	go_home(t_shell *info)
 	char	*path_home_2;
 	t_list	*path;
 
-	path = find_var_env(info->env, "HOME", 1);\
+	path = find_var_env(info->env, "HOME");\
 	if (!path)
 	{
 		printf("Minishell: cd : HOME not set\n");

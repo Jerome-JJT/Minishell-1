@@ -147,14 +147,22 @@ exit 0 0 | echo hello																							[√] (testé le : 11 Août 23)
 export APPEND=1; export APPEND+=2; export | grep APPEND															[√] (testé le : 11 Août 23)
 export APPEND_EMPTY=""; export APPEND_EMPTY=""; export APPEND_EMPTY=""; export | grep APPEND_EMPTY				[√] (testé le : 12 Août 23)
 export OVERWRITE=42; export OVERWRITE=a; export | grep OVERWRITE												[√] (testé le : 12 Août 23)
-export A=B=C=D; export | grep A																					[]
-export PATH; export | grep PATH																					[]
-export PWD; export | grep PWD																					[]
-export OLDPWD; export | grep OLDPWD																				[]
-unset PWD; cd ..; export | grep PWD																				[]
-unset OLDPWD; cd ..; export | grep OLDPWD																		[]
-unset PWD; cd ..; export PWD=new_value; export | grep PWD														[]
-unset OLDPWD; cd ..; export OLDPWD=new_value; export | grep OLDPWD												[]
-unset PWD; cd ..; export PWD; export | grep PWD																	[]
-unset OLDPWD; cd ..; export OLDPWD; export | grep OLDPWD														[]
+export A=B=C=D; export | grep A																					[√] (testé le : 14 Août 23)
+export PATH; export | grep PATH																					[√] (testé le : 14 Août 23)
+export PWD; export | grep PWD																					[√] (testé le : 14 Août 23)
+unset PWD; cd ..; export | grep PWD																				[√] (testé le : 14 Août 23)
+unset PWD; cd ..; export PWD=new_value; export | grep PWD														[√] (testé le : 14 Août 23)
+unset PWD; cd ..; export PWD; export | grep PWD																	[√] (testé le : 14 Août 23)
 export =
+
+/ ------------- Unset -------------- \
+unset; env | grep -v -E '^_=' | sort																			[√] (testé le : 14 Août 23)
+unset A; echo $A, export A='test $A'																			[√] (testé le : 14 Août 23)
+unset _A1; echo $_A1, export _A1='test $_A1'																	[√] (testé le : 14 Août 23)
+unset A B C; echo $A$B$C$D, export A=test B=multiple C=var D=hello												[√] (testé le : 14 Août 23)
+unset PWD; echo $PWD																							[√] (testé le : 14 Août 23)
+unset OLDPWD; echo $OLDPWD																						[√] (testé le : 14 Août 23)
+unset NO_SUCH_ENV; echo $?$NO_SUCH_ENV, unset NO_SUCH_ENV														[√] (testé le : 14 Août 23)
+unset 1																											[√] (testé le : 14 Août 23)
+unset A=a; echo $A, export A=a																					[√] (testé le : 14 Août 23)
+unset ' \"$&`\n'																								[√] (testé le : 14 Août 23)

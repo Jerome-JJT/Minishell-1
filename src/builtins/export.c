@@ -82,32 +82,34 @@ int	export_minishell(t_shell *info, char *arg)
 		tab = ft_split(arg, ' ', &info->trash_lst);
 		while (tab[i])
 		{
-			remove_quote(tab[i]);
+			if (tab[i][0] == '\"')
+				remove_quote(tab[i]);
 			// fprintf(stderr, "export tmp -> %s\n", tmp);
-			// if (!ft_isalpha(tab[i][0])|| tab[i][0] == '$')
-			// if (!ft_isprint(tab[i][0]))
-			// 	printf("minishell: export: `%s': not a valid identifier\n",
-			// 		tab[i]);
-			// else
-			// {
-				node = find_var_env(info->env, tab[i], 1);
+			// printf("tab[%d] = %s\n", i, tab[i]);
+			if (!ft_isalpha(tab[i][0]) && tab[i][0] != '_')
+				printf("minishell: export: `%s': not a valid identifier\n", tab[i]);
+			else
+			{
+				node = find_var_env(info->env, tab[i]);
 				if (!node)
 				{
-					// tmp = ft_strrchr(tab[i], '=');
 					node = ft_dlst_newcontent(NULL, &info->trash_lst);
 					str_to_node(tab[i], node, info, 0);
 					ft_dlst_addback(&info->env, node);
 				}
 				else
 				{
-					tmp = ft_strrchr(tab[i], '=');
-					printf("%p\n%s\n", &tmp, tmp);
-					if (!node->valeur && !tmp)
-						fill_node(node, node->variable, ft_strdup(tmp, &info->trash_lst), 1);
-					else
-						fill_node(node, node->variable,  ft_strdup(tmp + 1, &info->trash_lst), 1);
+					if (found_char(tab[i], '='))
+					{
+						tmp = ft_strrchr(tab[i], '=');
+						// printf("%p\n%s\n", &tmp, tmp);
+						if (!node->valeur && !tmp)
+							fill_node(node, node->variable, ft_strdup(tmp, &info->trash_lst), 1);
+						else
+							fill_node(node, node->variable,  ft_strdup(tmp + 1, &info->trash_lst), 1);
+					}
 				}
-			// }
+			}
 			i++;
 		}	
 	}

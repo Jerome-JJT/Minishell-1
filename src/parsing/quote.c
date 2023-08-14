@@ -22,7 +22,7 @@ static char	*if_env_var(char *str,  t_env *env, t_dlist **trash)
 		tmp[1] = ft_substr(str + i, 0, j, trash);
 	}
 	tmp[2] = ft_substr(str, 0, i, trash);
-	ret = find_var_env(env, tmp[2], 1);
+	ret = find_var_env(env, tmp[2]);
 	if (ret)
 		tmp[0] = ft_strdup(ret->valeur, trash);
 	if (j > 0)

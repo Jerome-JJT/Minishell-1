@@ -42,8 +42,10 @@ char	*if_env_var_word(char *str,  t_env *env, t_dlist **trash)
 		tmp[1] = ft_substr(str + i, 0, j, trash);
 	}
 	tmp[2] = ft_substr(str, 0, i, trash);
-	ret = find_var_env(env, tmp[2], 1);
-	if (ret != NULL)
+	// printf("tmp[2]: %s	len -> %zu\n", tmp[2], ft_strlen(tmp[2]));
+	ret = find_var_env(env, tmp[2]);
+	// printf("ret: %p\n", ret);
+	if (ret)
 		tmp[0] = ft_strdup_pars(ret->valeur, trash);
 	if (j > 0)
 		tmp[0] = ft_strjoin(tmp[0], tmp[1], trash);

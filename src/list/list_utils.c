@@ -13,7 +13,7 @@ void	str_to_node(char *str, t_list *node, t_shell *info, int first_time)
 	{
 		tab = split_arg(str, egal, &info->trash_lst);
 		if (!first_time)
-			tmp = find_var_env(info->env, tab[0], 1);
+			tmp = find_var_env(info->env, tab[0]);
 		if (!tmp)
 			fill_node(node, ft_strdup(tab[0], &info->trash_lst),
 				ft_strdup(tab[1], &info->trash_lst), 1);
@@ -35,30 +35,18 @@ void	fill_node(t_list *node, char *s1, char *s2, int if_var)
 }
 
 /* -------------------- 3.Find Variable env. -----------------------*/
-t_list	*find_var_env(t_env *env, char *var, int if_dd)
+t_list	*find_var_env(t_env *env, char *var)
 {
 	t_list	*node;
 
 	node = env->head;
-	if (if_dd == 0)
-		var++;
 	while (node != NULL)
 	{
-		if (var[ft_strlen(var) - 1] == '=')
-		{
-			if (ft_strncmp(var, node->variable,
-					ft_strlen(var) - 2) == 0)
-				return (node);
-		}
-		else
-		{
-			if (ft_strlen(var) == ft_strlen(node->variable))
-			{
-				if (ft_strncmp(var, node->variable,
-						ft_strlen(var)) == 0)
-					return (node);
-			}
-		}
+		// printf("Variable -> %s\n", node->variable);
+		// printf("strncmp -> %d\n", ft_strncmp(var, node->variable,ft_strlen(var)));
+		if (ft_strncmp(var, node->variable,
+				ft_strlen(node->variable)) == 0)
+			return (node);
 		node = node->next;
 	}
 	return (NULL);

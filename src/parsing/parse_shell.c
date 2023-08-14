@@ -77,7 +77,7 @@ int	parse_shell(char *buff, t_shell *info, t_exec *exec)
 
 	strlen = ft_strlen(buff);
 	if (!buff)
-		exit(0);
+		return (2);
 	if (!*buff)
 		return (3);
 	if (ft_char_sort(buff, info) > 0)

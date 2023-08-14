@@ -9,11 +9,18 @@ static char	*ft_word_d(char *buffer, t_env *env, t_dlist **trash)
 	i = 0;
 	tmp[0] = NULL;
 	while (!ft_isparsing_char(buffer[i]) && buffer[i] != '$')
+	{
+		// printf("A.buffer[%d] = %c\n", i, buffer[i]);
 		i++;
-	if (buffer[i] == '$' && ft_isalnum(buffer[i + 1] || buffer[i + 1] == '?'))
+	}
+	// printf("B.buffer[%d] = %c & ft_isalnum = %d\n", i, buffer[i], ft_isalnum(buffer[i + 1]));
+	if (buffer[i] == '$' && (ft_isalnum(buffer[i + 1])|| buffer[i + 1] == '?'))
+	{
 		tmp[0] = ft_substr(buffer, 0, i, trash);
+		// printf("tmp[0] = %s\n", tmp[0]);
+	}
 	i++;
-	if (ft_isalnum(buffer[i]))
+	if (ft_isalnum(buffer[i]) || buffer[i] == '_')
 	{
 		tmp[1] = if_env_var_word(buffer + i, env, trash);
 		tmp[0] = ft_strjoin(tmp[0], tmp[1], trash);

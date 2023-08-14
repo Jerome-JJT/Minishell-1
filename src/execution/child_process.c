@@ -127,7 +127,7 @@ void prepare_cmd(t_exec *d_exe, t_shell *d_shell, char *cmd)
 {
 	t_list *path;
 
-	path = find_var_env(d_shell->env, "PATH", 1); // -->> commande unset PATH ; ls
+	path = find_var_env(d_shell->env, "PATH"); // -->> commande unset PATH ; ls
 	if (path)
 	{
 		d_exe->path = path->valeur;
