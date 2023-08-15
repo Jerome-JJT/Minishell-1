@@ -1,5 +1,6 @@
 #include "../minishell.h"
 
+
 // int g_errno = 0;
 // int	main(int ac, char **av, char **envp)
 // {
@@ -75,13 +76,16 @@ int	main(int ac, char **av, char **envp)
 	(void) av;
 	(void) ac;
 
-	modify_terminal_attribut(&info_exec);
 	init_shell(&info_parse, &info_exec, envp);
-	set_signals();
+	//set_signals();
 	while (1)
 	{
+
+		setup_terminal(0, &info_exec);// vire ^
+		set_signals();
 		rl_on_new_line();
 		buffer = readline(""GREEN"$>"RESET" ");
+		setup_terminal(1, &info_exec);
 		if (!buffer)
 			exit(0);
 		if (*buffer)
@@ -95,7 +99,9 @@ int	main(int ac, char **av, char **envp)
  		// 	fprintf(stderr, "erro tcsetattr\n");
 	}
 	ft_dlst_clear(&info_parse.trash_lst, free);
-	//restore terminal
 	free(info_parse.env);
+	fprintf(stderr, "FIN\n");
 	return (0);
 }
+
+

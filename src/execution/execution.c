@@ -28,6 +28,7 @@ int shell_execution(t_exec *d_exec, char **env, t_shell *shell_info)
 	// fprintf(stderr, "check value apppend2: %s\n", d_exec->append[2]);
 	//fprintf(stderr, "nb de pipe0: %d\n", d_exec->number_of_pipes);
 	i = 0;
+
 	// if (tcsetattr(STDIN_FILENO, TCSANOW, &d_exec->save) == -1)
  	//   		fprintf(stderr, "erro tcsetattr\n");
 	while (d_exec->tab_cmd[i])
@@ -35,12 +36,12 @@ int shell_execution(t_exec *d_exec, char **env, t_shell *shell_info)
 	//d_exec->nb_probable_of_heredocs = i;
 	d_exec->nb_probable_of_heredocs = d_exec->number_of_pipes + 1;
 	d_exec->last_append = NULL;
-	signals_update();
 	d_exec->save_pid = ft_calloc(sizeof(int), d_exec->number_of_pipes + 1);
 	if (d_exec->save_pid == NULL)
 		return(0);
 	handle_heredoc(d_exec);
-	handle_pipes(&d_pip.fd_pipe1, &d_pip.fd_pipe2);
+	signals_update(0);
+	handle_pipes(&d_pip.fd_pipe1, &d_pip.fd_pipe2, d_exec);
 	if(d_exec->number_of_pipes == 0)
 	{
 		//fprintf(stderr, "exec no pipe begin\n");
@@ -133,13 +134,13 @@ void execution_no_pipe(t_exec *d_exec, t_pipe *d_pip, t_shell *shell_info)
 			// fprintf(stderr, "pipe = 0, builtins\n");
 			out_backup = dup(1);
 			if (out_backup == -1)
-				perror_msg_system(5);
+				perror_msg_system(5, d_exec);
 			handle_dup_fd_single_cmd(d_pip, d_exec);
 			create_cmd_n_args_builtins(d_exec);
 			builtins_exec(d_exec->cmd_n_arg[0], shell_info, d_exec->cmd_n_arg, d_exec);
 			dup2(out_backup, 1);
 			if (out_backup == -1)
-				perror_msg_system(4);
+				perror_msg_system(4, d_exec);
 			return;
 		}
 		else
@@ -148,8 +149,6 @@ void execution_no_pipe(t_exec *d_exec, t_pipe *d_pip, t_shell *shell_info)
 			handle_single_cmd(d_pip, d_exec, shell_info, d_exec->tab_cmd[0]);
 		}
 	}
-	// if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &d_exec->save) == -1)
- 	//  		fprintf(stderr, "erro tcsetattr\n");
 }
 
 void builtins_exec(char *builtins_name, t_shell *info, char **cmd, t_exec *exe)
@@ -189,8 +188,3 @@ int is_builtins(char *cmd_to_compare, char** builtins_list)
 	}
 	return (0);
 }
-
-// void save_pid(t_exec *exe)
-// {
-// 	//...
-// }

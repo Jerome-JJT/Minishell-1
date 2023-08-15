@@ -5,36 +5,29 @@ void handle_single_cmd(t_pipe *d_pip, t_exec *d_exe, t_shell *d_shell, char *cmd
     int fork_pid;
 	int status;
 
-    fprintf(stderr, "single cmd\n");
+    //fprintf(stderr, "single cmd\n");
 
     fork_pid = fork();
-	//fork_pid = -1;
     if (fork_pid == -1)
     {
-		perror_msg_system(1);
-        // fprintf(stderr, "fork error\n");
-        // return;
+		perror_msg_system(1, d_exe);
     }
     if (fork_pid == 0)
     {
-		// if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &d_exe->save) == -1)
- 	 	// 	fprintf(stderr, "erro tcsetattr\n");
         prepare_cmd(d_exe, d_shell, cmd);
         handle_dup_fd_single_cmd(d_pip, d_exe);
         if (execve(d_exe->cmd_path, d_exe->cmd_n_arg, d_exe->env_cpy) == -1)
         {
-			perror_msg_system(3);
-            // fprintf(stderr, "execve error\n");
-            // return;
+			perror_msg_system(3, d_exe);
         }
 		exit(1);
     }
-	if (tcsetattr(STDIN_FILENO, TCSANOW, &d_exe->save) == -1)
- 			fprintf(stderr, "erro tcsetattr\n");
+	// if (tcsetattr(STDIN_FILENO, TCSANOW, &d_exe->save) == -1)
+ 	// 		fprintf(stderr, "erro tcsetattr\n");
     waitpid(fork_pid, &status, 0);
-	if (WIFEXITED(status))
+	if (WIFEXITED(status)) // This macro returns true if the child process exited normally
 	{
-		g_errno = WEXITSTATUS(status);
+		g_errno = WEXITSTATUS(status); // In this case, the macro WEXITSTATUS(status) returns the exit status of the child process.
 	}
 	// page 547
 	//while(1) ;
@@ -50,7 +43,7 @@ void handle_dup_fd_single_cmd(t_pipe *d_pip, t_exec *exe)
 	handle_redirections(exe, d_pip);
     if (d_pip->infile)
     {
-        setup_infile_cmd(d_pip);
+        setup_infile_cmd(d_pip, exe);
     }
     if (d_pip->outfile)
     {
@@ -64,7 +57,7 @@ void		child_process_0(t_pipe *d_pip, t_exec *d_exe, t_shell *d_shell, char *cmd)
 
 	fork_pid = fork();
 	if (fork_pid == -1)
-		perror_msg_system(1);//fprintf(stderr, "fork errot\n");
+		perror_msg_system(1, d_exe);//fprintf(stderr, "fork errot\n");
 	//save_pid();
 	if (fork_pid == 0)
 	{
@@ -83,12 +76,12 @@ void		child_process_0(t_pipe *d_pip, t_exec *d_exe, t_shell *d_shell, char *cmd)
 			middle_cmd(d_pip, d_exe, 0);
 		}
 		if (execve (d_exe->cmd_path, d_exe->cmd_n_arg, d_exe->env_cpy) == -1)
-			perror_msg_system(3); // fprintf(stderr, "error excve\n");
+			perror_msg_system(3, d_exe); // fprintf(stderr, "error excve\n");
 		exit(1);
 	}
 	close_pipes(d_pip, 3);
 	if (pipe(d_pip->fd_pipe1) == -1)
-		perror_msg_system(2);
+		perror_msg_system(2, d_exe);
 }
 
 void	child_process_1(t_pipe *d, t_exec *d_exe, t_shell *d_shell, char *cmd)
@@ -98,7 +91,7 @@ void	child_process_1(t_pipe *d, t_exec *d_exe, t_shell *d_shell, char *cmd)
 	fork_pid = fork();
 
 	if (fork_pid == -1)
-		perror_msg_system(1);//fprintf(stderr, "fork errot\n"); //perror_msg();
+		perror_msg_system(1, d_exe);//fprintf(stderr, "fork errot\n"); //perror_msg();
 	if (fork_pid == 0)
 	{
 		close_pipes(d, 2);
@@ -116,11 +109,12 @@ void	child_process_1(t_pipe *d, t_exec *d_exe, t_shell *d_shell, char *cmd)
 			middle_cmd(d, d_exe, 1);
 		}
 		if (execve (d_exe->cmd_path, d_exe->cmd_n_arg, d_exe->env_cpy) == -1)
-			perror_msg_system(3);//fprintf(stderr, "error excve\n");//handle_exec_err(d->fd_pipe1[1], d_exe->cmd_n_arg, cmd_path);
+			perror_msg_system(3, d_exe);//fprintf(stderr, "error excve\n");//handle_exec_err(d->fd_pipe1[1], d_exe->cmd_n_arg, cmd_path);
+		exit(1);
 	}
 	close_pipes(d, 4);
 	if (pipe(d->fd_pipe2) == -1)
-		perror_msg_system(2);
+		perror_msg_system(2, d_exe);
 }
 
 void prepare_cmd(t_exec *d_exe, t_shell *d_shell, char *cmd)
