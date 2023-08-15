@@ -1,5 +1,6 @@
 #include "../minishell.h"
 
+
 // int g_errno = 0;
 // int	main(int ac, char **av, char **envp)
 // {
@@ -56,8 +57,8 @@ static void	ft_check(int check, t_shell *parse, t_exec *exec, char **envp)
 		tok_clearlst(&parse->token);
 	else if (check == 0)
 	{
-		print_token(&parse->token, "check");
-		print_parsing(exec, "test");
+		// print_token(&parse->token, "check");
+		// print_parsing(exec, "test");
 		shell_execution(exec, envp, parse);
 		tok_clearlst(&parse->token);
 		reset_shelltab(exec);
@@ -75,13 +76,15 @@ int	main(int ac, char **av, char **envp)
 	(void) av;
 	(void) ac;
 
-	modify_terminal_attribut(&info_exec);
 	init_shell(&info_parse, &info_exec, envp);
-	set_signals();
+	//set_signals();
 	while (1)
 	{
+		// setup_terminal(0, &info_exec);// vire ^
+		set_signals();
 		rl_on_new_line();
 		buffer = readline(""GREEN"$>"RESET" ");
+		// setup_terminal(1, &info_exec);
 		if (!buffer)
 			exit(0);
 		if (*buffer)
@@ -90,12 +93,15 @@ int	main(int ac, char **av, char **envp)
 			add_history(buffer);
 		check = parse_shell (buffer, &info_parse, &info_exec);
 		ft_check(check, &info_parse, &info_exec, envp);
+		free(buffer);
 		// Possible leaks ici si buffer non free !
 		// if (tcsetattr(STDIN_FILENO, TCSANOW, &info_exec.save) == -1)
  		// 	fprintf(stderr, "erro tcsetattr\n");
 	}
 	ft_dlst_clear(&info_parse.trash_lst, free);
-	//restore terminal
 	free(info_parse.env);
+	fprintf(stderr, "FIN\n");
 	return (0);
 }
+
+

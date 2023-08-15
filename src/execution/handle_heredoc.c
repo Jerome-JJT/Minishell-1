@@ -15,6 +15,7 @@ void handle_heredoc(t_exec *d_exe)
 	d_exe->nb_of_valid_heredoc = number_of_valid_heredoc(d_exe);
 	if (d_exe->nb_of_valid_heredoc == 0)
 		return;
+	//signals_update(1);
 	d_exe->str_heredoc = create_str_heredoc(d_exe->heredoc, d_exe);
 	heredoc_tab = ft_split_exec(d_exe->str_heredoc, ' ', 0);
     size = ft_tabsize(heredoc_tab);
@@ -35,7 +36,7 @@ void handle_heredoc(t_exec *d_exe)
         buffer = readline("> ");
     }
 	//free(buffer)
-	convert_tab_to_fd_heredoc(heredoc_res);
+	convert_tab_to_fd_heredoc(heredoc_res, d_exe);
 }
 
 // void set_heredoc_signals()

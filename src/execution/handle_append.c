@@ -1,7 +1,7 @@
 #include "minishell.h"
 
 char *find_last_element(char **tab_append_out);
-void    create_append_files(char **tab_append_out);
+void    create_append_files(char **tab_append_out, t_exec *exe);
 
 void handle_append(t_exec *exe)
 {
@@ -13,7 +13,7 @@ void handle_append(t_exec *exe)
  //  else
   // {
         tab_append_out = ft_split_exec(exe->append[exe->idx], ' ', 0);
-        create_append_files(tab_append_out);
+        create_append_files(tab_append_out, exe);
         last_element = find_last_element(tab_append_out);
         if (ft_strncmp("A_", last_element, 2) == 0)
         {
@@ -39,7 +39,7 @@ char *find_last_element(char **tab_append_out)
     return(tab_append_out[i]);
 }
 
-void    create_append_files(char **tab_append_out)
+void    create_append_files(char **tab_append_out, t_exec *exe)
 {
 	int i;
 	int append;
@@ -53,7 +53,7 @@ void    create_append_files(char **tab_append_out)
             if (append == -1)
 				write(2, "error append file opening\n", 26);
 		    if (close(append) == -1)
-		        perror_msg_system(6);
+		        perror_msg_system(6, exe);
 	    }
         i++;
     }

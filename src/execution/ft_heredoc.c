@@ -84,7 +84,7 @@ char	**create_tab(t_list **lst, t_dlist **trash)
 	return (tab);
 }
 
-void convert_tab_to_fd_heredoc(char **heredoc_res)
+void convert_tab_to_fd_heredoc(char **heredoc_res, t_exec *exe)
 {
 	int size;
 	int j;
@@ -109,5 +109,5 @@ void convert_tab_to_fd_heredoc(char **heredoc_res)
 		size--;
 	}
 	if (close(fd) == -1)
-		perror_msg_system(6);
+		perror_msg_system(6, exe);
 }

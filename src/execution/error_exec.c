@@ -49,10 +49,11 @@ void	command_not_found(char *cmd)
 // 	}
 // }
 
-int perror_msg_system(int errn)
+int perror_msg_system(int errn, t_exec *exe)
 {
-	fprintf(stderr, ">>errno: %d\n", errno);
-	fprintf(stderr, ">>errn: %d\n", errn);
+	(void) exe;
+	// fprintf(stderr, ">>errno: %d\n", errno);
+	// fprintf(stderr, ">>errn: %d\n", errn);
 	if (errn == 1 && (errno == EAGAIN || errno == ENOMEM))
 	{
 		perror("Fork");
@@ -85,29 +86,11 @@ int perror_msg_system(int errn)
 	{
 		//g_errno = -7;
 		perror("");
-		//exit(EXIT_FAILURE);
 	}
-	//restore terminal;
+	// setup_terminal(1, exe);
 	exit (g_errno);
 	// g_errno = errno;
 	// //return(g_errno);
 	// exit(EXIT_FAILURE);
 	// return(1);
 }
-
-// static int is_a_path(char *cmd)
-// {
-// 	int i;
-// 	int count;
-
-// 	i = 0;
-// 	count = 0;
-
-// 	while(cmd[i])
-// 	{
-// 		if (cmd[i] == '/')
-// 			count++;
-// 		i++;
-// 	}
-// 	return (count);
-// }

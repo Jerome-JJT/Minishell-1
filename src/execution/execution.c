@@ -28,6 +28,7 @@ int shell_execution(t_exec *d_exec, char **env, t_shell *shell_info)
 	// fprintf(stderr, "check value apppend2: %s\n", d_exec->append[2]);
 	//fprintf(stderr, "nb de pipe0: %d\n", d_exec->number_of_pipes);
 	i = 0;
+
 	// if (tcsetattr(STDIN_FILENO, TCSANOW, &d_exec->save) == -1)
  	//   		fprintf(stderr, "erro tcsetattr\n");
 	while (d_exec->tab_cmd[i])
@@ -40,7 +41,8 @@ int shell_execution(t_exec *d_exec, char **env, t_shell *shell_info)
 	if (d_exec->save_pid == NULL)
 		return(0);
 	handle_heredoc(d_exec);
-	handle_pipes(&d_pip.fd_pipe1, &d_pip.fd_pipe2);
+	signals_update(0);
+	handle_pipes(&d_pip.fd_pipe1, &d_pip.fd_pipe2, d_exec);
 	if(d_exec->number_of_pipes == 0)
 	{
 		//fprintf(stderr, "exec no pipe begin\n");
@@ -112,6 +114,7 @@ void execution_no_pipe(t_exec *d_exec, t_pipe *d_pip, t_shell *shell_info)
 {
 	char *builtins[8];
 	int out_backup;
+	int in_backup;
 
 	builtins[0] = "cd";
 	builtins[1] = "echo";
@@ -131,15 +134,17 @@ void execution_no_pipe(t_exec *d_exec, t_pipe *d_pip, t_shell *shell_info)
 		if(is_builtins(d_exec->tab_cmd[0], builtins) == 1)
 		{
 			// fprintf(stderr, "pipe = 0, builtins\n");
+			in_backup = dup(0);
 			out_backup = dup(1);
-			if (out_backup == -1)
-				perror_msg_system(5);
+			if (out_backup == -1 || in_backup == -1)
+				perror_msg_system(5, d_exec);
 			handle_dup_fd_single_cmd(d_pip, d_exec);
 			create_cmd_n_args_builtins(d_exec);
 			builtins_exec(d_exec->cmd_n_arg[0], shell_info, d_exec->cmd_n_arg, d_exec);
+			dup2(in_backup, 0);
 			dup2(out_backup, 1);
-			if (out_backup == -1)
-				perror_msg_system(4);
+			if (out_backup == -1 || in_backup == -1)
+				perror_msg_system(4, d_exec);
 			return;
 		}
 		else
@@ -148,8 +153,6 @@ void execution_no_pipe(t_exec *d_exec, t_pipe *d_pip, t_shell *shell_info)
 			handle_single_cmd(d_pip, d_exec, shell_info, d_exec->tab_cmd[0]);
 		}
 	}
-	// if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &d_exec->save) == -1)
- 	//  		fprintf(stderr, "erro tcsetattr\n");
 }
 
 void builtins_exec(char *builtins_name, t_shell *info, char **cmd, t_exec *exe)
@@ -172,8 +175,8 @@ void builtins_exec(char *builtins_name, t_shell *info, char **cmd, t_exec *exe)
 		pwd_minishell(info);
 	else if(ft_strncmp("unset", builtins_name, ft_strlen(builtins_name)) == 0)
 		i = unset_minishell(info, *(exe->cmd_n_arg + 1));
-	if (i == 1)
-		exe->env_cpy = lst_to_tab(info->env, exe->trash_lst_exe);
+	// if (i == 1)
+	// 	exe->env_cpy = lst_to_tab(info->env, exe->trash_lst_exe);
 }
 
 int is_builtins(char *cmd_to_compare, char** builtins_list)
@@ -189,8 +192,3 @@ int is_builtins(char *cmd_to_compare, char** builtins_list)
 	}
 	return (0);
 }
-
-// void save_pid(t_exec *exe)
-// {
-// 	//...
-// }

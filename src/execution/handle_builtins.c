@@ -7,7 +7,7 @@ void		builtins_0(t_pipe *d_pip, t_exec *d_exe, t_shell *d_shell, char *cmd)
    // fprintf(stderr, "builtin_0: %s\n", cmd);
 	fork_pid = fork();
 	if (fork_pid == -1)
-		perror_msg_system(1);//fprintf(stderr, "fork errot\n"); //perror_msg();
+		perror_msg_system(1, d_exe);//fprintf(stderr, "fork errot\n"); //perror_msg();
 	if (fork_pid == 0)
 	{
 		// fprintf(stderr, "bugubuibui b %s\n", d_exe->cmd_path);
@@ -31,7 +31,7 @@ void		builtins_0(t_pipe *d_pip, t_exec *d_exe, t_shell *d_shell, char *cmd)
 	}
 		close_pipes(d_pip, 3);
 		if (pipe(d_pip->fd_pipe1) == -1)
-			perror_msg_system(2);
+			perror_msg_system(2, d_exe);
 }
 
 void	builtins_1(t_pipe *d, t_exec *d_exe, t_shell *d_shell, char *cmd)
@@ -42,7 +42,7 @@ void	builtins_1(t_pipe *d, t_exec *d_exe, t_shell *d_shell, char *cmd)
 	//fprintf(stderr, "builtin_1: %s\n", cmd);
 	fork_pid = fork();
 	if (fork_pid == -1)
-		perror_msg_system(1);//fprintf(stderr, "fork errot\n"); //perror_msg();
+		perror_msg_system(1, d_exe);//fprintf(stderr, "fork errot\n"); //perror_msg();
 	if (fork_pid == 0)
 	{
 		close_pipes(d, 2);
@@ -61,7 +61,7 @@ void	builtins_1(t_pipe *d, t_exec *d_exe, t_shell *d_shell, char *cmd)
 	}
 	close_pipes(d, 4);
 	if (pipe(d->fd_pipe2) == -1)
-		perror_msg_system(2);
+		perror_msg_system(2, d_exe);
 }
 
 void create_cmd_n_args_builtins(t_exec *exe)

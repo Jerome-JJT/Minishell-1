@@ -17,13 +17,13 @@ static t_tok    *send_red(t_tok *lst, t_exec *exec, int type, int index, t_dlist
     char    *tmp;
 
     tmp = NULL;
-    printf("lst->tok: %s\n", lst->tok);
+    // printf("lst->tok: %s\n", lst->tok);
     if (ft_isword(type))
         exec->tab_cmd[index] = fill_tab(exec->tab_cmd[index], lst->tok, trash);
     else
     {
         lst = lst->next;
-        printf("lst->tok: %s\n", lst->tok);
+        // printf("lst->tok: %s\n", lst->tok);
         if (lst->type == SPACEE)
             lst = lst->next;
         if (type == RED_IN)

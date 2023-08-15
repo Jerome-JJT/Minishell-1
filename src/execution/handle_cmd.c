@@ -50,7 +50,7 @@ void	first_cmd(t_pipe *d, t_exec *d_exe)
 	// fprintf(stderr, "first_cmd outfile:%s\n", d->outfile);
 	if (d->infile)
 	{
-		setup_infile_cmd(d);
+		setup_infile_cmd(d, d_exe);
 	}
 	if (d->outfile)
 	{
@@ -59,7 +59,7 @@ void	first_cmd(t_pipe *d, t_exec *d_exe)
 	else
 	{
 		if(dup2(d->fd_pipe2[1], STDOUT_FILENO) == -1)
-			perror_msg_system(4);
+			perror_msg_system(4, d_exe);
 		close_pipes(d, 2);
 	}
 }
@@ -69,20 +69,20 @@ void	last_cmd(t_pipe *d, int process, t_exec *d_exe)
 	//fprintf(stderr, "last_cmd\n");
 	if (d->infile)
 	{
-		setup_infile_cmd(d);
+		setup_infile_cmd(d, d_exe);
 	}
 	else
 	{
 		if (process == 0)
 		{
 			if (dup2 (d->fd_pipe1[0], STDIN_FILENO) == -1)
-				perror_msg_system(4);
+				perror_msg_system(4, d_exe);
 			close_pipes(d, 2);
 		}
 		if (process == 1)
 		{
 			if (dup2 (d->fd_pipe2[0], STDIN_FILENO) == -1)
-				perror_msg_system(4);
+				perror_msg_system(4, d_exe);
 			close_pipes(d, 1);
 		}
 	}
@@ -99,14 +99,14 @@ void	middle_cmd(t_pipe *d, t_exec *exe, int process)
 	if (d->infile)
 	{
 		//fprintf(stderr, "infile in middle_cmd: %s\n", d->infile);
-		setup_infile_cmd(d);
+		setup_infile_cmd(d, exe);
 	}
 	else
 	{
 		if (process == 0)
-			setup_middle_cmd(d, 0);
+			setup_middle_cmd(d, 0, exe);
 		if (process == 1)
-			setup_middle_cmd(d, 1);
+			setup_middle_cmd(d, 1, exe);
 	}
 	if (d->outfile)
 		setup_outfile_cmd(d, exe);
@@ -114,16 +114,16 @@ void	middle_cmd(t_pipe *d, t_exec *exe, int process)
 	{
 		if (process == 0)
 		{
-			setup_middle_cmd(d, 2);
+			setup_middle_cmd(d, 2, exe);
 		}
 		if (process == 1)
 		{
-			setup_middle_cmd(d, 3);
+			setup_middle_cmd(d, 3, exe);
 		}
 	}
 }
 
-void setup_infile_cmd(t_pipe *d_pipe)
+void setup_infile_cmd(t_pipe *d_pipe, t_exec *exe)
 {
 	//fprintf(stderr, ">>steup infile cmd\n");
 	d_pipe->fd_in = open(d_pipe->infile, O_RDONLY);
@@ -134,12 +134,12 @@ void setup_infile_cmd(t_pipe *d_pipe)
     }
 	if (dup2(d_pipe->fd_in, STDIN_FILENO) == -1)
 	{
-		perror_msg_system(4);
+		perror_msg_system(4, exe);
 		return; // AJOUT
 	}
 	close(d_pipe->fd_in);
 	if (d_pipe->fd_in == -1)
-		perror_msg_system(2);
+		perror_msg_system(2, exe);
 }
 
 void setup_outfile_cmd(t_pipe *d_pipe, t_exec *d_exe)
@@ -163,36 +163,36 @@ void setup_outfile_cmd(t_pipe *d_pipe, t_exec *d_exe)
 	}
 	if(dup2 (d_pipe->fd_out, STDOUT_FILENO) == -1)
 	{
-		perror_msg_system(4);
+		perror_msg_system(4, d_exe);
 		return; // AJOUT
 	}
 	close(d_pipe->fd_out);
 	if (d_pipe->fd_out == -1)
-		perror_msg_system(2);
+		perror_msg_system(2, d_exe);
 }
 
-void setup_middle_cmd(t_pipe *d_pipe, int option)
+void setup_middle_cmd(t_pipe *d_pipe, int option, t_exec *exe)
 {
 	if (option == 0)
 	{
 		if (dup2(d_pipe->fd_pipe1[0], STDIN_FILENO) == -1)
-			perror_msg_system(4);
+			perror_msg_system(4, exe);
 	}
 	if (option == 1)
 	{
 		if (dup2(d_pipe->fd_pipe2[0], STDIN_FILENO) == -1)
-			perror_msg_system(4);
+			perror_msg_system(4, exe);
 	}
 	if (option == 2)
 	{
 		if (dup2(d_pipe->fd_pipe2[1], STDOUT_FILENO) == -1)
-			perror_msg_system(4);
+			perror_msg_system(4, exe);
 		close_pipes(d_pipe, 2);
 	}
 	if (option == 3)
 	{
 		if (dup2(d_pipe->fd_pipe1[1], STDOUT_FILENO) == -1)
-			perror_msg_system(4);
+			perror_msg_system(4, exe);
 		close_pipes(d_pipe, 1);
 	}
 }
