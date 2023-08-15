@@ -61,7 +61,7 @@ char **heredoc_data_saved(char *to_check, t_exec *d_exe, char *buffer)
 
 char	**create_tab(t_list **lst, t_dlist **trash)
 {
-	(void)trash;
+	// (void)trash;
 	t_list	*tmp;
 	char	**tab;
 	int		i;
@@ -70,7 +70,7 @@ char	**create_tab(t_list **lst, t_dlist **trash)
 	i = 0;
 	size = ft_lstsize_heredoc(*lst);
 	//fprintf(stderr, "size: %d, sizeof : %lu\n", size, sizeof(char**));
-	tab = my_malloc(size + 1, sizeof(char**),  trash);
+	tab = my_malloc(size + 1, sizeof(char **), trash);
 	if (tab == NULL)
 		return (NULL);
 	tmp = *lst;

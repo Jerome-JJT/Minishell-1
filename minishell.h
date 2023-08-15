@@ -165,9 +165,9 @@ char    	*tab_to_str(char **tab, t_dlist **trash);
 // void		remplace_char(char *s, char old, char new);
 char		*if_errno_word(char *str, t_dlist **trash);
 char		**ft_split_var(char *var, t_dlist **trash);
-int			ft_error_msg(int errno, char *str, char *ft);
 char		**split_arg(char *str, int egal, t_dlist **trash);
 char		*ft_strdup_pars(const char *str, t_dlist **trash);
+int			ft_error_msg(int errno, char *str, char *ft, int num);
 char		*if_env_var_word(char *str,  t_env *env, t_dlist **trash);
 
 /* -------------- Fonctions utiles liste -----------------------*/

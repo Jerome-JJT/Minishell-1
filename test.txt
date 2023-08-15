@@ -166,3 +166,6 @@ unset NO_SUCH_ENV; echo $?$NO_SUCH_ENV, unset NO_SUCH_ENV														[√] (te
 unset 1																											[√] (testé le : 14 Août 23)
 unset A=a; echo $A, export A=a																					[√] (testé le : 14 Août 23)
 unset ' \"$&`\n'																								[√] (testé le : 14 Août 23)
+
+/ ------------- Error -------------- \
+<directory grep a | cat -e

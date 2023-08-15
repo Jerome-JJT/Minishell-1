@@ -21,26 +21,28 @@ static void	go_home(t_shell *info)
 void	cd_minishell(t_shell *info, char *arg)
 {
 	int			ret;
+	char		**tab;
+	char		*path;
 	struct stat	filestat;
 
 	if (!arg)
 		go_home(info);
 	else
 	{
-		if (stat(info->cwd, &filestat) == 0)
+		tab = ft_split(arg, ' ', &info->trash_lst);
+		path = ft_strjoin(info->cwd, "/", &info->trash_lst);
+		stat(ft_strjoin(path, *tab, &info->trash_lst), &filestat);
+		if (S_ISREG(filestat.st_mode))
+			ft_error_msg(1, *tab, "cd", 1);
+		else if (S_ISDIR(filestat.st_mode))
 		{
-			if (S_ISREG(filestat.st_mode))
-				ft_error_msg(1, arg, "cd");
-			else if (S_ISDIR(filestat.st_mode))
-			{
-				ret = chdir(arg);
-				if (ret == -1)
-					ft_error_msg(1, arg, "cd");
-				else
-					getcwd(info->cwd, 1024);
-			}
+			ret = chdir(*tab);
+			if (ret == -1)
+				ft_error_msg(1, *tab, "cd", 0);
+			else
+				getcwd(info->cwd, 1024);
 		}
 		else
-			perror("Error access file or directory\n");
+			ft_error_msg(1, *tab, "cd", 0);
 	}
 }

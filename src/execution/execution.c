@@ -36,7 +36,7 @@ int shell_execution(t_exec *d_exec, char **env, t_shell *shell_info)
 	d_exec->nb_probable_of_heredocs = d_exec->number_of_pipes + 1;
 	d_exec->last_append = NULL;
 	signals_update();
-	d_exec->save_pid = ft_calloc(sizeof(int), d_exec->number_of_pipes + 1);
+	d_exec->save_pid = ft_calloc(sizeof(int), d_exec->number_of_pipes + 1); // --> à free
 	if (d_exec->save_pid == NULL)
 		return(0);
 	handle_heredoc(d_exec);
@@ -172,8 +172,8 @@ void builtins_exec(char *builtins_name, t_shell *info, char **cmd, t_exec *exe)
 		pwd_minishell(info);
 	else if(ft_strncmp("unset", builtins_name, ft_strlen(builtins_name)) == 0)
 		i = unset_minishell(info, *(exe->cmd_n_arg + 1));
-	// if (i == 1)
-	// 	exe->env_cpy = lst_to_tab(info->env, exe->trash_lst_exe);
+	if (i == 1)
+		exe->env_cpy = lst_to_tab(info->env, exe->trash_lst_exe);
 }
 
 int is_builtins(char *cmd_to_compare, char** builtins_list)

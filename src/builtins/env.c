@@ -26,19 +26,19 @@ static void	env_with_arg(t_shell *info, char **arg)
 		if (arg != NULL)
 		{
 				// fprintf(stderr, "ici ?\n");
-				ft_error_msg(127, *arg, "env");
+				ft_error_msg(127, *arg, "env", 0);
 				return ;
 		}
 		print_env(info->env);
 		g_errno = 0;
 	}
-	else if (ft_strncmp(*arg, "/", 1) == 0 && !access(*info->arg, F_OK))
+	else if (ft_strncmp(*arg, "/", 1) == 0 && access(*info->arg, F_OK))
 	{
 		if (access(*arg, W_OK) != 0)
-			ft_error_msg(126, *arg, "env");
+			ft_error_msg(126, *arg, "env", 0);
 	}
 	else
-		ft_error_msg(127, *arg, "env");
+		ft_error_msg(127, *arg, "env", 0);
 }
 
 /* ------------------------- 3.Fonction env ------------------------------*/

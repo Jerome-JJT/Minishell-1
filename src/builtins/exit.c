@@ -26,7 +26,7 @@ static int	check_digitchar(char *str)
 		if (str[i] == '-' && i  == 0)
 			i++;
 		if (ft_isdigit(str[i]) == 0 && str[i] != '\0')
-			ft_error_msg(255, str, "exit");
+			ft_error_msg(255, str, "exit", 0);
 		i++;
 	}
 	return (0);
@@ -39,12 +39,12 @@ static int	check_line(char **arg)
 	if (!arg)
 		exit (g_errno);
 	else if (ft_isdigit(**arg) == 0)
-		ft_error_msg(255, *arg, "exit");
+		ft_error_msg(255, *arg, "exit", 0);
 	else
 	{
 		check_digitchar(*arg);
 		if (*(arg + 1) != NULL)
-			ft_error_msg(1, NULL, "exit");
+			ft_error_msg(1, NULL, "exit", 0);
 		else
 		{
 			printf("exit\n");
@@ -66,7 +66,7 @@ int	exit_minishell(char *arg, t_dlist **trash)
 	remove_quote(arg, '\"');
 	if (ft_isonlyspace(arg) || !ft_strncmp(arg, "9223372036854775808", 20)
 		|| !ft_strncmp(arg, "-9223372036854775809", 21))
-		ft_error_msg(255, arg, "exit");
+		ft_error_msg(255, arg, "exit", 0);
 	s_tmp = ft_strtrim(arg, " ", trash);
 	tab = ft_split(s_tmp, ' ', trash);
 	if (!tab)
@@ -87,7 +87,7 @@ int	exit_minishell(char *arg, t_dlist **trash)
 		if (*(tab + 1) != NULL)
 		{
 			// printf("5\n");
-			return (ft_error_msg(1, NULL, "exit"));
+			return (ft_error_msg(1, NULL, "exit", 0));
 		}
 		// printf("6\n");
 		printf("exit\n");

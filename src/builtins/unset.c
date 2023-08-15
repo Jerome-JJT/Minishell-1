@@ -3,9 +3,6 @@
 /* -------------------- 1.clear info node -----------------------*/
 static void	clear_node(t_shell *info, t_list *node)
 {
-	// printf("node->next:	%p\n", node->next);
-	// printf("node->prev:	%p\n", node->prev);
-	// printf("node->variable:	%s\n", node->variable);
 	if (!node->prev)
 	{
 		node->next->prev = NULL;
@@ -35,6 +32,7 @@ static void	clear_node(t_shell *info, t_list *node)
 static int	analyze_arg_unset(char **tab, t_shell *info)
 {
 	int		i;
+	int		j;
 	int		check;
 	t_list	*node;
 
@@ -42,21 +40,22 @@ static int	analyze_arg_unset(char **tab, t_shell *info)
 	check = 0;
 	while (tab[i])
 	{
-		// printf("tab[%d] = %s\n", i, tab[i]);
-		if (ft_isalpha(tab[i][0]) || tab[i][0] == '_')
+		j = 0;
+		while (tab[i][j])
 		{
-			node = find_var_env(info->env, tab[i++]);
-			// printf("ptr node -> %p\n", node);
-			if (node)
+			if (!ft_isalpha(tab[i][j]) && tab[i][j] != '_')
 			{
-				// print_list(info->env, "unset", 2);
-				// printf("ici ?\n");
-				clear_node(info, node);
-				check++;
+				ft_error_msg(1, tab[i], "unset", 0);
+				break ;
 			}
+			j++;
 		}
-		else
-			ft_error_msg(1, tab[i++], "unset");
+		node = find_var_env(info->env, tab[i++]);
+		if (node)
+		{
+			clear_node(info, node);
+			check++;
+		}
 	}
 	return (check);
 }

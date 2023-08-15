@@ -9,11 +9,11 @@ static int	check_pipe(t_tok **node, t_shell *info)
 	tmp = *node;
 	*node = (*node)->next;
 	if (!tmp->prev || tmp->prev->type == PIPE)
-		return (ft_error_msg(258, tmp->tok, "check_pipe"));
+		return (ft_error_msg(258, tmp->tok, "syntax", 0));
 	else if (tmp->prev->type == SPACEE)
 	{
 		if (type_is_sep(tmp->prev->prev->type))
-			return (ft_error_msg(258, tmp->tok, "check_pipe"));
+			return (ft_error_msg(258, tmp->tok, "syntax", 0));
 	}
 	if (*node == NULL)
 		{
@@ -28,45 +28,42 @@ static int	check_pipe(t_tok **node, t_shell *info)
 }
 
 /* -------------------------- 2.If token is in, out or append ------------------------------- */
-static int	in_out_append(t_tok **node)
+static int	in_out_append(t_tok **node, t_shell *info)
 {
 	t_tok	*tmp;
+	char	*path;
+	struct stat	filestat;
 
 	tmp = (*node)->next;
 	if (!tmp)
-		return (ft_error_msg(258, NULL, "in_out_append"));
+		return (ft_error_msg(258, NULL, "syntax", 0));
 	else if (tmp->type == SPACEE)
 	{
 		tmp = tmp->next;
 		if (!tmp)
-			return (ft_error_msg(258, NULL, "in_out_append"));
+			return (ft_error_msg(258, NULL, "syntax", 0));
 	}
-	if (tmp->type != WORD)
-		return (ft_error_msg(258, tmp->tok, "in_out_append"));
+	if (tmp->type != WORD || !tmp->tok)
+		return (ft_error_msg(258, tmp->tok, "syntax", 0));
 	else if (ft_isword(tmp->type) == 1)
 	{
+		path = ft_strjoin(info->cwd, "/", &info->trash_lst);
+		stat(ft_strjoin(path, tmp->tok, &info->trash_lst), &filestat);
+		if (S_ISDIR(filestat.st_mode))
+			return (ft_error_msg(1, tmp->tok, "syntax", 1));
+		else if (!S_ISREG(filestat.st_mode))
+			return (ft_error_msg(1, tmp->tok, "syntax", 0));
 		if ((*node)->type == RED_IN)
 		{
 			if (open(tmp->tok, O_RDWR) < 0) // -->> A changer selon le type de permissions accordées de base au fichier
-				return (ft_error_msg(1, tmp->tok, "in_out_append"));
+				return (ft_error_msg(1, tmp->tok, "syntax", 2));
 		}
-		// else if ((*node)->type == RED_OUT)
-		// {
-		// 	if (access(tmp->tok, F_OK) == 0)
-		// 		unlink(tmp->tok);
-		// 	if (open(tmp->tok, O_WRONLY | O_CREAT | O_TRUNC, 0644) < 0)
-		// 		return (ft_error_msg(1, tmp->tok));
 		else
 		{
-			// if (access(tmp->tok, F_OK) == 0)
-			// 	unlink(tmp->tok);
-			
-			// if ((*node)->type == RED_OUT)
 			if (strncmp((*node)->tok, ">", 2) == 0)
 			{
-				//fprintf(stderr, "PLOP\n");
 				if (open(tmp->tok, O_WRONLY | O_CREAT | O_TRUNC, 0644) < 0)
-					return (ft_error_msg(1, tmp->tok, "in_out_append"));
+					return (ft_error_msg(1, tmp->tok, "syntax", 2));
 			}
 		}
 		(*node) = tmp->next;
@@ -81,13 +78,13 @@ static int	heredoc(t_tok **node)
 
 	tmp = (*node)->next;
 	if (!tmp)
-		return (ft_error_msg(258, NULL, "here_doc"));
+		return (ft_error_msg(258, NULL, "here_doc", 0));
 	else if (tmp->type == SPACEE)
 		tmp = tmp->next;
 	if (!tmp)
-		return (ft_error_msg(258, NULL, "here_doc"));
+		return (ft_error_msg(258, NULL, "here_doc", 0));
 	else if (tmp->type != WORD)
-		return (ft_error_msg(258, tmp->tok, "here_doc"));
+		return (ft_error_msg(258, tmp->tok, "here_doc", 0));
 	(*node) = tmp->next;
 	return (0);
 }
@@ -133,7 +130,7 @@ int	check_syntax(t_shell *info, t_tok *lst, t_dlist **trash)
 			check = (check_pipe(&node, info));
 		else if (node->type == RED_IN || node->type == RED_OUT
 			|| node->type == APPEND)
-			check = (in_out_append(&node));
+			check = (in_out_append(&node, info));
 		else if (node->type == H_D)
 			check = (heredoc(&node));
 		else if (ft_isword(node->type))

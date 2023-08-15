@@ -93,6 +93,7 @@ void handle_infile_heredoc_redirections(t_exec *exe, t_pipe *pipe)
 			{
 				//fprintf(stderr, "heredoc no empty\n");
 				pipe->fd_in = open(".heredoc.txt", O_RDONLY); // A TESTER
+				close (pipe->fd_in);
 				exe->redi_infile[0] = ".heredoc.txt";
 			}
 		}
