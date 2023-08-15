@@ -40,8 +40,7 @@ static char	*purify_buffer(char *buff, t_dlist **trash)
 {
 	char	*tmp;
 
-	tmp = ft_strtrim(buff, " ", trash);
-	tmp = ft_strtrim(tmp, "\t", trash);
+	tmp = ft_strtrim(buff, " \r\n\t\f\v", trash);
 	return (tmp);
 }
 
